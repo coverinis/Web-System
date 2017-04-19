@@ -1,0 +1,67 @@
+#menuContent{
+	text-align: center;
+}
+
+#logoBanner{
+	height: 100px;
+	width: 70%;
+	display: inline-block;
+	background-color: blue;
+}
+
+.menuButton{
+	position: relative;
+	display: inline-block;
+	/*height: 100px;*/
+	width: 70%;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: grey;
+	text-align: center;
+	margin-top: 5px;
+	padding: 30px 0px;
+	text-decoration: none;
+	font-family: arial;
+	font-size: 16pt;
+	color: black;
+}
+
+.menuButton:hover{
+	background-color: lightgrey;
+	
+}
+
+.menuButton .tooltip {
+    visibility: hidden;
+    width: 120px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 10px 10px;
+    position: absolute;
+    z-index: 1;
+    top: 15px;
+    left: 110%;
+    margin-left: -60px;
+	font-size: 8pt;
+	opacity: 0;
+    transition: opacity 1s;
+	color: yellow;
+}
+
+.menuButton .tooltip::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent black transparent transparent;
+}
+
+.menuButton:hover .tooltip {
+    visibility: visible;
+	opacity: 1;
+}
