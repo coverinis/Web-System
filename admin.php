@@ -5,9 +5,6 @@
 <html lang="en">
 <head>
 
-	<style>
-		
-	</style>
 <link rel="stylesheet" type="text/css" href="common.css">
 
 <script>
@@ -33,10 +30,17 @@ function openTab(evt, tabName) {
 		<div class="tab">
 			<button class="tablinks" id='defaultOpen' onclick="openTab(event, 'UserInfo')">User Information</button>
 			<button class="tablinks" onclick="openTab(event, 'AuditInfo')">Audit Information</button>
+			<button class="tablinks" onclick="openTab(event, 'CompanyInfo')">Company Information</button>
 		</div>
 		<div id="UserInfo" class="tabcontent">
 			<form>
-				
+				<h3 class='customFormLabel'>Select User</h3>
+				<select class='customFormInput'>
+					<option value="AddNew">Add new...</option>
+					<option value="User1">User1</option>
+					<option value="User2">User2</option>
+				</select>
+				<input class='customFormInput' type='hidden' name='userID'>
 				<h3 class='customFormLabel'>Username</h3>
 				<input class='customFormInput' type='text' name='username'>
 				<h3 class='customFormLabel'>Password</h3>
@@ -52,6 +56,20 @@ function openTab(evt, tabName) {
 		<div id="AuditInfo" class="tabcontent">
 		  <form>
 			<h3 class='customFormLabel'>Audit Information</h3>
+		  </form>
+		</div>
+		<div id="CompanyInfo" class="tabcontent">
+		  <form>
+		  <h3 class='customFormLabel'>Select Company</h3>
+				<select class='customFormInput'>
+					<option value="AddNew">Add new...</option>
+					<option value="Company1">Company1</option>
+					<option value="Company2">Company2</option>
+				</select>
+			<h3 class='customFormLabel'>Company Name</h3>
+			<input class='customFormInput' type='hidden' name='companyID'>
+			<input class='customFormInput' type='text' name='companyName'>
+			<button class='customFormInput'>Submit</button>
 		  </form>
 		</div>
 	</div>

@@ -1,5 +1,6 @@
 <?php
 //Page name constants
+define('Login', 'Login');
 define('MainMenu', 'Main Menu');
 define ('MainMenuLink', 'menu.php');
 define('EmpMaintenance', 'Employee Maintenance');
@@ -14,6 +15,9 @@ function GenerateBreadCrumbTrail($pageName){
 	
 	if(strcmp($pageName, MainMenu) == 0){
 		$breadCrumb = $breadCrumb . MainMenu;
+	}
+	else if(strcmp($pageName, Login) == 0){
+		$breadCrumb = $breadCrumb . Login;
 	}
 	else{
 		$breadCrumb = $breadCrumb . GenerateLink(MainMenu, MainMenuLink) . " > ";
