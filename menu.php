@@ -1,6 +1,6 @@
 <!doctype html>
 
-<?php require 'pageGeneration.php' ?>
+<?php require './scripts/pageGeneration.php' ?>
 
 <html lang="en">
 <head>
@@ -8,8 +8,8 @@
 	<style>
 		
 	</style>
-<link rel="stylesheet" type="text/css" href="common.css">
-<link rel="stylesheet" type="text/css" href="menu.css">
+<link rel="stylesheet" type="text/css" href="/styles/common.css">
+<link rel="stylesheet" type="text/css" href="/styles/menu.css">
 </head>
 
 <body>
