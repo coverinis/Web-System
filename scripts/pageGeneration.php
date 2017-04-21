@@ -1,4 +1,5 @@
 <?php
+
 //Page name constants
 define('Login', 'Login');
 define('MainMenu', 'Main Menu');
@@ -7,6 +8,16 @@ define('EmpMaintenance', 'Employee Maintenance');
 define('EmpSearch', 'Employee Search');
 define ('EmpReports', 'Employee Reports');
 define('EmsSysAdmin', 'EMS System Administration');
+
+//Employee Type Constants
+define('FullTime', 'Full Time');
+define('PartTime', 'Part Time');
+define('Seasonal', 'Seasonal');
+define('Contract', 'Contract');
+
+//Security Level Constants
+define('Admin', 'Admin');
+define('General', 'General');
 
 //Make the bread crumb string
 function GenerateBreadCrumbTrail($pageName){
@@ -85,5 +96,72 @@ function GenerateFooter(){
 	</div>
 <?php
 	return ob_get_clean();
+}
+
+function GenerateEmployeeForm($empType, $secLevel){
+	$formCode = "";
+	
+	if(strcmp($empType, FullTime) == 0){
+		ob_start();
+?>
+		<h3 class='customFormLabel'>First Name</h3>
+		<input class='customFormInput' type='text' name='fname'>
+		<h3 class='customFormLabel'>Last Name</h3>
+		<input class='customFormInput' type='text' name='lname'>
+		<h3 class='customFormLabel'>Company Name</h3>
+		<input class='customFormInput' type='text' name='cname'>
+		<h3 class='customFormLabel'>Social Insurance Number</h3>
+		<input class='customFormInput' type='text' name='sin'>
+		<h3 class='customFormLabel'>Date of Birth</h3>
+		<input class='customFormInput' type='text' name='dob'>
+		<h3 class='customFormLabel'>Date of Hire</h3>
+		<input class='customFormInput' type='text' name='doh'>
+<?php
+		if(strcmp($secLevel, Admin) == 0){
+?>
+			<h3 class='customFormLabel'>Date of Termination</h3>
+			<input class='customFormInput' type='text' name='dot'>
+			<h3 class='customFormLabel'>Salary</h3>
+			<input class='customFormInput' type='text' name='lname'>
+			<h3 class='customFormLabel'>Status</h3>
+			<input class='customFormInput' type='text' name='cname'>
+<?php
+			
+		}
+?>
+		<button class='customFormInput'>Submit</button>
+<?php	
+		$formCode = ob_get_clean();
+	}
+	else if(strcmp($empType, PartTime) == 0){
+		ob_start();
+?>
+
+<?php		
+		$formCode = ob_get_clean();
+	}
+	else if(strcmp($empType, Seasonal) == 0){
+		ob_start();
+?>
+
+<?php		
+		$formCode = ob_get_clean();
+	}
+	else if(strcmp($empType, Contract) == 0 && strcmp($secLevel, Admin) == 0){
+		ob_start();
+?>
+
+<?php		
+		$formCode = ob_get_clean();
+	}
+	else{
+		ob_start();
+?>
+
+<?php		
+		$formCode = ob_get_clean();
+	}
+	
+	return $formCode;
 }
 ?>

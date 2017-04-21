@@ -60,6 +60,20 @@ function openTab(evt, tabName) {
 					<button class='actionButton'>Leave</button>
 				</td>
 			</tr>
+			<tr>
+				<td>
+					Other, Person. (123456782)
+					<button class='tablink' onclick="openTab(event, 'item2Content')">More...</button>
+					<div id='item2Content' class='tabcontent'>
+						More Info.
+					</div>
+				</td>
+				<td style="padding:0px; margin:0px;">
+					<button class='actionButton'>Edit</button>
+					<button class='actionButton'>Timecard</button>
+					<button class='actionButton'>Leave</button>
+				</td>
+			</tr>
 		</table>
 	</div>
 	<?php echo GenerateFooter(); ?>
