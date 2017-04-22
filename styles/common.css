@@ -247,3 +247,23 @@ div.tab button.active {
 .actionForm{
 	display: inline;
 }
+
+.reportResultTable{
+	border: 1px solid black;
+	font-size: 12px;
+	font-style: none;
+	font-family: arial;
+	margin: 0px;
+	padding: 0px;
+}
+
+.reportResultTable th{
+	border: 1px solid black;
+	padding: 5px;
+}
+
+.reportResultTable td{
+	border: 1px solid black;
+	padding: 5px;
+	margin: 0px;
+}

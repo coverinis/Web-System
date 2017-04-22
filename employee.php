@@ -1,23 +1,19 @@
 <?php 
-	class employee 
-	{
+	class employee {
 		
 		var $firstName; 
 		var $lastName; 
 		var $socialInsuranceNumber; 
 		var $dateOfBirth;
 		
-		function __construct()
-		{
+		function __construct(){
 			
 			$a = func_get_args();
 			$i = func_num_args();
-			if (method_exists($this,$f='__construct'.$i)) 
-			{
+			if (method_exists($this,$f='__construct'.$i)) {
 				call_user_func_array(array($this,$f),$a);
 			}
-			else
-			{
+			else{
 					
 				$this->lastName = "";
 				$this->firstName = "";
@@ -26,8 +22,7 @@
 			}
 		}
 		
-		function __construct4($newLastName, $newFirstName, $newSocialInsuranceNumber, $newDateOfBirth)
-		{
+		function __construct4($newLastName, $newFirstName, $newSocialInsuranceNumber, $newDateOfBirth){
 			
 			$this->lastName = $newLastName;
 			$this->firstName = $newFirstName;
@@ -35,43 +30,35 @@
 			$this->dateOfBirth = $newDateOfBirth;
 		}
 		
-		function setLastName($newLastName) 
-		{ 
+		function setLastName($newLastName) { 
 			$this->lastName = $newLastName;  
  		}
  
-   		function getLastName() 
-		{
+   		function getLastName() {
 			return $this->lastName;
 		}
 		
-		function setFirstName($firstName) 
-		{ 
+		function setFirstName($firstName) { 
 			$this->firstName = $firstName;  
  		}
  
-   		function getFirstName() 
-		{
+   		function getFirstName() {
 			return $this->firstName;
 		}
 		
-		function setSocialInsuranceNumber($newSocialInsuranceNumber) 
-		{ 
+		function setSocialInsuranceNumber($newSocialInsuranceNumber) { 
 			$this->socialInsuranceNumber = $newSocialInsuranceNumber;  
  		}
  
-   		function getSocialInsuranceNumber() 
-		{
+   		function getSocialInsuranceNumber() {
 			return $this->socialInsuranceNumber;
 		}
 		
-		function setDateOfBirth($newDateOfBirth) 
-		{ 
+		function setDateOfBirth($newDateOfBirth) { 
 			$this->dateOfBirth = $newDateOfBirth;  
  		}
  
-   		function getDateOfBirth() 
-		{
+   		function getDateOfBirth() {
 			return $this->dateOfBirth;
 		}
 	}

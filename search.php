@@ -8,7 +8,7 @@
 <?php
 	//Get the post variables
 	//Get the security level of the user
-		$securityLevel = Admin;
+		$securityLevel = General;
 		//Get the first_name if it is set
 		//ini_set('display_errors', 0);
 		if(isset($_POST["fname"])){

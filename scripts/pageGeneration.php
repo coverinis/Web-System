@@ -23,6 +23,13 @@ define('General', 'General');
 define('EmpForm', 'Employee Form');
 define('TimeCard', 'Time Card');
 
+//Report Types
+define('SeniorityReport', 'Seniority Report');
+define('WeeklyHoursReport', 'Weekly Hours Worked Report');
+define('PayrollReport', 'Payroll Report');
+define('ActiveEmpReport', 'Active Employee Report');
+define('InactiveEmpReport', 'Inactive Employee Report');
+
 //Make the bread crumb string
 function GenerateBreadCrumbTrail($pageName){
 	//The return string
@@ -72,6 +79,23 @@ function GenerateEmployeeTypeList($secLevel){
 	if(strcmp($secLevel, Admin) == 0){
 ?>
 	<option value="<?php echo Contract; ?>"><?php echo Contract; ?></option>
+<?php
+	}
+	
+	return ob_get_clean();
+}
+
+function GenerateReportList($secLevel){
+	ob_start();
+?>
+	<option value="<?php echo SeniorityReport; ?>"><?php echo SeniorityReport; ?></option>
+	<option value="<?php echo WeeklyHoursReport; ?>"><?php echo WeeklyHoursReport; ?></option>
+<?php
+	if(strcmp($secLevel, Admin) == 0){
+?>
+	<option value="<?php echo PayrollReport; ?>"><?php echo PayrollReport; ?></option>
+	<option value="<?php echo ActiveEmpReport; ?>"><?php echo ActiveEmpReport; ?></option>
+	<option value="<?php echo InactiveEmpReport; ?>"><?php echo InactiveEmpReport; ?></option>
 <?php
 	}
 	
@@ -315,8 +339,8 @@ function GenerateSearchResult($securityLevel, $lastName, $firstName, $SIN){
 				<th>Employee</th>
 				<th>Actions</th>
 			</tr>
-			<?php echo GenerateSearchResultRow("blah", 1); ?>
-			<?php echo GenerateSearchResultRow("blah", 2); ?>
+			<?php echo GenerateSearchResultRow("blah", 1, $securityLevel); ?>
+			<?php echo GenerateSearchResultRow("blah", 2, $securityLevel); ?>
 		</table>
 <?php
 		$tableCode = ob_get_clean();
@@ -325,7 +349,7 @@ function GenerateSearchResult($securityLevel, $lastName, $firstName, $SIN){
 	return $tableCode;
 }
 
-function GenerateSearchResultRow($employeeResult, $resultNumber){
+function GenerateSearchResultRow($employeeResult, $resultNumber, $securityLevel){
 	$rowCode = "";
 	
 	ob_start();
@@ -335,8 +359,18 @@ function GenerateSearchResultRow($employeeResult, $resultNumber){
 			Hergott, Justin. (123456782)
 			<button class='tablink  detailButton' onclick="openTab(event, '<?php echo 'item' . $resultNumber . 'Content'?>')">More...</button>
 			<div id='<?php echo 'item' . $resultNumber . 'Content'?>' class='tabcontent'>
-				Hello.
-				<br>
+				Company: <br>
+				Date of Birth: <br>
+				Date of Hire: <br>
+<?php
+				if(strcmp($securityLevel, Admin) == 0){
+?>
+					Date of Termination: <br>
+					Pay: <br>
+					Status: <br>
+<?php
+				}
+?>
 				<button class='tablink detailButton' onclick="closeTab(event, '<?php echo 'item' . $resultNumber . 'Content'?>')">Less...</button>
 			</div>
 		</td>
@@ -359,5 +393,272 @@ function GenerateSearchResultRow($employeeResult, $resultNumber){
 	$rowCode = ob_get_clean();
 	
 	return $rowCode;
+}
+
+function GenerateReport($userID, $securityLevel, $reportType, $company, $date){
+	$reportCode = "";
+	
+	if(strlen($company) == 0){
+		$reportCode = "No Report.";
+	}
+	else{
+		if(strcmp($reportType, SeniorityReport) == 0){
+			//Generate Seniority Report
+			$reportCode = GenerateSeniorityReport($userID, $company);
+		}
+		else if(strcmp($reportType, WeeklyHoursReport) == 0){
+			//Generate Weekly Hours Worker Report
+			$reportCode = GenerateWeeklyHoursReport($userID, $company, $date);
+		}
+		else if(strcmp($reportType, PayrollReport) == 0 && strcmp($securityLevel, Admin) == 0){
+			//Generate Payroll Report
+			$reportCode = GeneratePayrollReport($userID, $company, $date);
+		}
+		else if(strcmp($reportType, ActiveEmpReport) == 0 && strcmp($securityLevel, Admin) == 0){
+			//Generate Active Employee Report
+			$reportCode = GenerateActiveEmployeeReport($userID, $company);
+		}
+		else if(strcmp($reportType, InactiveEmpReport) == 0 && strcmp($securityLevel, Admin) == 0){
+			//Generate Inactive Employee Report
+			$reportCode = GenerateInactiveEmployeeReport($userID, $company);
+		}
+		else{
+			$reportCode = "Unknown Report";
+		}
+	}
+	
+	return $reportCode;
+}
+
+function GenerateReportEnd($userID){
+	$returnString = "";
+	
+	//Get the current Date
+	$date = new DateTime();
+	$strip = $date->format('Y-m-d');
+	
+	return "<br>Date Generated: " . $strip . "<br>" . "Run By: " . $userID;
+}
+
+function GenerateSeniorityReport($userID, $company){
+	$seniorityReportCode = "";
+	
+	//Get Report Results
+	
+	ob_start();
+?>
+	<h3 class='customFormLabel'>Seniority Report (Company)</h3>
+	<table class='reportResultTable'>
+		<tr>
+			<th>Employee Name</th>
+			<th>SIN</th>
+			<th>Type</th>
+			<th>Date of Hire</th>
+			<th>Years of Service</th>
+		</tr>
+		<tr>
+			<td>Hergott, Justin</td>
+			<td>1234567892</td>
+			<td>Full Time</td>
+			<td>2000-01-01</td>
+			<td>17 Years</td>
+		</tr>
+	</table>
+<?php	
+	$seniorityReportCode = ob_get_clean();
+	
+	return $seniorityReportCode . GenerateReportEnd($userID);
+}
+
+function GenerateWeeklyHoursReport($userID, $company, $date){
+	$weeklyHoursReportCode = "";
+	
+	//Get Report Results
+	
+	ob_start();
+?>
+	<h3 class='customFormLabel'>Weekly Hours Worked Report (Company)</h3>
+<?php
+	//For each Full Time Employee
+	echo GenerateWeeklyHoursReportTable("blah", FullTime);
+	//Part Time Employees
+	echo GenerateWeeklyHoursReportTable("blah", PartTime);
+	//Seasonal Employees
+	echo GenerateWeeklyHoursReportTable("blah", Seasonal);
+	
+	$weeklyHoursReportCode = ob_get_clean();
+	
+	//Week Ending
+	$weekEnding = "For Week Ending: " . $date;
+	
+	return $weeklyHoursReportCode . $weekEnding . GenerateReportEnd($userID);
+}
+
+function GenerateWeeklyHoursReportTable($results, $employeeType){
+	$tableCode = "";
+	
+	ob_start();
+	//For each employee that matches the type
+?>
+	<table class='reportResultTable'>
+		<tr>
+			<th colspan='3'><?php echo $employeeType; ?></th>
+		</tr>
+		<tr>
+			<th>Employee Name</th>
+			<th>SIN</th>
+			<th>Hours</th>
+		</tr>
+		<tr>
+			<td>Hergott, Justin</td>
+			<td>1234567892</td>
+			<td>40.00</td>
+		</tr>
+	</table>
+	<br>
+<?php
+	
+	$tableCode = ob_get_clean();
+	
+	return $tableCode;
+}
+
+function GeneratePayrollReport($userID, $company, $date){
+	$payrollReportCode = "";
+	
+	//Get Report Results
+	
+	ob_start();
+?>
+	<h3 class='customFormLabel'>Payroll Report (Company)</h3>
+<?php
+	//For each Full Time Employee
+	echo GeneratePayrollReportTable("blah", FullTime);
+	//Part Time Employees
+	echo GeneratePayrollReportTable("blah", PartTime);
+	//Seasonal Employees
+	echo GeneratePayrollReportTable("blah", Seasonal);
+	//Contract Employees
+	echo GeneratePayrollReportTable("blah", Contract);
+	
+	$payrollReportCode = ob_get_clean();
+	
+	//Week Ending
+	$weekEnding = "For Week Ending: " . $date;
+	
+	return $payrollReportCode . $weekEnding . GenerateReportEnd($userID);
+}
+
+function GeneratePayrollReportTable($results, $employeeType){
+	$tableCode = "";
+	
+	ob_start();
+	//For each employee that matches the type
+?>
+	<table class='reportResultTable'>
+		<tr>
+			<th colspan='4'><?php echo $employeeType; ?></th>
+		</tr>
+		<tr>
+			<th>Employee Name</th>
+			<th>Hours</th>
+			<th>Gross</th>
+			<th>Notes</th>
+		</tr>
+		<tr>
+			<td>Hergott, Justin</td>
+			<td>40.00</td>
+			<td>1,000.00</td>
+			<td>Not Full Work Week</td>
+		</tr>
+	</table>
+	<br>
+<?php
+	
+	$tableCode = ob_get_clean();
+	
+	return $tableCode;
+}
+
+function GenerateActiveEmployeeReport($userID, $company){
+	$activeReportCode = "";
+	
+	//Get Report Results
+	
+	ob_start();
+?>
+	<h3 class='customFormLabel'>Active Employee Report (Company)</h3>
+<?php
+	//For each Full Time Employee
+	echo GenerateActiveEmployeeReportTable("blah", FullTime);
+	//Part Time Employees
+	echo GenerateActiveEmployeeReportTable("blah", PartTime);
+	//Seasonal Employees
+	echo GenerateActiveEmployeeReportTable("blah", Seasonal);
+	//Contract Employees
+	echo GenerateActiveEmployeeReportTable("blah", Contract);
+	
+	$activeReportCode = ob_get_clean();
+	
+	return $activeReportCode . GenerateReportEnd($userID);
+}
+
+function GenerateActiveEmployeeReportTable($results, $employeeType){
+	$tableCode = "";
+	
+	ob_start();
+	//For each employee that matches the type
+?>
+	<table class='reportResultTable'>
+		<tr>
+			<th colspan='3'><?php echo $employeeType; ?></th>
+		</tr>
+		<tr>
+			<th>Employee Name</th>
+			<th>Date of Hire</th>
+			<th>Avg. Hours</th>
+		</tr>
+		<tr>
+			<td>Hergott, Justin</td>
+			<td>2017-02-28</td>
+			<td>40.00</td>
+		</tr>
+	</table>
+	<br>
+<?php
+	
+	$tableCode = ob_get_clean();
+	
+	return $tableCode;
+}
+
+function GenerateInactiveEmployeeReport($userID, $company){
+	$inactiveReportCode = "";
+	
+	//Get Report Results
+	
+	ob_start();
+?>
+	<h3 class='customFormLabel'>Inactive Employee Report (Company)</h3>
+	<table class='reportResultTable'>
+		<tr>
+			<th>Employee Name</th>
+			<th>Hired</th>
+			<th>Terminated</th>
+			<th>Type</th>
+			<th>Reason for Leaving</th>
+		</tr>
+		<tr>
+			<td>Hergott, Justin</td>
+			<td>2000-01-01</td>
+			<td>2000-01-02</td>
+			<td>Full Time</td>
+			<td>Bad Employee</td>
+		</tr>
+	</table>
+<?php	
+	$inactiveReportCode = ob_get_clean();
+	
+	return $inactiveReportCode . GenerateReportEnd($userID);
 }
 ?>
