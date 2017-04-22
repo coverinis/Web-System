@@ -209,6 +209,12 @@ div.tab button.active {
     padding:0!important;
     font: inherit;
     cursor: pointer;
+	margin-left: 25px;
+}
+
+.actionButton{
+	width: 90px;
+	margin: 2px 2px;
 }
 
 .searchResultTable{
@@ -220,18 +226,22 @@ div.tab button.active {
 
 .searchResultTable th{
 	border: 1px solid black;
-	width: 300px;
 }
 
 .searchResultTable td{
 	border: 1px solid black;
+	padding: 0px;
+	margin: 0px;
 }
 
 .searchResultTable td button{
 	padding: 0px 5px;
-	margin-left: 10px;
 }
 
 .searchResultTable .tabcontent{
 	padding: 0px;
+}
+
+.actionForm{
+	display: inline;
 }

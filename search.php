@@ -68,8 +68,13 @@ function closeTab(evt, tabName) {
 						<button class='tablink detailButton' onclick="closeTab(event, 'item2Content')">Less...</button>
 					</div>
 				</td>
-				<td style="padding:0px; margin:0px;">
-					<button class='actionButton'>Edit</button>
+				<td>
+					<form class='actionForm' name='editItem1' action='maintenance.php' method='post'>
+						<input type='hidden' name='emp_id' value='1'/>
+						<input type='hidden' name='form_type' value='Part Time'/>
+						<input type='hidden' name='page_type' value='Employee Form'/>
+						<button class='actionButton'>Edit</button>
+					</form>
 					<button class='actionButton'>Timecard</button>
 					<button class='actionButton'>Leave</button>
 				</td>
@@ -84,7 +89,7 @@ function closeTab(evt, tabName) {
 						<button class='tablink detailButton' onclick="closeTab(event, 'item2Content')">Less...</button>
 					</div>
 				</td>
-				<td style="padding:0px; margin:0px;">
+				<td>
 					<button class='actionButton'>Edit</button>
 					<button class='actionButton'>Timecard</button>
 					<button class='actionButton'>Leave</button>
