@@ -50,6 +50,14 @@
 		else{
 			$response = "";
 		}
+		
+		//Get the date if there is one
+		if(isset($_POST["week_start"])){
+			$weekStart = $_POST["week_start"];
+		}
+		else{
+			$weekStart = "";
+		}
 ?>
 <script>
 
@@ -142,9 +150,9 @@
 						<option value="AddNew">Add New...</option>
 					</select>
 				<h3 class='customFormLabel'>Week Start Date</h3>
-				<input class='customFormInput' type='week' name='weekStart'>
+				<input class='customFormInput' type='date' name='weekStart'>
 				<h3 class='customFormLabel'>Time Card</h3>
-				<?php echo GenerateEmployeeTimeCard($securityLevel, $employeeID); ?>
+				<?php echo GenerateEmployeeTimeCard($securityLevel, $employeeID, $weekStart); ?>
 			</form>
 		</div>
 		<form id='formChange' action='maintenance.php' method='post'>

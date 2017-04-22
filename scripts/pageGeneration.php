@@ -275,7 +275,9 @@ function GenerateEmployeeForm($empType, $secLevel, $empID){
 }
 
 //Create a time card table
-function GenerateEmployeeTimeCard($securityLevel, $employeeID){
+function GenerateEmployeeTimeCard($securityLevel, $employeeID, $weekStart){
+	//Convert the date to a monday
+	$weekStart = ConvertDateToMonday($weekStart);
 	ob_start();
 ?>
 	<table class='timeCardTable'>
@@ -316,7 +318,9 @@ function GenerateEmployeeTimeCard($securityLevel, $employeeID){
 		</tr>
 	</table>
 	<button class='customFormInput'>Submit</button>
-<?php	
+	<br>
+<?php
+	echo "For Week Starting: " . $weekStart; 
 	return ob_get_clean();
 }
 
@@ -397,6 +401,9 @@ function GenerateSearchResultRow($employeeResult, $resultNumber, $securityLevel)
 
 function GenerateReport($userID, $securityLevel, $reportType, $company, $date){
 	$reportCode = "";
+	
+	//Convert date to monday
+	$date = ConvertDateToMonday($date);
 	
 	if(strlen($company) == 0){
 		$reportCode = "No Report.";
@@ -489,7 +496,7 @@ function GenerateWeeklyHoursReport($userID, $company, $date){
 	$weeklyHoursReportCode = ob_get_clean();
 	
 	//Week Ending
-	$weekEnding = "For Week Ending: " . $date;
+	$weekEnding = "For Week Ending: " . date('Y-m-d', strtotime("next sunday", strtotime($date)));
 	
 	return $weeklyHoursReportCode . $weekEnding . GenerateReportEnd($userID);
 }
@@ -544,7 +551,7 @@ function GeneratePayrollReport($userID, $company, $date){
 	$payrollReportCode = ob_get_clean();
 	
 	//Week Ending
-	$weekEnding = "For Week Ending: " . $date;
+	$weekEnding = "For Week Ending: " . date('Y-m-d', strtotime("next sunday", strtotime($date)));
 	
 	return $payrollReportCode . $weekEnding . GenerateReportEnd($userID);
 }
@@ -660,5 +667,29 @@ function GenerateInactiveEmployeeReport($userID, $company){
 	$inactiveReportCode = ob_get_clean();
 	
 	return $inactiveReportCode . GenerateReportEnd($userID);
+}
+
+function ConvertDateToMonday($date){
+	
+	$returnDate = "";
+	$time = strtotime($date);
+	
+	if(strtotime($date) == false){
+		$returnDate = "False";
+	}
+	
+	$returnDate =  date('Y-m-d', $time);
+	
+	$day = date('D', $time);
+	if( strcmp($day, "Mon") == 0 ){
+		//Date is a monday
+		$returnDate = $date;
+	}
+	else{
+		//Convert date to last monday
+		$returnDate = date('Y-m-d', strtotime("last monday", strtotime($date)));	
+	}
+	
+	return $returnDate;
 }
 ?>

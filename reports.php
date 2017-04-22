@@ -37,6 +37,20 @@
 		else{
 			$company = "";
 		}
+		
+		//Get the date if it is set
+		//Get the last_name if it is set
+		if(isset($_POST["week_start"])){
+			if(!empty($_POST["week_start"])){
+				$weekStart = $_POST["week_start"];
+			}
+			else{
+				$weekStart = "";
+			}
+		}
+		else{
+			$weekStart = "";
+		}
 ?>
 
 <script>
@@ -44,6 +58,8 @@
 	$(document).ready(pageReady);
 	
 	function pageReady(){
+		$('#reportSelect').change(changeType);
+		
 		//Select the right option from type
 		var currentType = "<?php echo $reportType; ?>";
 		if(currentType == "<?php echo SeniorityReport; ?>"){
@@ -64,6 +80,19 @@
 		else{
 			$('#reportSelect').val("<?php echo SeniorityReport; ?>");
 		}
+		
+		$("#reportSelect").change();
+	}
+	
+	function changeType(e){
+		e.preventDefault();
+		var reportSelected = $('#reportSelect').find(":selected").text();
+		if(reportSelected == "<?php echo WeeklyHoursReport; ?>" || reportSelected == "<?php echo PayrollReport; ?>" ){
+			$('#weekPick').show();
+		}
+		else{
+			$('#weekPick').hide();
+		}
 	}
 	
 </script>
@@ -81,9 +110,11 @@
 			<select class='customFormInput' name='company_name'>
 				<option value="Company1">Company 1</option>
 			</select>
+			<h3 class='customFormLabel'>Select Week</h3>
+			<input class='customFormInput' type='date' name='week_start' id='weekPick' value='<?php echo date('Y-m-d'); ?>' style='display:none;'>
 			<button class='customFormInput'>Run Report</button>
 		</form>
-		<?php echo GenerateReport($userID, $securityLevel, $reportType, $company); ?>
+		<?php echo GenerateReport($userID, $securityLevel, $reportType, $company, $weekStart); ?>
 	</div>
 	<?php echo GenerateFooter(); ?>
 </body>
