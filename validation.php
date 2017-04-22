@@ -59,19 +59,22 @@
 		return $valid;
 	}
 	
-	function validateDate($year, $month, $day)
+	function validateDate($date)
 	{
+		$yearMonthDay = explode('-',$date,3);
+		
 		// the date is a valid date
-		return checkdate ($month , $day, $year);
+		return checkdate ($yearMonthDay[1] , $yearMonthDay[2], $yearMonthDay[0]);
 	}
 	
-	function validatePastDate($year, $month, $day)
+	function validatePastDate($date)
 	{
+		$yearMonthDay = explode('-',$date,3);
 		$valid = false;
 		// the date is a valid date
-		if(checkdate ($month , $day, $year) == true)
+		if(checkdate ($yearMonthDay[1] , $yearMonthDay[2], $yearMonthDay[0]) == true)
 		{
-			$date = new DateTime($year . "-" . $month . "-" . $day);
+			$date = new DateTime($date);
 			$now = new DateTime();
 			// the date is in the past
 			if($date <= $now)
