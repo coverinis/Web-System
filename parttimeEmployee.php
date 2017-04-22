@@ -1,11 +1,11 @@
 <?php 
 	include 'employee.php';
 	
-	class fulltimeEmployee extends employee  {
+	class parttimeEmployee extends employee  {
 		
 		var $dateOfHire;
 		var $dateOfTermination; 
-		var $salary;
+		var $hourlyRate;
 		
 		function __construct(){
 			
@@ -22,16 +22,16 @@
 				$this->dateOfBirth = "";
 				$this->dateOfHire = "";
 				$this->dateOfTermination = ""; 
-				$this->salary = "";
+				$this->hourlyRate = 0;
 			}
 		}
 		
-		function __construct7($newLastName, $newFirstName, $newSocialInsuranceNumber, $newDateOfBirth, $newDateOfHire, $newDateOfTermination, $newSalary){
+		function __construct7($newLastName, $newFirstName, $newSocialInsuranceNumber, $newDateOfBirth, $newDateOfHire, $newDateOfTermination, $newHourlyRate){
 			
 			parent::__construct($newLastName, $newFirstName, $newSocialInsuranceNumber, $newDateOfBirth);
 			$this->dateOfHire = $newDateOfHire;
 			$this->dateOfTermination = $newDateOfTermination; 
-			$this->salary = $newSalary;
+			$this->hourlyRate = $newHourlyRate;
 		}
 		
 		function setDateOfHire($newDateOfHire) { 
@@ -50,13 +50,12 @@
 			return $this->dateOfTermination;
 		}
 		
-		function setSalary($newSalary) { 
-			$this->Salary = $newSalary;  
+		function setHourlyRate($newHourlyRate) { 
+			$this->hourlyRate = $newHourlyRate;  
  		}
  
-   		function getSalary() {
-			
-			return $this->salary;
+   		function getHourlyRate() {
+			return $this->hourlyRate;
 		}
 	}
 
