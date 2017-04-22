@@ -121,6 +121,8 @@ function GenerateFooter(){
 function GenerateEmployeeForm($empType, $secLevel, $empID){
 	$formCode = "";
 	
+	//$employee = GetDetails($empID);
+	
 	if(strcmp($empType, FullTime) == 0){
 		ob_start();
 ?>
@@ -292,5 +294,70 @@ function GenerateEmployeeTimeCard($securityLevel, $employeeID){
 	<button class='customFormInput'>Submit</button>
 <?php	
 	return ob_get_clean();
+}
+
+function GenerateSearchResult($securityLevel, $lastName, $firstName, $SIN){
+	
+	$tableCode = "";
+	
+	if(strlen($lastName) == 0 && strlen($firstName) == 0 && strlen($SIN) == 0){
+		//Do search
+		
+		$tableCode = "No Result";
+	}
+	else{
+		//Make table
+		ob_start();
+?>
+		<h3 class='customFormLabel'>Test Result<h3>
+		<table class='searchResultTable'>
+			<tr>
+				<th>Employee</th>
+				<th>Actions</th>
+			</tr>
+			<?php echo GenerateSearchResultRow("blah", 1); ?>
+			<?php echo GenerateSearchResultRow("blah", 2); ?>
+		</table>
+<?php
+		$tableCode = ob_get_clean();
+	}
+	
+	return $tableCode;
+}
+
+function GenerateSearchResultRow($employeeResult, $resultNumber){
+	$rowCode = "";
+	
+	ob_start();
+?>
+	<tr>
+		<td>
+			Hergott, Justin. (123456782)
+			<button class='tablink  detailButton' onclick="openTab(event, '<?php echo 'item' . $resultNumber . 'Content'?>')">More...</button>
+			<div id='<?php echo 'item' . $resultNumber . 'Content'?>' class='tabcontent'>
+				Hello.
+				<br>
+				<button class='tablink detailButton' onclick="closeTab(event, '<?php echo 'item' . $resultNumber . 'Content'?>')">Less...</button>
+			</div>
+		</td>
+		<td>
+			<form class='actionForm' action='maintenance.php' method='post'>
+				<input type='hidden' name='emp_id' value='1'/>
+				<input type='hidden' name='form_type' value='Part Time'/>
+				<input type='hidden' name='page_type' value='<?php echo EmpForm; ?>'/>
+				<button class='actionButton'>Edit...</button>
+			</form>
+			<form class='actionForm' action='maintenance.php' method='post'>
+				<input type='hidden' name='emp_id' value='1'/>
+				<input type='hidden' name='form_type' value='Part Time'/>
+				<input type='hidden' name='page_type' value='<?php echo TimeCard; ?>'/>
+				<button class='actionButton'>Time Card...</button>
+			</form>
+		</td>
+	</tr>
+<?php	
+	$rowCode = ob_get_clean();
+	
+	return $rowCode;
 }
 ?>

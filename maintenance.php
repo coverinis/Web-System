@@ -14,7 +14,7 @@
 		//Get the security level of the user
 		$securityLevel = Admin;
 		//Get the form_type if it is set
-		ini_set('display_errors', 0);
+		//ini_set('display_errors', 0);
 		if(isset($_POST["form_type"])){
 			if(!empty($_POST["form_type"])){
 				$formType = $_POST["form_type"];
@@ -58,15 +58,6 @@
 	function pageReady(){
 		$("#empTypeSelect").change(changeForm);
 		
-		//Select the right tab on the page
-		var pageType = "<?php echo $pageType; ?>";
-		if(pageType == "<?php echo EmpForm; ?>"){
-			$("#empFormTab").click();
-		}
-		else{
-			$("#timeCardTab").click();
-		}
-		
 		//Select the right option from type
 		var currentType = "<?php echo $formType; ?>";
 		if(currentType == "<?php echo FullTime; ?>"){
@@ -84,6 +75,19 @@
 		else{
 			$('#empTypeSelect').val("<?php echo FullTime; ?>");
 		}
+		
+		//Select the right tab on the page
+		var pageType = "<?php echo $pageType; ?>";
+		if(pageType == "<?php echo EmpForm; ?>"){
+			$("#empFormTab").click();
+		}
+		else if (pageType == "<?php echo TimeCard; ?>"){
+			$("#timeCardTab").click();
+		}
+		else{
+			$("#empFormTab").click();
+		}
+		
 	}
 	
 	function changeForm(e){
@@ -138,15 +142,15 @@
 						<option value="AddNew">Add New...</option>
 					</select>
 				<h3 class='customFormLabel'>Week Start Date</h3>
-				<input class='customFormInput' type='date' name='weekStart'>
+				<input class='customFormInput' type='week' name='weekStart'>
 				<h3 class='customFormLabel'>Time Card</h3>
 				<?php echo GenerateEmployeeTimeCard($securityLevel, $employeeID); ?>
 			</form>
 		</div>
 		<form id='formChange' action='maintenance.php' method='post'>
-				<input type='hidden' id='form_type' name='form_type' value='<?php echo $formType; ?>'>
-				<input type='hidden' id='emp_ip' name='emp_id' value='<?php echo $employeeID; ?>'>
-				<input type='hidden' id='page_type' name='page_type' value='<?php echo $pageType; ?>'>
+				<input type='hidden' id='form_type' name='form_type' value=''>
+				<input type='hidden' id='emp_ip' name='emp_id' value=''>
+				<input type='hidden' id='page_type' name='page_type' value=''>
 		</form>
 	</div>
 	<?php echo GenerateFooter(); ?>

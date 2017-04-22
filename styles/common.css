@@ -222,6 +222,8 @@ div.tab button.active {
 	font-size: 12px;
 	font-style: none;
 	font-family: arial;
+	margin: 0px;
+	padding: 0px;
 }
 
 .searchResultTable th{

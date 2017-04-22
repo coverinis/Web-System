@@ -5,9 +5,51 @@
 <html lang="en">
 <head>
 
-	<style>
+<?php
+	//Get the post variables
+	//Get the security level of the user
+		$securityLevel = Admin;
+		//Get the first_name if it is set
+		//ini_set('display_errors', 0);
+		if(isset($_POST["fname"])){
+			if(!empty($_POST["fname"])){
+				$firstName = $_POST["fname"];
+			}
+			else{
+				$firstName = "";
+			}
+		}
+		else{
+			$firstName = "";
+		}
 		
-	</style>
+		//Get the last_name if it is set
+		if(isset($_POST["lname"])){
+			if(!empty($_POST["lname"])){
+				$lastName = $_POST["lname"];
+			}
+			else{
+				$lastName = "";
+			}
+		}
+		else{
+			$lastName = "";
+		}
+		
+		//Get the first_name if it is set
+		if(isset($_POST["sin"])){
+			if(!empty($_POST["sin"])){
+				$sin = $_POST["sin"];
+			}
+			else{
+				$sin = "";
+			}
+		}
+		else{
+			$sin = "";
+		}
+?>
+
 <link rel="stylesheet" type="text/css" href="/styles/common.css">
 
 <script>
@@ -43,59 +85,16 @@ function closeTab(evt, tabName) {
 <body>
 	<?php echo GenerateHeader(EmpSearch); ?>
 	<div id='searchContent'>
-		<form>
+		<form name='searchForm' action="" method='post'>
 			<h3 class='customFormLabel'>First Name</h3>
-			<input class="customFormInput" type='text' name='fname'>
+			<input class="customFormInput" type='text' name='fname' value='<?php echo $firstName; ?>'>
 			<h3 class='customFormLabel'>Last Name</h3>
-			<input class="customFormInput" type='text' name='lname'>
+			<input class="customFormInput" type='text' name='lname' value='<?php echo $lastName; ?>'>
 			<h3 class='customFormLabel'>Social Insurance Number</h3>
-			<input class="customFormInput" type='text' name='sin'>
+			<input class="customFormInput" type='text' name='sin' value='<?php echo $sin; ?>'>
 			<button class='customFormInput'>Search</button>
 		</form>
-		<h2>Test Result<h3>
-		<table class='searchResultTable'>
-			<tr>
-				<th>Employee</th>
-				<th>Actions</th>
-			</tr>
-			<tr>
-				<td>
-					Hergott, Justin. (123456782)
-					<button class='tablink  detailButton' onclick="openTab(event, 'item1Content')">More...</button>
-					<div id='item1Content' class='tabcontent'>
-						Hello.
-						<br>
-						<button class='tablink detailButton' onclick="closeTab(event, 'item2Content')">Less...</button>
-					</div>
-				</td>
-				<td>
-					<form class='actionForm' name='editItem1' action='maintenance.php' method='post'>
-						<input type='hidden' name='emp_id' value='1'/>
-						<input type='hidden' name='form_type' value='Part Time'/>
-						<input type='hidden' name='page_type' value='Employee Form'/>
-						<button class='actionButton'>Edit</button>
-					</form>
-					<button class='actionButton'>Timecard</button>
-					<button class='actionButton'>Leave</button>
-				</td>
-			</tr>
-			<tr>
-				<td>
-					Other, Person. (123456782)
-					<button class='tablink detailButton' onclick="openTab(event, 'item2Content')">More...</button>
-					<div id='item2Content' class='tabcontent'>
-						More Info.
-						<br>
-						<button class='tablink detailButton' onclick="closeTab(event, 'item2Content')">Less...</button>
-					</div>
-				</td>
-				<td>
-					<button class='actionButton'>Edit</button>
-					<button class='actionButton'>Timecard</button>
-					<button class='actionButton'>Leave</button>
-				</td>
-			</tr>
-		</table>
+		<?php echo GenerateSearchResult($securityLevel, $lastName, $firstName, $sin); ?>
 	</div>
 	<?php echo GenerateFooter(); ?>
 </body>
