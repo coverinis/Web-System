@@ -1,20 +1,24 @@
 <?php 
 	include 'employee.php';
 	
-	class parttimeEmployee extends employee  {
+	class parttimeEmployee extends employee  
+	{
 		
 		var $dateOfHire;
 		var $dateOfTermination; 
 		var $hourlyRate;
 		
-		function __construct(){
+		function __construct()
+		{
 			
 			$a = func_get_args();
 			$i = func_num_args();
-			if (method_exists($this,$f='__construct'.$i)) {
+			if (method_exists($this,$f='__construct'.$i)) 
+			{
 				call_user_func_array(array($this,$f),$a);
 			}
-			else{
+			else
+			{
 					
 				$this->lastName = "";
 				$this->firstName = "";
@@ -26,7 +30,8 @@
 			}
 		}
 		
-		function __construct7($newLastName, $newFirstName, $newSocialInsuranceNumber, $newDateOfBirth, $newDateOfHire, $newDateOfTermination, $newHourlyRate){
+		function __construct7($newLastName, $newFirstName, $newSocialInsuranceNumber, $newDateOfBirth, $newDateOfHire, $newDateOfTermination, $newHourlyRate)
+		{
 			
 			parent::__construct($newLastName, $newFirstName, $newSocialInsuranceNumber, $newDateOfBirth);
 			$this->dateOfHire = $newDateOfHire;
@@ -34,27 +39,33 @@
 			$this->hourlyRate = $newHourlyRate;
 		}
 		
-		function setDateOfHire($newDateOfHire) { 
+		function setDateOfHire($newDateOfHire) 
+		{ 
 			$this->dateOfHire = $newDateOfHire;
  		}
  
-   		function getDateOfHire() {
+   		function getDateOfHire()
+		{
 			return $this->dateOfHire;
 		}
 		
-		function setDateOfTermination($newDateOfTermination) { 
+		function setDateOfTermination($newDateOfTermination) 
+		{ 
 			$this->dateOfTermination = $newDateOfTermination;
  		}
  
-   		function getDateOfTermination() {
+   		function getDateOfTermination() 
+		{
 			return $this->dateOfTermination;
 		}
 		
-		function setHourlyRate($newHourlyRate) { 
+		function setHourlyRate($newHourlyRate) 
+		{ 
 			$this->hourlyRate = $newHourlyRate;  
  		}
  
-   		function getHourlyRate() {
+   		function getHourlyRate() 
+		{
 			return $this->hourlyRate;
 		}
 	}

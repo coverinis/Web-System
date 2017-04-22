@@ -1,20 +1,24 @@
 <?php 
 	include 'employee.php';
 	
-	class contractEmployee extends employee  {
+	class contractEmployee extends employee  
+	{
 		
 		var $contractStartDate;
 		var $contractEndDate; 
 		var $fixedContractAmount;
 		
-		function __construct(){
+		function __construct()
+		{
 			
 			$a = func_get_args();
 			$i = func_num_args();
-			if (method_exists($this,$f='__construct'.$i)) {
+			if (method_exists($this,$f='__construct'.$i)) 
+			{
 				call_user_func_array(array($this,$f),$a);
 			}
-			else{
+			else
+			{
 					
 				$this->lastName = "";
 				$this->firstName = "";
@@ -26,7 +30,8 @@
 			}
 		}
 		
-		function __construct7($newLastName, $newFirstName, $newSocialInsuranceNumber, $newDateOfBirth, $newContractStartDate, $newContractEndDate, $newFixedContractAmount){
+		function __construct7($newLastName, $newFirstName, $newSocialInsuranceNumber, $newDateOfBirth, $newContractStartDate, $newContractEndDate, $newFixedContractAmount)
+		{
 			
 			parent::__construct($newLastName, $newFirstName, $newSocialInsuranceNumber, $newDateOfBirth);
 			$this->contractStartDate = $newContractStartDate;
@@ -34,27 +39,33 @@
 			$this->fixedContractAmount = $newFixedContractAmount;
 		}
 		
-		function setContractStartDate($newContractStartDate) { 
+		function setContractStartDate($newContractStartDate) 
+		{ 
 			$this->contractStartDate = $newContractStartDate;
  		}
  
-   		function getContractStartDate() {
+   		function getContractStartDate() 
+		{
 			return $this->contractStartDate;
 		}
 		
-		function setContractEndDate($newContractEndDate) { 
+		function setContractEndDate($newContractEndDate) 
+		{ 
 			$this->contractEndDate = $newContractEndDate;
  		}
  
-   		function getContractEndDate() {
+   		function getContractEndDate() 
+		{
 			return $this->contractEndDate;
 		}
 		
-		function setFixedContractAmount($newFixedContractAmount) { 
+		function setFixedContractAmount($newFixedContractAmount) 
+		{ 
 			$this->fixedContractAmount = $newFixedContractAmount;  
  		}
  
-   		function getFixedContractAmount() {
+   		function getFixedContractAmount() 
+		{
 			return $this->fixedContractAmount;
 		}
 	}

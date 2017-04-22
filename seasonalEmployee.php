@@ -1,19 +1,23 @@
 <?php 
 	include 'employee.php';
 	
-	class seasonalEmployee extends employee  {
+	class seasonalEmployee extends employee  
+	{
 		
 		var $season;
 		var $piecePay;
 		
-		function __construct(){
+		function __construct()
+		{
 			
 			$a = func_get_args();
 			$i = func_num_args();
-			if (method_exists($this,$f='__construct'.$i)) {
+			if (method_exists($this,$f='__construct'.$i)) 
+			{
 				call_user_func_array(array($this,$f),$a);
 			}
-			else{
+			else
+			{
 				
 				$this->lastName = "";
 				$this->firstName = "";
@@ -24,26 +28,31 @@
 			}
 		}
 		
-		function __construct6($newLastName, $newFirstName, $newSocialInsuranceNumber, $newDateOfBirth, $newSeason, $newPiecePay){
+		function __construct6($newLastName, $newFirstName, $newSocialInsuranceNumber, $newDateOfBirth, $newSeason, $newPiecePay)
+		{
 			
 			parent::__construct($newLastName, $newFirstName, $newSocialInsuranceNumber, $newDateOfBirth);
 			$this->season = $newSeason;
 			$this->piecePay = $newPiecePay;
 		}
 		
-		function setSeason($newSeason) { 
+		function setSeason($newSeason) 
+		{ 
 			$this->season = $newSeason;
  		}
  
-   		function getSeason() {
+   		function getSeason() 
+		{
 			return $this->season;
 		}
 		
-		function setPiecePay($newPiecePay) { 
+		function setPiecePay($newPiecePay) 
+		{ 
 			$this->piecePay = $newPiecePay;
  		}
  
-   		function getPiecePay() {
+   		function getPiecePay() 
+		{
 			return $this->piecePay;
 		}
 	}
