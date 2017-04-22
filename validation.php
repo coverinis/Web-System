@@ -1,6 +1,6 @@
 <?php 
 
-
+	// first and last name
 	function validateName($name) 
 	{
 		// allowed characters are letters "'" and "-"
@@ -61,7 +61,7 @@
 	
 	function validateDate($date)
 	{
-		$yearMonthDay = explode('-',$date,3);
+		$yearMonthDay = explode('-', $date, 3);
 		
 		// the date is a valid date
 		return checkdate ($yearMonthDay[1] , $yearMonthDay[2], $yearMonthDay[0]);
@@ -69,18 +69,71 @@
 	
 	function validatePastDate($date)
 	{
-		$yearMonthDay = explode('-',$date,3);
+		$now = new DateTime();
+		return validateEarlierDate($date, $now->format('Y-m-d'));
+	}
+	
+	function validateEarlierDate($earlierDate, $laterDate)
+	{
+		$soonerYearMonthDay = explode('-', $earlierDate, 3);
+		$laterYearMonthDay = explode('-', $laterDate, 3);
 		$valid = false;
 		// the date is a valid date
-		if(checkdate ($yearMonthDay[1] , $yearMonthDay[2], $yearMonthDay[0]) == true)
+		if((checkdate ($soonerYearMonthDay[1] , $soonerYearMonthDay[2], $soonerYearMonthDay[0]) == true) &&
+			(checkdate ($laterYearMonthDay[1] , $laterYearMonthDay[2], $laterYearMonthDay[0]) == true))
 		{
-			$date = new DateTime($date);
-			$now = new DateTime();
+			$past = new DateTime($earlierDate);
+			$now = new DateTime($laterDate);
 			// the date is in the past
-			if($date <= $now)
+			if($past <= $now)
 			{
 				$valid = true;
 			}
+		}
+		return $valid;
+	}
+	
+	function validateCompanyName($companyName)
+	{
+		return preg_match("/^[^\/|]{1,40}$/", $companyName);
+	}
+	
+	function validateBusinessNumber($dateOfIncorporation, $businessNumber)
+	{
+		$valid = false;
+		$dateOfIncorporationArray = str_split($dateOfIncorporation);
+		$businessNumberArray = str_split($businessNumber);
+		
+		if((sizeof($dateOfIncorporationArray) >= 4) &&
+			(sizeof($businessNumberArray) >= 2) && 
+			($businessNumberArray[0] == $dateOfIncorporationArray[2]) &&
+			($businessNumberArray[1] == $dateOfIncorporationArray[3]))
+		{
+			
+			$valid = validateSocialInsuranceNumber($businessNumber);
+		}
+		return $valid;
+	}
+	
+	function validateSeason($season)
+	{
+		$valid = false;
+		
+		if(($season >= 1) && ($season <= 4))
+		{
+			$valid = true;
+		}
+		return $valid;
+	}
+	
+	// piecepay, hourly rate, salary, fixed contract amount
+	function validatePay($pay)
+	{
+		$valid = false;
+		
+		if($pay > 0)
+		{
+			$valid = true;
 		}
 		return $valid;
 	}
