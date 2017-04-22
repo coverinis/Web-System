@@ -150,7 +150,7 @@
 						<option value="AddNew">Add New...</option>
 					</select>
 				<h3 class='customFormLabel'>Week Start Date</h3>
-				<input class='customFormInput' type='date' name='weekStart'>
+				<input class='customFormInput' type='date' name='week_start' value='<?php echo date('Y-m-d'); ?>'>
 				<h3 class='customFormLabel'>Time Card</h3>
 				<?php echo GenerateEmployeeTimeCard($securityLevel, $employeeID, $weekStart); ?>
 			</form>
