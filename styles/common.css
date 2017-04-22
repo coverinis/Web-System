@@ -174,3 +174,64 @@ div.tab button.active {
     visibility: visible;
 	opacity: 1;
 }
+
+.responseMessage{
+	margin: 0px;
+	padding: 0px;
+}
+
+.timeCardTable{
+	border: 1px solid black;
+}
+
+.timeCardTable th{
+	border: 1px solid black;
+	padding: 10px;
+	width: 75px;
+}
+
+.timeCardTable td{
+	border: 1px solid black;
+	text-align: center;
+}
+
+
+.timeCardTable input{
+	display: inline-block;
+	width: 75px;
+}
+
+.detailButton{
+	float: right;
+	background:none!important;
+    color:inherit;
+    border:none; 
+    padding:0!important;
+    font: inherit;
+    cursor: pointer;
+}
+
+.searchResultTable{
+	border: 1px solid black;
+	font-size: 12px;
+	font-style: none;
+	font-family: arial;
+}
+
+.searchResultTable th{
+	border: 1px solid black;
+	width: 300px;
+}
+
+.searchResultTable td{
+	border: 1px solid black;
+}
+
+.searchResultTable td button{
+	padding: 0px 5px;
+	margin-left: 10px;
+}
+
+.searchResultTable .tabcontent{
+	padding: 0px;
+}

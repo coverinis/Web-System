@@ -24,6 +24,18 @@ function openTab(evt, tabName) {
     document.getElementById(tabName).style.display = "block";
     evt.currentTarget.className += " active";
 }
+
+function closeTab(evt, tabName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+}
 </script>
 
 </head>
@@ -41,7 +53,7 @@ function openTab(evt, tabName) {
 			<button class='customFormInput'>Search</button>
 		</form>
 		<h2>Test Result<h3>
-		<table>
+		<table class='searchResultTable'>
 			<tr>
 				<th>Employee</th>
 				<th>Actions</th>
@@ -49,9 +61,11 @@ function openTab(evt, tabName) {
 			<tr>
 				<td>
 					Hergott, Justin. (123456782)
-					<button class='tablink' onclick="openTab(event, 'item1Content')">More...</button>
+					<button class='tablink  detailButton' onclick="openTab(event, 'item1Content')">More...</button>
 					<div id='item1Content' class='tabcontent'>
 						Hello.
+						<br>
+						<button class='tablink detailButton' onclick="closeTab(event, 'item2Content')">Less...</button>
 					</div>
 				</td>
 				<td style="padding:0px; margin:0px;">
@@ -63,9 +77,11 @@ function openTab(evt, tabName) {
 			<tr>
 				<td>
 					Other, Person. (123456782)
-					<button class='tablink' onclick="openTab(event, 'item2Content')">More...</button>
+					<button class='tablink detailButton' onclick="openTab(event, 'item2Content')">More...</button>
 					<div id='item2Content' class='tabcontent'>
 						More Info.
+						<br>
+						<button class='tablink detailButton' onclick="closeTab(event, 'item2Content')">Less...</button>
 					</div>
 				</td>
 				<td style="padding:0px; margin:0px;">
