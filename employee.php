@@ -61,19 +61,5 @@
    		function getDateOfBirth() {
 			return $this->dateOfBirth;
 		}
-		
-		function validateName($name) {
-			
-            // allowed characters are letters "'" and "-"
-            // min 1 character, max 20 characters
-			return preg_match("/^([A-Za-z'-]){1,20}$/", $name);
-		}
 	}
-	// test code
-	//$e = new employee("walters","zach","123456782","1993-11-05");
-	//$e->setFirstName("name");
-	//print($e->getFirstName());
-	//print($e->getLastName());
-	//print($e->validateName("zach"));
-	//print($e->validateName("234234"));
 ?>
