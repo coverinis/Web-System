@@ -169,11 +169,11 @@ function openTab(evt, tabName) {
 		  </form>
 		</div>
 		<div id="CompanyInfo" class="tabcontent">
-		  <form method='post'>
-		  <h3 class='customFormLabel'>Select Company</h3>
-				<select class='customFormInput' id='companySelect'>
-					<?php echo GenerateCompanyList(true); ?>
-				</select>
+			<form method='post'>
+			<h3 class='customFormLabel'>Select Company</h3>
+			<select class='customFormInput' id='companySelect'>
+				<?php echo GenerateCompanyList(true); ?>
+			</select>
 			<h3 class='customFormLabel'>Company Name</h3>
 			<input class='customFormInput' type='text' name='companyName' id='companyName' required>
 			<input type='hidden' name='page_type' value='<?php echo CompanyForm; ?>'>

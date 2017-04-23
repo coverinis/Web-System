@@ -21,6 +21,7 @@ define('General', 'General');
 
 //Page Types
 define('EmpForm', 'Employee Form');
+define('WorkTerm', 'Work Term Form');
 define('TimeCard', 'Time Card');
 define('UserForm', 'User Form');
 define('AuditForm', 'Audit Form');
@@ -117,7 +118,26 @@ function GenerateEmployeeList($secLevel, $addNew){
 	}
 	//Loop through employees
 ?>
-	<option value="1">Justin Hergott (Company)</option>
+	<option value="1">Justin Hergott (SIN)</option>
+	<option value="2">Bob Hergott (SIN)</option>
+<?php
+	
+	return ob_get_clean();
+}
+
+function GenerateWorkTermList($employeeID, $secLevel, $addNew){
+	
+	//Get the employee details
+	
+	ob_start();
+	if($addNew == true){
+?>
+	<option value="0">Add New...</option>
+<?php
+	}
+	//Loop through employees
+?>
+	<option value="1">Company - Type - DOH</option>
 <?php
 	
 	return ob_get_clean();
@@ -198,7 +218,30 @@ function GenerateFooter(){
 	return ob_get_clean();
 }
 
-function GenerateEmployeeForm($empType, $secLevel, $empID){
+function GenerateEmployeeForm($secLevel){
+	$formCode = "";
+	
+	//$employee = GetDetails($empID);
+	
+	ob_start();
+?>
+	<h3 class='customFormLabel'>First Name</h3>
+	<input class='customFormInput' type='text' id='empFName' name='fname' value='<?php echo $empID; ?>'>
+	<h3 class='customFormLabel'>Last Name<?php if(strcmp($secLevel, Admin) == 0){ echo " (Corporation Name)"; } ?></h3>
+	<input class='customFormInput' type='text' id='empLName' name='lname'>
+	<h3 class='customFormLabel'>Social Insurance Number<?php if(strcmp($secLevel, Admin) == 0){ echo " (Business Number)"; } ?></h3>
+	<input class='customFormInput' type='text' id='empSIN' name='sin'>
+	<h3 class='customFormLabel'>Date of Birth<?php if(strcmp($secLevel, Admin) == 0){ echo " (Date of Incorporation)"; } ?></h3>
+	<input class='customFormInput' type='text' id='empDOB' name='dob'>
+	<button class='customFormInput'>Submit</button>
+<?php
+
+	$formCode = ob_get_clean();
+	
+	return $formCode;
+}
+
+function GenerateWorkTermForm($empType, $secLevel, $empID){
 	$formCode = "";
 	
 	//$employee = GetDetails($empID);
@@ -206,16 +249,10 @@ function GenerateEmployeeForm($empType, $secLevel, $empID){
 	if(strcmp($empType, FullTime) == 0){
 		ob_start();
 ?>
-		<h3 class='customFormLabel'>First Name</h3>
-		<input class='customFormInput' type='text' name='fname' value='<?php echo $empID; ?>'>
-		<h3 class='customFormLabel'>Last Name</h3>
-		<input class='customFormInput' type='text' name='lname'>
-		<h3 class='customFormLabel'>Company Name</h3>
-		<input class='customFormInput' type='text' name='cname'>
-		<h3 class='customFormLabel'>Social Insurance Number</h3>
-		<input class='customFormInput' type='text' name='sin'>
-		<h3 class='customFormLabel'>Date of Birth</h3>
-		<input class='customFormInput' type='text' name='dob'>
+		<h3 class='customFormLabel'>Select Company</h3>
+		<select class='customFormInput' id='cid'>
+			<?php echo GenerateCompanyList(false); ?>
+		</select>
 		<h3 class='customFormLabel'>Date of Hire</h3>
 		<input class='customFormInput' type='text' name='doh'>
 <?php
@@ -237,16 +274,10 @@ function GenerateEmployeeForm($empType, $secLevel, $empID){
 	else if(strcmp($empType, PartTime) == 0){
 		ob_start();
 ?>
-		<h3 class='customFormLabel'>First Name</h3>
-		<input class='customFormInput' type='text' name='fname' value='<?php echo $empID; ?>'>
-		<h3 class='customFormLabel'>Last Name</h3>
-		<input class='customFormInput' type='text' name='lname'>
-		<h3 class='customFormLabel'>Company Name</h3>
-		<input class='customFormInput' type='text' name='cname'>
-		<h3 class='customFormLabel'>Social Insurance Number</h3>
-		<input class='customFormInput' type='text' name='sin'>
-		<h3 class='customFormLabel'>Date of Birth</h3>
-		<input class='customFormInput' type='text' name='dob'>
+		<h3 class='customFormLabel'>Select Company</h3>
+		<select class='customFormInput' id='cid'>
+			<?php echo GenerateCompanyList(false); ?>
+		</select>
 		<h3 class='customFormLabel'>Date of Hire</h3>
 		<input class='customFormInput' type='text' name='doh'>
 <?php
@@ -268,16 +299,10 @@ function GenerateEmployeeForm($empType, $secLevel, $empID){
 	else if(strcmp($empType, Seasonal) == 0){
 		ob_start();
 ?>
-		<h3 class='customFormLabel'>First Name</h3>
-		<input class='customFormInput' type='text' name='fname' value='<?php echo $empID; ?>'>
-		<h3 class='customFormLabel'>Last Name</h3>
-		<input class='customFormInput' type='text' name='lname'>
-		<h3 class='customFormLabel'>Company Name</h3>
-		<input class='customFormInput' type='text' name='cname'>
-		<h3 class='customFormLabel'>Social Insurance Number</h3>
-		<input class='customFormInput' type='text' name='sin'>
-		<h3 class='customFormLabel'>Date of Birth</h3>
-		<input class='customFormInput' type='text' name='dob'>
+		<h3 class='customFormLabel'>Select Company</h3>
+		<select class='customFormInput' id='cid'>
+			<?php echo GenerateCompanyList(false); ?>
+		</select>
 		<h3 class='customFormLabel'>Season</h3>
 		<input class='customFormInput' type='text' name='doh'>
 		<h3 class='customFormLabel'>Season Year</h3>
@@ -299,14 +324,10 @@ function GenerateEmployeeForm($empType, $secLevel, $empID){
 	else if(strcmp($empType, Contract) == 0 && strcmp($secLevel, Admin) == 0){
 		ob_start();
 ?>
-		<h3 class='customFormLabel'>Corporation Name</h3>
-		<input class='customFormInput' type='text' name='lname' value='<?php echo $empID; ?>'>
-		<h3 class='customFormLabel'>Company Name</h3>
-		<input class='customFormInput' type='text' name='cname'>
-		<h3 class='customFormLabel'>Business Number</h3>
-		<input class='customFormInput' type='text' name='sin'>
-		<h3 class='customFormLabel'>Date of Incorporation</h3>
-		<input class='customFormInput' type='text' name='dob'>
+		<h3 class='customFormLabel'>Select Company</h3>
+		<select class='customFormInput' id='cid'>
+			<?php echo GenerateCompanyList(false); ?>
+		</select>
 		<h3 class='customFormLabel'>Contract Start Date</h3>
 		<input class='customFormInput' type='text' name='doh'>
 		<h3 class='customFormLabel'>Contract End Date</h3>
