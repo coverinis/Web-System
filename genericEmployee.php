@@ -23,9 +23,9 @@ class genericEmployee
 	function __construct($fromDatabase)
 	{
 		$this->id = $fromDatabase["employeeID"];
-		$this->lastName = $fromDatabase["lastName"];
-		$this->firstName = $fromDatabase["firstName"];
-		$this->companyName = $fromDatabase["companyName"];
+		$this->lName = $fromDatabase["lastName"];
+		$this->fName = $fromDatabase["firstName"];
+		$this->cName = $fromDatabase["companyName"];
 		$this->sin = $fromDatabase["socialInsuranceNumber"];
 		$this->dob = $fromDatabase["dateOfBirth"];
 		$this->type = $fromDatabase["employeeTypeName"];
@@ -59,8 +59,8 @@ class genericEmployee
 			$this->dot = strtotime($fromDatabase["dateOfTermination"]);
 		}
 		
-		$this->pay = fromDatabase["pay"];
-		$this->status = fromDatabase["reasonForLeaving"];
+		$this->pay = $fromDatabase["pay"];
+		$this->status = $fromDatabase["reasonForLeaving"];
 		
 	}
 	
