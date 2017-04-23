@@ -1,5 +1,7 @@
 <?php
 
+require 'dal.php';
+
 //Page name constants
 define('Login', 'Login');
 define('MainMenu', 'Main Menu');
@@ -16,7 +18,7 @@ define('Seasonal', 'Seasonal');
 define('Contract', 'Contract');
 
 //Security Level Constants
-define('Admin', 'Admin');
+define('Admin', 'Administrator');
 define('General', 'General');
 
 //Page Types
@@ -182,16 +184,38 @@ function GenerateUserList($addNew){
 
 <?php
 //Generate the common header
-function GenerateHeader($pageName){
+function GenerateHeader($pageName, $showUserInfo){
 	ob_start();
 ?>
 	<div id='pageHeader'>
 		<div id='appTitle'>
 			<p>EMSII</p>
 		</div>
-		<div id='userInfo'>
-			
-		</div>
+<?php 
+		if($showUserInfo == true){
+?>
+			<div id='userInfo'>
+<?php 
+			session_start();
+			if(!isset($_SESSION["userID"])){
+				/*echo $_SESSION["userID"];
+				/*DAL::Init();
+				$currentUser = DAL::GetUserDetails($_SESSION["userID"]);
+				echo $currentUser["firstName"];*/
+				/*echo $_SESSION["userFName"];
+				echo $_SESSION["userLName"];
+				echo $_SESSION["userType"];*/
+				//Not logged in, redirect to login page
+				header("Location: ../login.php"); /* Redirect browser */
+				exit();
+			}
+?>
+				<p>Logged In As: <?php echo $_SESSION["userFName"] . " " . $_SESSION["userLName"]; ?><br>Security Level: <?php echo $_SESSION["userType"]; ?></p><br>
+				<a href='/scripts/logout.php'>Log Out</a>
+			</div>
+<?php 
+		}
+?>
 		<div id='breadcrumb'>
 			<?php echo GenerateBreadCrumbTrail($pageName); ?>
 		</div>
