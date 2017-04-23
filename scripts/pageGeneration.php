@@ -1,6 +1,6 @@
 <?php
 
-require 'dal.php';
+require 'tools.php';
 
 //Page name constants
 define('Login', 'Login');
@@ -111,6 +111,7 @@ function GenerateReportList($secLevel){
 function GenerateEmployeeList($secLevel, $addNew){
 	
 	//Get the employee details
+	//$employeeList = GetEmployeeList($secLevel);
 	
 	ob_start();
 	if($addNew == true){
@@ -198,13 +199,6 @@ function GenerateHeader($pageName, $showUserInfo){
 <?php 
 			session_start();
 			if(!isset($_SESSION["userID"])){
-				/*echo $_SESSION["userID"];
-				/*DAL::Init();
-				$currentUser = DAL::GetUserDetails($_SESSION["userID"]);
-				echo $currentUser["firstName"];*/
-				/*echo $_SESSION["userFName"];
-				echo $_SESSION["userLName"];
-				echo $_SESSION["userType"];*/
 				//Not logged in, redirect to login page
 				header("Location: ../login.php"); /* Redirect browser */
 				exit();

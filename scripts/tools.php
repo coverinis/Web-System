@@ -70,7 +70,7 @@ function GetEmployeeList($securityLevel){
 
 	$fromDatabase = array();
 	
-	if (strcmp($securityLevel, 'Admin'))
+	if (strcmp($securityLevel, 'Administrator'))
 	{
 		$fromDatabase = DAL::GetAllEmployee();
 	}
@@ -93,7 +93,7 @@ function GetWorkTermList($employeeID){
 	return ParseToGenericArray($fromDatabase, Workterm);
 }
 
-function GetUserList()
+function GetUserList(){
 	$fromDatabase = DAL::GetAllUser();
 	return ParseToGenericArray($fromDatabase, User);
 }

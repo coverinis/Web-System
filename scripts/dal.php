@@ -9,10 +9,25 @@ class DAL {
 	{
 		if (self::$initialized)
             return;		
-		self::$conn = new mysqli("localhost", "root", "jdogjdog", "ems_pss");
+		self::$conn = new mysqli("localhost", "root", "Conestoga1", "ems_pss");
 	}
 	
-	
+	static function Execute_GetMultipleRows($query)
+	{
+		$result = self::$conn->query($query);
+		$ret = array();
+		if (!$result) {
+				
+		}
+		else
+		{
+			while($row = $result->fetch_assoc()){
+				$ret[] = $row;
+			}
+		}
+
+		return $ret;
+	}
 	
 	
 	static function ValidateLogin($userID, $password)
@@ -129,6 +144,63 @@ class DAL {
 		return $ret;
 	}
 		
+	static function GetAllCompany()
+	{
+		$query = "SELECT * FROM company;";
+		
+		// run the query
+		$ret = self::Execute_GetMultipleRows($query);
+		
+		return $ret;
+	}
 
+
+	static function GetAllEmployee()
+	{
+		$query = "SELECT * FROM employees;";
+
+		$ret = self::Execute_GetMultipleRows($query);
+
+		return $ret;
+	}
+
+
+	static function GetAllEmployee_WithoutContractEmployee()
+	{
+		$query = "SELECT * FROM employees WHERE employeeTypeName!='Contract';";
+
+		$ret = self::Execute_GetMultipleRows($query);
+
+		return $ret;
+	}
+
+
+	static function GetAllWorkTerm($employeeID)
+	{
+		$query = "SELECT * FROM employees WHERE employeeID=".$employeeID.";";
+
+		$ret = self::Execute_GetMultipleRows($query);
+
+		return $ret;
+	}
+
+
+	static function GetAllUser()
+	{
+		$query = "SELECT * FROM users;";
+
+		$ret = self::Execute_GetMultipleRows($query);
+
+		return $ret;
+	}
+
+	static function GetTimeCard($employeeID, $startDate)
+	{
+		$query = "SELECT * FROM employeeTimeCardInfo WHERE employeeID=".$employeeID." AND cardDate=".$startDate.";";
+
+		$ret = self::Execute_GetMultipleRows($query);
+
+		return $ret;
+	}
 }
 ?>
