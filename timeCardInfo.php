@@ -8,7 +8,7 @@ class timeCardInfo
 	public $pieces;
 	public $pieceComplete;
 	
-	function __construct1($fromDatabase)
+	function __construct($fromDatabase)
 	{
 		$this->employeeID = $fromDatabase["employeeID"];
 		$this->cardDate = $fromDatabase["cardDate"];

@@ -6,7 +6,7 @@ class user
 	public $firstName;
 	public $lastName;
 	
-	function __construct1($fromDatabase)
+	function __construct($fromDatabase)
 	{
 		$this->userID = $fromDatabase["userID"];
 		$this->lastName = $fromDatabase["lastName"];

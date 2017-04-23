@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 define('SpringStartDate', '1');
 define('SummerStartDate', '4');
 define('FallStartDate', '7');
@@ -20,7 +22,7 @@ class genericWorkTerm
 	public $employeeType;	
 	
 	
-	function __construct1($fromDatabase)
+	function __construct($fromDatabase)
 	{
 		$this->employeeID = $fromDatabase["employeeID"];
 		$this->lastName = $fromDatabase["lastName"];
