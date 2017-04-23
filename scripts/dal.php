@@ -14,7 +14,25 @@ class DAL {
 	
 	
 	
-	
+	static function Execute_GetMultipleRows($query)
+	{
+		$result = self::$conn->query($query);
+		$ret = array();
+		if (!$result) {
+				
+		}
+		elset
+		{
+			while($row = $result->fetch_assoc()){
+				$ret[] = $row;
+			}
+		}
+
+		return $ret;
+	}
+
+
+
 	static function ValidateLogin($userName, $password)
 	{	
 		$result = self::$conn->query("SELECT pass AS result FROM account WHERE username ='".$userName."'");
@@ -40,7 +58,7 @@ class DAL {
 		$sinFilter = $sin.'%';
 		$first = true;
 		
-		$query = "SELECT * FROM employees WHERE ";
+		$query = "SELECT * FROM employee WHERE ";
 		
 		
 		if (strcmp($lastName, "") != 0)
@@ -75,30 +93,16 @@ class DAL {
 		
 		
 		$query = $query . ';';
-		//echo "<script>console.log( 'Debug Objects: '" . $query . "'' );</script>";
-		// run the query
-		$result = self::$conn->query($query);
-		$ret = array();
-		if (!$result) {
-				
-		}
-		else
-		{
-			while($row = $result->fetch_assoc()){
-				echo $row['employeeID'];
-				$ret[] = $row;		
-			}
-		}
-		
+		$ret = self::Execute_GetMultipleRows($query);		
 		
 		return $ret;
 	}
 	
 	
-	
+	// This should return list of employees, not workterms
 	static function SeachEmployee($id)
 	{
-		$query = "SELECT * FROM employees WHERE employeeID=".$id.";";
+		$query = "SELECT * FROM employee WHERE employeeID=".$id.";";
 		
 		// run the query
 		$result = self::$conn->query($query);
@@ -116,7 +120,46 @@ class DAL {
 		
 		return $ret;
 	}
-		
 
+
+	static function GetAllCompany()
+	{
+		$query = "SELECT * FROM company;";
+		
+		// run the query
+		$ret = self::Execute_GetMultipleRows($query);
+		
+		return $ret;
+	}
+
+
+	static function GetAllEmployee()
+	{
+		$query = "SELECT * FROM employees;"
+
+		$ret = self::Execute_GetMultipleRows($query);
+
+		return $ret;
+	}
+
+
+	static function GetAllEmployee_WithoutContractEmployee()
+	{
+		$query = "SELECT * FROM employees WHERE employeeTypeName!='Contract';"
+
+		$ret = self::Execute_GetMultipleRows($query);
+
+		return $ret;
+	}
+
+
+	static function GetAllWorkTerm($employeeID)
+	{
+		$query = "SELECT * FROM employees WHERE employeeID=".$employeeID.";";
+
+		$ret = self::Execute_GetMultipleRows($query);
+
+		return $ret;
+	}
 }
 ?>
