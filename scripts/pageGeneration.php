@@ -770,6 +770,22 @@ function ConvertDateToMonday($date){
 	return $returnDate;
 }
 
+function GenerateUserForm($userID){
+	$formCode = "";
+	
+	//Get the username from the id
+	
+	ob_start();
+?>
+	<h3 class='customFormLabel'>Username</h3>
+	<input class='customFormInput' type='text' name='username' id='username' required>
+<?php
+	
+	$formCode = ob_get_clean();
+	
+	return $formCode;
+}
+
 function GenerateAuditTable($employeeID, $numberOfResults){
 	$tableCode = "";
 	
@@ -806,5 +822,21 @@ function GenerateAuditTable($employeeID, $numberOfResults){
 	$tableCode = ob_get_clean();
 	
 	return $tableCode;
+}
+
+function GenerateCompanyForm($companyID){
+	$formCode = "";
+	
+	//Get the company name from the id
+	
+	ob_start();
+?>
+	<h3 class='customFormLabel'>Company Name</h3>
+	<input class='customFormInput' type='text' name='companyName' id='companyName' required>	
+<?php
+	
+	$formCode = ob_get_clean();
+	
+	return $formCode;
 }
 ?>

@@ -12,11 +12,24 @@
 	$securityLevel = Admin;
 
 	//Get the page type if there is one
-	if(isset($_POST["page_type"])){
-		$pageType = $_POST["page_type"];
+	if(isset($_POST["submit_page_type"])){
+		$pageType = $_POST["submit_page_type"];
 	}
 	else{
-		$pageType = UserForm;
+		if(isset($_POST["page_type"])){
+			$pageType = $_POST["page_type"];
+		}
+		else{
+			$pageType = EmpForm;
+		}
+	}
+	
+	//Get the user ID if there is one
+	if(isset($_POST["user_id"])){
+		$userID = $_POST["user_id"];
+	}
+	else{
+		$userID = "0";
 	}
 	
 	//Get the employee id if there is one
@@ -34,6 +47,14 @@
 	else{
 		$numberOfResults = "0";
 	}
+	
+	//Get the Company ID if there is one
+	if(isset($_POST["company_id"])){
+		$companyID = $_POST["company_id"];
+	}
+	else{
+		$companyID = "0";
+	}
 ?>
 <script>
 
@@ -44,6 +65,10 @@ function pageReady(){
 	$('#userSelect').change(changeUser);
 	//Set the event handler for the company switch
 	$('#companySelect').change(changeCompany);
+	
+	//Select the correct company and user from the drop downs
+	$('#userSelect').val('<?php echo $userID; ?>');
+	$('#companySelect').val('<?php echo $companyID; ?>');
 	
 	//Select the right tab on the page
 	var pageType = "<?php echo $pageType; ?>";
@@ -62,32 +87,21 @@ function pageReady(){
 }
 
 function changeUser(e){
-	e.preventDefault();
-	//Get the user id
-	var userSelected = $('#userSelect').find(":selected").text();
-	//If its not zero fill in the info by ID
-	if(userSelected != "Add New..."){
-		//Get employee details
-		
-		//Fill in
-		$('#username').val("UNAME");
-		$('#password').val("PASS");
-	}
+	var selectID = "#" + $(this).attr("id");
+	var newID = $(selectID).val();
 	
+	$("#user_id").val(newID);
+	$("#page_type").val("<?php echo UserForm; ?>");
+	$("#formChange").submit();
 }
 
-function changeCompany(e){
-	e.preventDefault();
-	//Get the user id
-	var userSelected = $('#companySelect').find(":selected").text();
-	//If its not zero fill in the info by ID
-	if(userSelected != "Add New..."){
-		//Get employee details
-		
-		//Fill in
-		$('#companyName').val("CNAME");
-	}
+function changeCompany(e){	
+	var selectID = "#" + $(this).attr("id");
+	var newID = $(selectID).val();
 	
+	$("#company_id").val(newID);
+	$("#page_type").val("<?php echo CompanyForm; ?>");
+	$("#formChange").submit();
 }
 
 function passwordsMatch(){
@@ -134,8 +148,7 @@ function openTab(evt, tabName) {
 				<select class='customFormInput' id='userSelect'>
 					<?php echo GenerateUserList(true); ?>
 				</select>
-				<h3 class='customFormLabel'>Username</h3>
-				<input class='customFormInput' type='text' name='username' id='username' required>
+				<?php echo GenerateUserForm($userID); ?>
 				<h3 class='customFormLabel'>Password</h3>
 				<input class='customFormInput' type='password' name='password' id='password' required>
 				<h3 class='customFormLabel'>Confirm Password</h3>
@@ -145,7 +158,7 @@ function openTab(evt, tabName) {
 					<option value="General">General</option>
 					<option value="Admin">Admin</option>
 				</select>
-				<input type='hidden' name='page_type' value='<?php echo UserForm; ?>'>
+				<input type='hidden' name='submit_page_type' value='<?php echo UserForm; ?>'>
 				<button class='customFormInput'>Submit</button>
 			</form>
 			<p id='response'></p>
@@ -163,7 +176,7 @@ function openTab(evt, tabName) {
 				<option value="50">50</option>
 				<option value="100">100</option>
 			</select>
-			<input type='hidden' name='page_type' value='<?php echo AuditForm; ?>'>
+			<input type='hidden' name='submit_page_type' value='<?php echo AuditForm; ?>'>
 			<button class='customFormInput'>Submit</button>
 			<?php echo GenerateAuditTable($employeeID, $numberOfResults); ?>
 		  </form>
@@ -174,12 +187,16 @@ function openTab(evt, tabName) {
 			<select class='customFormInput' id='companySelect'>
 				<?php echo GenerateCompanyList(true); ?>
 			</select>
-			<h3 class='customFormLabel'>Company Name</h3>
-			<input class='customFormInput' type='text' name='companyName' id='companyName' required>
-			<input type='hidden' name='page_type' value='<?php echo CompanyForm; ?>'>
+			<?php echo GenerateCompanyForm($companyID); ?>
+			<input type='hidden' name='submit_page_type' value='<?php echo CompanyForm; ?>'>
 			<button class='customFormInput'>Submit</button>
 		  </form>
 		</div>
+		<form id='formChange' action='' method='post'>
+			<input type='hidden' id='company_id' name='company_id' value='<?php echo $companyID; ?>'>
+			<input type='hidden' id='user_id' name='user_id' value='<?php echo $userID; ?>'>
+			<input type='hidden' id='page_type' name='page_type' value='<?php echo $pageType; ?>'>
+		</form>
 	</div>
 	<?php echo GenerateFooter(); ?>
 </body>
