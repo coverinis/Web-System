@@ -1,6 +1,10 @@
 <!doctype html>
 
-<?php require './scripts/pageGeneration.php' ?>
+<?php
+	require './scripts/pageGeneration.php';
+	session_start();
+?>
+
 
 <html lang="en">
 <head>
@@ -135,7 +139,7 @@ function openTab(evt, tabName) {
 </head>
 
 <body>
-	<?php echo GenerateHeader(EmsSysAdmin); ?>
+	<?php echo GenerateHeader(EmsSysAdmin, true); ?>
 	<div id='adminContent'>
 		<div class="tab">
 			<button class="tablinks" id='userFormTab' onclick="openTab(event, 'UserInfo')">User Information</button>

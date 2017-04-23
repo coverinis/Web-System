@@ -1,7 +1,6 @@
 <?php 
 	class employee {
 		
-		var $id;
 		var $firstName; 
 		var $lastName; 
 		var $socialInsuranceNumber; 
@@ -21,14 +20,6 @@
 				$this->socialInsuranceNumber = "";
 				$this->dateOfBirth = "";
 			}
-		}
-
-		function __construct1($fromDatabase){
-			$this->employeeID = $fromDatabase["employeeID"];
-			$this->lastName = $fromDatabase["lastName"];
-			$this->firstName = $fromDatabase["firstName"];
-			$this->socialInsuranceNumber = $fromDatabase["socialInsuranceNumber"];
-			$this->dateOfBirth = $fromDatabase["dateOfBirth"];
 		}
 		
 		function __construct4($newLastName, $newFirstName, $newSocialInsuranceNumber, $newDateOfBirth){

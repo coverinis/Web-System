@@ -1,6 +1,10 @@
 <!doctype html>
 
-<?php require './scripts/pageGeneration.php' ?>
+<?php
+	require './scripts/pageGeneration.php';
+	session_start();
+?>
+
 
 <html lang="en">
 <head>
@@ -9,8 +13,8 @@
 <?php
 	//Get the post variables
 	//Get the security level of the user
-		$userID = "1";
-		$securityLevel = Admin;
+		$userID = $_SESSION["userID"];
+		$securityLevel = $_SESSION["userType"];
 		//Get the first_name if it is set
 		//ini_set('display_errors', 0);
 		if(isset($_POST["report_type"])){
@@ -99,7 +103,7 @@
 </head>
 
 <body>
-	<?php echo GenerateHeader(EmpReports); ?>
+	<?php echo GenerateHeader(EmpReports, true); ?>
 	<div id='reportsContent'>
 		<form name='reportForm' action='reports.php' method='post'>
 			<h3 class='customFormLabel'>Select Report</h3>

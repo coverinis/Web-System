@@ -1,6 +1,10 @@
 <!doctype html>
 
-<?php require './scripts/pageGeneration.php' ?>
+<?php
+	require './scripts/pageGeneration.php';
+	session_start();
+?>
+
 
 <html lang="en">
 <head>
@@ -8,7 +12,7 @@
 <?php
 	//Get the post variables
 	//Get the security level of the user
-		$securityLevel = General;
+		$securityLevel = $_SESSION["userType"];
 		//Get the first_name if it is set
 		//ini_set('display_errors', 0);
 		if(isset($_POST["fname"])){
@@ -83,7 +87,7 @@ function closeTab(evt, tabName) {
 </head>
 
 <body>
-	<?php echo GenerateHeader(EmpSearch); ?>
+	<?php echo GenerateHeader(EmpSearch, true); ?>
 	<div id='searchContent'>
 		<form name='searchForm' action="" method='post'>
 			<h3 class='customFormLabel'>First Name</h3>

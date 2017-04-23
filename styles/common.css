@@ -36,6 +36,23 @@ body{
 	margin-top: 10px;
 	margin-right: 10px;
 	float: right;
+	text-align: center;
+}
+
+#userInfo p{
+	display: inline-block;
+	padding: 5px;
+	margin-top: 15px;
+}
+
+#userInfo a{
+	display: inline-block;
+	margin-bottom: 15px;
+}
+
+#userInfo br{
+	margin: 0px;
+	padding: 0px;
 }
 
 #breadcrumb{

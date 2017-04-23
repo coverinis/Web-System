@@ -1,19 +1,21 @@
 <!doctype html>
 
-<?php require './scripts/pageGeneration.php' ?>
+<?php
+	require './scripts/pageGeneration.php';
+	session_start();
+?>
 
 <html lang="en">
 <head>
-
-	<style>
-		
-	</style>
+<?php
+	$securityLevel = $_SESSION["userType"];
+?>
 <link rel="stylesheet" type="text/css" href="/styles/common.css">
 <link rel="stylesheet" type="text/css" href="/styles/menu.css">
 </head>
 
 <body>
-	<?php echo GenerateHeader(MainMenu); ?>
+	<?php echo GenerateHeader(MainMenu, true); ?>
 	<div id='menuContent'>
 		<div id='logoBanner'></div>
 		<a href='maintenance.php' class='menuButton toolTipParent'>
@@ -28,10 +30,16 @@
 			Employee Reports
 			<span class='tooltip'>Run reports to get additional Employee information.</span>
 		</a>
+<?php
+		if(strcmp($securityLevel, Admin) == 0){
+?>
 		<a href='admin.php' class='menuButton toolTipParent'>
 			EMS System Administration
 			<span class='tooltip'>Manage users, complete Employee records, and blah blah.</span>
 		</a>
+<?php 
+		}
+?>
 	</div>
 	<?php echo GenerateFooter(); ?>
 </body>

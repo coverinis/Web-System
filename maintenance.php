@@ -1,6 +1,10 @@
 <!doctype html>
 
-<?php require './scripts/pageGeneration.php' ?>
+<?php
+	require './scripts/pageGeneration.php';
+	session_start();
+?>
+
 
 <html lang="en">
 <head>
@@ -12,7 +16,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <?php
 		//Get the security level of the user
-		$securityLevel = Admin;
+		$securityLevel = $_SESSION["userType"];
 		//Get the form_type if it is set
 		//ini_set('display_errors', 0);
 		if(isset($_POST["form_type"])){
@@ -205,7 +209,7 @@
 </head>
 
 <body>
-	<?php echo GenerateHeader(EmpMaintenance); ?>
+	<?php echo GenerateHeader(EmpMaintenance, true); ?>
 	<div id='maintenanceContent'>
 		<div class="tab">
 			<button class="tablinks" id='empFormTab' onclick="openTab(event, 'EmpInfo')">Employee Information</button>
