@@ -33,9 +33,9 @@ class DAL {
 
 
 
-	static function ValidateLogin($userName, $password)
+	static function ValidateLogin($userID, $password)
 	{	
-		$result = self::$conn->query("SELECT pass AS result FROM account WHERE username ='".$userName."'");
+		$result = self::$conn->query("SELECT pass AS result FROM users WHERE userID ='".$userID."'");
 		$row = $result->fetch_assoc();
 
 		$ret = false;
@@ -43,6 +43,20 @@ class DAL {
 		if(strcmp($password, $row['result']) == 0){
 			$ret = true;
 		}
+		
+		return $ret;
+	}
+	
+	static function GetUserDetails($userID)
+	{	
+		$result = self::$conn->query("SELECT firstName, lastName, userTypeName FROM users JOIN usertype ON users.userTypeID = usertype.userTypeID WHERE userID ='".$userID."'");
+		
+		$row = $result->fetch_assoc();
+		$ret = array(
+			"firstName" => $row["firstName"],
+			"lastName" => $row["lastName"],
+			"userType" => $row["userTypeName"]
+		);
 		
 		return $ret;
 	}
