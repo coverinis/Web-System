@@ -22,6 +22,9 @@ define('General', 'General');
 //Page Types
 define('EmpForm', 'Employee Form');
 define('TimeCard', 'Time Card');
+define('UserForm', 'User Form');
+define('AuditForm', 'Audit Form');
+define('CompanyForm', 'Company Form');
 
 //Report Types
 define('SeniorityReport', 'Seniority Report');
@@ -99,6 +102,59 @@ function GenerateReportList($secLevel){
 <?php
 	}
 	
+	return ob_get_clean();
+}
+
+function GenerateEmployeeList($secLevel, $addNew){
+	
+	//Get the employee details
+	
+	ob_start();
+	if($addNew == true){
+?>
+	<option value="0">Add New...</option>
+<?php
+	}
+	//Loop through employees
+?>
+	<option value="1">Justin Hergott (Company)</option>
+<?php
+	
+	return ob_get_clean();
+}
+
+function GenerateCompanyList($addNew){
+	
+	//Get the companies
+	
+	ob_start();
+	if($addNew == true){
+?>
+	<option value="0">Add New...</option>
+<?php
+	}
+	//Loop through companies
+?>
+	<option value="<?php echo "1"; ?>"><?php echo "Company1"; ?></option>
+<?php
+	
+	return ob_get_clean();
+}
+
+function GenerateUserList($addNew){
+	
+	//Get the users
+	
+	ob_start();
+	if($addNew == true){
+?>
+	<option value="0">Add New...</option>
+<?php
+	}
+	//Loop through users
+?>
+	<option value="<?php echo "1"; ?>"><?php echo "User1"; ?></option>
+<?php
 	return ob_get_clean();
 }
 
@@ -691,5 +747,43 @@ function ConvertDateToMonday($date){
 	}
 	
 	return $returnDate;
+}
+
+function GenerateAuditTable($employeeID, $numberOfResults){
+	$tableCode = "";
+	
+	//Get Audit Records
+	
+	ob_start();
+	if(strcmp($employeeID, "0") != 0){
+?>
+	<h3 class='customFormLabel'>Audit Records For:</h3>
+	<table class='reportResultTable'>
+		<tr>
+			<th>Timestamp</th>
+			<th>Username</th>
+			<th>Event Type</th>
+			<th>Attribute Changed</th>
+			<th>Old Value</th>
+			<th>New Value</th>
+		</tr>
+<?php
+	//For each audit record
+?>
+		<tr>
+			<th>Date</th>
+			<th>Hergott</th>
+			<th>MOD</th>
+			<th>FNAME</th>
+			<th>JUSTIN</th>
+			<th>Justin</th>
+		</tr>
+	</table>
+	<br>
+<?php
+	}
+	$tableCode = ob_get_clean();
+	
+	return $tableCode;
 }
 ?>

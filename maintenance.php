@@ -56,7 +56,7 @@
 			$weekStart = $_POST["week_start"];
 		}
 		else{
-			$weekStart = "";
+			$weekStart =  date('Y-m-d');
 		}
 ?>
 <script>
@@ -65,6 +65,8 @@
 
 	function pageReady(){
 		$("#empTypeSelect").change(changeForm);
+		
+		//Check if form info needs to be filled in
 		
 		//Select the right option from type
 		var currentType = "<?php echo $formType; ?>";
@@ -116,6 +118,14 @@
 			tablinks[i].className = tablinks[i].className.replace(" active", "");
 		}
 		document.getElementById(tabName).style.display = "block";
+		//If it the tabName is EmpInfo set the hidden
+		if(tabName == EmpInfo){
+			$("#page_type").val("<?php echo EmpForm; ?>");
+		}
+		//Else set it to TimeCardInfo
+		else{
+			$("#page_type").val("<?php echo TimeCard; ?>");
+		}		
 		evt.currentTarget.className += " active";
 	}
 </script>
@@ -134,7 +144,7 @@
 			<form id='employeeForm' action='' method='post'>
 				<h3 class='customFormLabel'>Select Employee</h3>
 				<select class='customFormInput'>
-					<option value="0">Add New...</option>
+					<?php echo GenerateEmployeeList($securityLevel, true); ?>
 				</select>
 				<h3 class='customFormLabel'>Employee Type</h3>
 				<select class='customFormInput' id='empTypeSelect'>
@@ -147,10 +157,11 @@
 			<form id='timeCardForm' action='' method='post'>
 				<h3 class='customFormLabel'>Select Employee</h3>
 					<select class='customFormInput'>
-						<option value="AddNew">Add New...</option>
+						<?php echo GenerateEmployeeList($securityLevel, false); ?>
 					</select>
 				<h3 class='customFormLabel'>Week Start Date</h3>
 				<input class='customFormInput' type='date' name='week_start' value='<?php echo date('Y-m-d'); ?>'>
+				<input type='hidden' id='page_type' name='page_type' value=''>
 				<h3 class='customFormLabel'>Time Card</h3>
 				<?php echo GenerateEmployeeTimeCard($securityLevel, $employeeID, $weekStart); ?>
 			</form>

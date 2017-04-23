@@ -108,7 +108,7 @@
 			</select>
 			<h3 class='customFormLabel'>Select Company</h3>
 			<select class='customFormInput' name='company_name'>
-				<option value="Company1">Company 1</option>
+				<?php echo GenerateCompanyList(false); ?>
 			</select>
 			<h3 class='customFormLabel'>Select Week</h3>
 			<input class='customFormInput' type='date' name='week_start' id='weekPick' value='<?php echo date('Y-m-d'); ?>' style='display:none;'>
