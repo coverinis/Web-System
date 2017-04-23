@@ -161,5 +161,24 @@ class DAL {
 
 		return $ret;
 	}
+
+
+	static function GetAllUser()
+	{
+		$query = "SELECT * FROM users;";
+
+		$ret = self::Execute_GetMultipleRows($query);
+
+		return $ret;
+	}
+
+	static function GetTimeCard($employeeID, $startDate)
+	{
+		$query = "SELECT * FROM employeeTimeCardInfo WHERE employeeID=".$employeeID." AND cardDate=".$startDate.";";
+
+		$ret = self::Execute_GetMultipleRows($query);
+
+		return $ret;
+	}
 }
 ?>

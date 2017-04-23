@@ -3,10 +3,14 @@ require 'dal.php';
 require './genericWorkTerm.php';
 require './genericCompany.php';
 require './employee.php';
+require './user.php';
+require './timeCardInfo.php';
 
 define('Employee', 1);
-define('WorkTerm', 2);
-define ('Company', 3);
+define('Workterm', 2);
+define('Company', 3);
+define('User', 4);
+define('TimeCardInfo', 5);
 
 // This is used within this class only
 function ParseToGenericArray($fromDatabase, $type){
@@ -19,12 +23,20 @@ function ParseToGenericArray($fromDatabase, $type){
 				$ret[$i] = new employee($row);
 				break;
 			
-			case WorkTerm:
+			case Workterm:
 				$ret[$i] = new genericWorkTerm($row);
 				break;
 
 			case Company:
 				$ret[$i] = new genericCompany($row);
+				break;
+
+			case User:
+				$ret[$i] = new user($row);
+				break;
+
+			case TimeCardInfo:
+				$ret[$i] = new timeCardInfo($row);
 				break;
 		}
 		
@@ -67,21 +79,29 @@ function GetEmployeeList($securityLevel){
 		$fromDatabase = DAL::GetAllEmployee_WithoutContractEmployee();
 	}
 
-	return ParseToGenericArray($fromDatabase, true);
+	return ParseToGenericArray($fromDatabase, Workterm);
 }
 
 function GetCompanyList(){
 	$fromDatabase = DAL::GetAllCompany();
-	return $ParseToGenericArray($fromDatabase, Company);
+	return ParseToGenericArray($fromDatabase, Company);
 }
 
 
 function GetWorkTermList($employeeID){
-	$fromDatabase = DAL::GetAllCompany();
-	return $ParseToGenericArray($fromDatabase, WorkTerm);
+	$fromDatabase = DAL::GetAllWorkTerm();
+	return ParseToGenericArray($fromDatabase, Workterm);
 }
 
+function GetUserList()
+	$fromDatabase = DAL::GetAllUser();
+	return ParseToGenericArray($fromDatabase, User);
+}
 
+function GetTimeCardInfo($employeeID, $weekStartDate){
+	$fromDatabase = DAL::GetTimeCard($employeeID, $weekStartDate);
+	return ParseToGenericArray($fromDatabase, TimeCardInfo);
+}
 
 
 ?>

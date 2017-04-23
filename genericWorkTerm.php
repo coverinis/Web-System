@@ -20,7 +20,7 @@ class genericWorkTerm
 	public $employeeType;	
 	
 	
-	function __construct($fromDatabase)
+	function __construct1($fromDatabase)
 	{
 		$this->employeeID = $fromDatabase["employeeID"];
 		$this->lastName = $fromDatabase["lastName"];
