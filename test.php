@@ -11,9 +11,8 @@ $id = 1;
 
 
 //$employee = GetEmployeeDetails("Coverini","",""); // This is for seaching
-$timecard = GetTimeCardInfo(1, '2017-04-23'); // This is for edit
-echo $timecard[0]->cardDate;
-
+$ret = GenerateReport('ActiveEmployement', 'Conestoga College', '');
+echo $ret[0]->row1;
 
 
 

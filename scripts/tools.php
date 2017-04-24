@@ -5,12 +5,14 @@ require './genericCompany.php';
 require './employee.php';
 require './user.php';
 require './timeCardInfo.php';
+require './genericReport.php';
 
 define('Employee', 1);
 define('Workterm', 2);
 define('Company', 3);
 define('User', 4);
 define('TimeCardInfo', 5);
+define('Report', 6);
 
 define('Invalid_LastName', 1);
 define('Invalid_FirstName', 2);
@@ -44,9 +46,27 @@ function ParseToGenericArray($fromDatabase, $type){
 			case TimeCardInfo:
 				$ret[$i] = new timeCardInfo($row);
 				break;
+
+			case Report:
+				$ret[$i] = new genericReport($row);
+				break;
 		}
 		
 		$i++;
+	}
+
+	return $ret;
+}
+
+
+function ParseToGenericArray_Report($fromDatabase, $reportType){
+	$ret = array();
+	$i = 0;
+
+	foreach($fromDatabase as $row)
+	{
+		$ret[$i] = new genericReport($row, $reportType);	
+		$i++;	
 	}
 
 	return $ret;
@@ -128,6 +148,37 @@ function GetTimeCardInfo($workTermID, $weekStartDate){
 	$fromDatabase = DAL::GetTimeCard($workTermID, $weekStartDate);
 	return ParseToGenericArray($fromDatabase, TimeCardInfo);
 }
+
+
+function GenerateReport($reportType, $companyName, $cardDate){
+	$fromDatabase = array();
+	switch ($reportType) {
+		case 'ActiveEmployement':
+			$fromDatabase = DAL::GetReport_ActiveEmployement($companyName);
+			break;
+		
+		case 'InactiveEmployment':
+			$fromDatabase = DAL::GetReport_InactiveEmployement($companyName);
+			break;
+
+		case 'Payroll':
+			$fromDatabase = DAL::GetReport_Payroll($companyName, $cardDate);
+			break;
+
+		case 'Seniority':
+			$fromDatabase = DAL::GetReport_Seniority($companyName);
+			break;
+
+		case 'WeeklyHoursWorked':
+			$fromDatabase = DAL::GetReport_WeeklyHoursWorked($companyName, $cardDate);
+			break;
+	}
+
+	return ParseToGenericArray_Report($fromDatabase, $reportType);
+	
+}
+
+
 
 
 

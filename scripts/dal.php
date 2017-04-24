@@ -11,7 +11,7 @@ class DAL {
 	{
 		if (self::$initialized)
             return;		
-		self::$conn = new mysqli("localhost", "emstest", "Conestoga1", "ems_pss");
+		self::$conn = new mysqli("localhost", "root", "Conestoga1", "ems_pss");
 	}
 	
 	static function Execute_GetMultipleRows($query)
@@ -19,7 +19,7 @@ class DAL {
 		$result = self::$conn->query($query);
 		$ret = array();
 		if (!$result) {
-			
+
 		}
 		else
 		{
@@ -231,6 +231,42 @@ class DAL {
 		return $ret;
 	}
 
+	static function GetReport_ActiveEmployement($companyName)
+	{
+		$query = "CALL getActiveEmploymentReport('". $companyName ."');";
+		$ret = self::Execute_GetMultipleRows($query);		
+		return $ret;
+	}
+
+	static function GetReport_InactiveEmployement($companyName)
+	{
+		$query = "CALL getInactiveEmploymentReport('". $companyName ."');";
+		$ret = self::Execute_GetMultipleRows($query);		
+		return $ret;
+	}
+
+	static function GetReport_Payroll($companyName, $cardDate)
+	{
+		$query = "CALL getPayrollReport('". $companyName ."', '". $cardDate ."');";
+		$ret = self::Execute_GetMultipleRows($query);		
+		return $ret;
+	}
+
+	static function GetReport_Seniority($companyName)
+	{
+		$query = "CALL getSeniorityReport('". $companyName ."');";
+		$ret = self::Execute_GetMultipleRows($query);		
+		return $ret;
+	}
+
+
+	static function GetReport_WeeklyHoursWorked($companyName, $cardDate)
+	{
+		$query = "CALL getWeeklyHoursWorkedReport('". $companyName ."', '". $cardDate ."');";
+		$ret = self::Execute_GetMultipleRows($query);		
+		return $ret;
+	}
+
 
 	static function InsertEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth)
 	{
@@ -283,8 +319,6 @@ class DAL {
 		return $ret;
 		
 	}
-
-
 
 }
 ?>
