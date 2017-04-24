@@ -36,6 +36,9 @@ define('PayrollReport', 'Payroll Report');
 define('ActiveEmpReport', 'Active Employee Report');
 define('InactiveEmpReport', 'Inactive Employee Report');
 
+//Initialize DAL
+DAL::Init();
+
 //Make the bread crumb string
 function GenerateBreadCrumbTrail($pageName){
 	//The return string
@@ -111,7 +114,7 @@ function GenerateReportList($secLevel){
 function GenerateEmployeeList($secLevel, $addNew){
 	
 	//Get the employee details
-	//$employeeList = GetEmployeeList($secLevel);
+	$employeeList = GetEmployeeList($secLevel);
 	
 	ob_start();
 	if($addNew == true){
@@ -120,10 +123,11 @@ function GenerateEmployeeList($secLevel, $addNew){
 <?php
 	}
 	//Loop through employees
+	foreach($employeeList as $row){
 ?>
-	<option value="1">Justin Hergott (SIN)</option>
-	<option value="2">Bob Hergott (SIN)</option>
+		<option value='<?php echo $row->employeeID; ?>'><?php echo $row->firstName . " " . $row->lastName . " (" . $row->socialInsuranceNumber . ")"; ?></option>
 <?php
+	}
 	
 	return ob_get_clean();
 }
@@ -131,7 +135,7 @@ function GenerateEmployeeList($secLevel, $addNew){
 function GenerateWorkTermList($employeeID, $secLevel, $addNew){
 	
 	//Get the employee details
-	
+	$workTermList = GetWorkTermList($employeeID);
 	ob_start();
 	if($addNew == true){
 ?>
@@ -139,9 +143,11 @@ function GenerateWorkTermList($employeeID, $secLevel, $addNew){
 <?php
 	}
 	//Loop through employees
+	foreach($workTermList as $workTerm){
 ?>
-	<option value="1">Company - Type - DOH</option>
+		<option value='<?php echo $workTerm->employeeID; ?>'><?php echo $workTerm->companyName . " - " . $workTerm->employeeType . " - " . $workTerm->dateOfHire; ?></option>
 <?php
+	}
 	
 	return ob_get_clean();
 }
@@ -197,7 +203,6 @@ function GenerateHeader($pageName, $showUserInfo){
 ?>
 			<div id='userInfo'>
 <?php 
-			session_start();
 			if(!isset($_SESSION["userID"])){
 				//Not logged in, redirect to login page
 				header("Location: ../login.php"); /* Redirect browser */
@@ -236,21 +241,21 @@ function GenerateFooter(){
 	return ob_get_clean();
 }
 
-function GenerateEmployeeForm($secLevel){
+function GenerateEmployeeForm($empID, $secLevel){
 	$formCode = "";
 	
-	//$employee = GetDetails($empID);
+	$employee = GetEmployeeDetail($empID);
 	
 	ob_start();
 ?>
 	<h3 class='customFormLabel'>First Name</h3>
-	<input class='customFormInput' type='text' id='empFName' name='fname' value='<?php echo $empID; ?>'>
+	<input class='customFormInput' type='text' id='empFName' name='fname' value='<?php echo $employee->firstName; ?>'>
 	<h3 class='customFormLabel'>Last Name<?php if(strcmp($secLevel, Admin) == 0){ echo " (Corporation Name)"; } ?></h3>
-	<input class='customFormInput' type='text' id='empLName' name='lname'>
+	<input class='customFormInput' type='text' id='empLName' name='lname' value='<?php echo $employee->lastName; ?>'>
 	<h3 class='customFormLabel'>Social Insurance Number<?php if(strcmp($secLevel, Admin) == 0){ echo " (Business Number)"; } ?></h3>
-	<input class='customFormInput' type='text' id='empSIN' name='sin'>
+	<input class='customFormInput' type='text' id='empSIN' name='sin' value='<?php echo $employee->socialInsuranceNumber; ?>'>
 	<h3 class='customFormLabel'>Date of Birth<?php if(strcmp($secLevel, Admin) == 0){ echo " (Date of Incorporation)"; } ?></h3>
-	<input class='customFormInput' type='text' id='empDOB' name='dob'>
+	<input class='customFormInput' type='text' id='empDOB' name='dob' value='<?php echo $employee->dateOfBirth; ?>'>
 	<button class='customFormInput'>Submit</button>
 <?php
 

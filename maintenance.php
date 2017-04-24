@@ -224,7 +224,7 @@
 					<?php echo GenerateEmployeeList($securityLevel, true); ?>
 				</select>
 				<input type='hidden' value='<?php echo EmpForm; ?>' name='submit_page_type'>
-				<?php echo GenerateEmployeeForm($securityLevel); ?>
+				<?php echo GenerateEmployeeForm($employeeID, $securityLevel); ?>
 			</form>
 		</div>
 		<div id="WorkTerm" class="tabcontent">

@@ -9,7 +9,7 @@ class DAL {
 	{
 		if (self::$initialized)
             return;		
-		self::$conn = new mysqli("localhost", "root", "Conestoga1", "ems_pss");
+		self::$conn = new mysqli("localhost", "emstest", "Conestoga1", "ems_pss");
 	}
 	
 	static function Execute_GetMultipleRows($query)

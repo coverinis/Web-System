@@ -89,7 +89,7 @@ function GetCompanyList(){
 
 
 function GetWorkTermList($employeeID){
-	$fromDatabase = DAL::GetAllWorkTerm();
+	$fromDatabase = DAL::GetAllWorkTerm($employeeID);
 	return ParseToGenericArray($fromDatabase, Workterm);
 }
 
