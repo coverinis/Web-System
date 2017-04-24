@@ -62,7 +62,7 @@ class genericWorkTerm
 			//$this->dateOfHire = strtotime($fromDatabase["dateOfHire"]);
 			$this->dateOfHire = $fromDatabase["dateOfHire"];
 			//$this->dateOfTermination = strtotime($fromDatabase["dateOfTermination"]);
-			$this->dateOfHire = $fromDatabase["dateOfTermination"];
+			$this->dateOfTermination = $fromDatabase["dateOfTermination"];
 		}
 		
 		$this->pay = $fromDatabase["pay"];
