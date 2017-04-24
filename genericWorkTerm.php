@@ -8,6 +8,7 @@ define('WinterStartDate', '10');
 
 class genericWorkTerm
 {
+	public $workTermID;
 	public $employeeID;
 	public $firstName;
 	public $lastName;
@@ -24,6 +25,7 @@ class genericWorkTerm
 	
 	function __construct($fromDatabase)
 	{
+		$this->workTermID = $fromDatabase["workTermID"];
 		$this->employeeID = $fromDatabase["employeeID"];
 		$this->lastName = $fromDatabase["lastName"];
 		$this->firstName = $fromDatabase["firstName"];
@@ -57,8 +59,10 @@ class genericWorkTerm
 		}
 		else
 		{
-			$this->dateOfHire = strtotime($fromDatabase["dateOfHire"]);
-			$this->dateOfTermination = strtotime($fromDatabase["dateOfTermination"]);
+			//$this->dateOfHire = strtotime($fromDatabase["dateOfHire"]);
+			$this->dateOfHire = $fromDatabase["dateOfHire"];
+			//$this->dateOfTermination = strtotime($fromDatabase["dateOfTermination"]);
+			$this->dateOfHire = $fromDatabase["dateOfTermination"];
 		}
 		
 		$this->pay = $fromDatabase["pay"];
