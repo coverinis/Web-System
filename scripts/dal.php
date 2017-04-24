@@ -11,7 +11,7 @@ class DAL {
 	{
 		if (self::$initialized)
             return;		
-		self::$conn = new mysqli("localhost", "root", "Conestoga1", "ems_pss");
+		self::$conn = new mysqli("localhost", "emstest", "Conestoga1", "ems_pss");
 	}
 	
 	static function Execute_GetMultipleRows($query)
@@ -31,6 +31,19 @@ class DAL {
 		return $ret;
 	}
 	
+	static function ValidateLogin($userID, $password)
+	{	
+		$result = self::$conn->query("SELECT pass AS result FROM users WHERE userID ='".$userID."'");
+		$row = $result->fetch_assoc();
+
+		$ret = false;
+		//Check if the password is the same	
+		if(strcmp($password, $row['result']) == 0){
+			$ret = true;
+		}
+		
+		return $ret;
+	}
 	
 	static function GetUserDetails($userID)
 	{	
