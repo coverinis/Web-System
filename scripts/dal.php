@@ -94,10 +94,10 @@ class DAL {
 		{
 			if ($first)
 			{				
-				$query = $query . "socialInsuranceNumber = " . $sinFilter;
+				$query = $query . "CAST(socialInsuranceNumber as CHAR) LIKE '" . $sinFilter . "';";
 			}				
 			else
-				$query = $query . " AND sin LIKE '" . $sinFilter . "'";
+				$query = $query . " AND CAST(socialInsuranceNumber as CHAR) LIKE '" . $sinFilter . "';";
 		}		
 		
 		
