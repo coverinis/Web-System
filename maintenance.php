@@ -102,6 +102,7 @@
 		$("#workTermSelectEmployee").change(changeEmployee);
 		$("#workTermSelectWorkTerm").change(changeWorkTerm);
 		$("#timeCardSelectEmployee").change(changeEmployee);
+		$("#timeCardSelectWorkTerm").change(changeWorkTerm);
 		
 		//Select the right employee from each select
 		$('#employeeSelectEmp').val('<?php echo $employeeID; ?>');
@@ -110,6 +111,7 @@
 		
 		//Select the right work term
 		$("#workTermSelectWorkTerm").val('<?php echo $workTermID; ?>');
+		$("#timeCardSelectWorkTerm").val('<?php echo $workTermID; ?>');
 		
 		//Select the right company
 		$("#cname").val('<?php echo $companyName; ?>');
@@ -194,9 +196,19 @@
 		var selectID = "#" + $(this).attr("id");
 		var newID = $(selectID).val();
 		
-		$("#work_term_id").val(newID);
-		$("#page_type").val("<?php echo WorkTerm; ?>");
-		$("#formChange").submit();
+		if(selectID == "#workTermSelectWorkTerm"){
+			//Fill in the hidden form and refresh the page
+			$("#work_term_id").val(newID);
+			$("#page_type").val("<?php echo WorkTerm; ?>");
+			$("#formChange").submit();
+		}
+		else{
+			$("#work_term_id").val(newID);
+			$("#week_start").val("<?php echo date('Y-m-d');; ?>");
+			$("#page_type").val("<?php echo TimeCard; ?>");
+			$("#formChange").submit();
+		}	
+		
 	}
 	
 	function openTab(evt, tabName) {
@@ -268,11 +280,15 @@
 		<div id="TimeCardInfo" class="tabcontent">
 			<form id='timeCardForm' action='' method='post'>
 				<h3 class='customFormLabel'>Select Employee</h3>
-				<select class='customFormInput' id='timeCardSelectEmployee'>
+				<select class='customFormInput' id='timeCardSelectEmployee' name='emp_id'>
 					<?php echo GenerateEmployeeList($securityLevel, false); ?>
 				</select>
+				<h3 class='customFormLabel'>Select Work Term</h3>
+				<select class='customFormInput' id='timeCardSelectWorkTerm'>
+					<?php echo GenerateWorkTermList($employeeID, $securityLevel, false); ?>
+				</select>
 				<h3 class='customFormLabel'>Week Start Date</h3>
-				<input class='customFormInput' type='date' name='week_start' value='<?php echo date('Y-m-d'); ?>'>
+				<input class='customFormInput' type='date' name='week_start' value='<?php echo $weekStart; ?>'>
 				<input type='hidden' value='<?php echo TimeCard; ?>' name='submit_page_type'>
 				<h3 class='customFormLabel'>Time Card</h3>
 				<?php echo GenerateEmployeeTimeCard($securityLevel, $employeeID, $weekStart); ?>

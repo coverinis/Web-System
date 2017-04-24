@@ -380,6 +380,9 @@ function GenerateWorkTermForm($empType, $secLevel, $workTermID){
 function GenerateEmployeeTimeCard($securityLevel, $employeeID, $weekStart){
 	//Convert the date to a monday
 	$weekStart = ConvertDateToMonday($weekStart);
+	
+	//Get the time card
+	$timeCard = GetTimeCardInfo($employeeID, $weekStart);
 	ob_start();
 ?>
 	<table class='timeCardTable'>
@@ -395,26 +398,26 @@ function GenerateEmployeeTimeCard($securityLevel, $employeeID, $weekStart){
 		</tr>
 		<tr>
 			<th>Hours</th>
-			<td><input type='number' name='monHours'></td>
-			<td><input type='number' name='tuesHours'></td>
-			<td><input type='number' name='wedHours'></td>
-			<td><input type='number' name='thursHours'></td>
-			<td><input type='number' name='friHours'></td>
-			<td><input type='number' name='satHours'></td>
-			<td><input type='number' name='sunHours'></td>
+			<td><input type='number' name='monHours' value='<?php echo $timeCard[0]->hours["mon"]; ?>'></td>
+			<td><input type='number' name='tueHours' value='<?php echo $timeCard[0]->hours["tue"]; ?>'></td>
+			<td><input type='number' name='wedHours' value='<?php echo $timeCard[0]->hours["wed"]; ?>'></td>
+			<td><input type='number' name='thuHours' value='<?php echo $timeCard[0]->hours["thu"]; ?>'></td>
+			<td><input type='number' name='friHours' value='<?php echo $timeCard[0]->hours["fri"]; ?>'></td>
+			<td><input type='number' name='satHours' value='<?php echo $timeCard[0]->hours["sat"]; ?>'></td>
+			<td><input type='number' name='sunHours' value='<?php echo $timeCard[0]->hours["sun"]; ?>'></td>
 		</tr>
 <?php
 	//Check Employee Type to see if its seasonal to display pieces
 ?>
 		<tr>
 			<th>Pieces</th>
-			<td><input type='number' name='monPieces'></td>
-			<td><input type='number' name='tuesPieces'></td>
-			<td><input type='number' name='wedPieces'></td>
-			<td><input type='number' name='thursPieces'></td>
-			<td><input type='number' name='friPieces'></td>
-			<td><input type='number' name='satPieces'></td>
-			<td><input type='number' name='sunPieces'></td>
+			<td><input type='number' name='monPieces' value='<?php echo $timeCard[0]->pieces["mon"]; ?>'></td>
+			<td><input type='number' name='tuePieces' value='<?php echo $timeCard[0]->pieces["mon"]; ?>'></td>
+			<td><input type='number' name='wedPieces' value='<?php echo $timeCard[0]->pieces["mon"]; ?>'></td>
+			<td><input type='number' name='thuPieces' value='<?php echo $timeCard[0]->pieces["mon"]; ?>'></td>
+			<td><input type='number' name='friPieces' value='<?php echo $timeCard[0]->pieces["mon"]; ?>'></td>
+			<td><input type='number' name='satPieces' value='<?php echo $timeCard[0]->pieces["mon"]; ?>'></td>
+			<td><input type='number' name='sunPieces' value='<?php echo $timeCard[0]->pieces["mon"]; ?>'></td>
 		</tr>
 		<tr>
 		</tr>
@@ -430,12 +433,16 @@ function GenerateSearchResult($securityLevel, $lastName, $firstName, $SIN){
 	
 	$tableCode = "";
 	
-	if(strlen($lastName) == 0 && strlen($firstName) == 0 && strlen($SIN) == 0){
-		//Do search
-		
+	if(strlen($lastName) == 0 && strlen($firstName) == 0 && strlen($SIN) == 0){		
 		$tableCode = "No Result";
 	}
 	else{
+		//Do search
+		$searchList = GetEmployeeDetails($lastName, $firstName, $SIN);
+		if(sizeof($searchList) == 0){
+			$tableCode = "0 Results Found.";
+		}
+		else{
 		//Make table
 		ob_start();
 ?>
@@ -445,11 +452,17 @@ function GenerateSearchResult($securityLevel, $lastName, $firstName, $SIN){
 				<th>Employee</th>
 				<th>Actions</th>
 			</tr>
-			<?php echo GenerateSearchResultRow("blah", 1, $securityLevel); ?>
-			<?php echo GenerateSearchResultRow("blah", 2, $securityLevel); ?>
+<?php
+		$resultNumber = 1;
+		foreach($searchList as $result){
+			echo GenerateSearchResultRow($result, $resultNumber, $securityLevel);
+			$resultNumber++;
+		}
+?>
 		</table>
 <?php
 		$tableCode = ob_get_clean();
+		}
 	}
 	
 	return $tableCode;
@@ -462,7 +475,7 @@ function GenerateSearchResultRow($employeeResult, $resultNumber, $securityLevel)
 ?>
 	<tr>
 		<td>
-			Hergott, Justin. (123456782)
+			<?php echo $employeeResult->lastName . ", " . $employeeResult->firstName . ". (" . $employeeResult->socialInsuranceNumber . ")"; ?>
 			<button class='tablink  detailButton' onclick="openTab(event, '<?php echo 'item' . $resultNumber . 'Content'?>')">More...</button>
 			<div id='<?php echo 'item' . $resultNumber . 'Content'?>' class='tabcontent'>
 				Company: <br>
