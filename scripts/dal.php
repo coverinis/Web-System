@@ -9,7 +9,7 @@ class DAL {
 	{
 		if (self::$initialized)
             return;		
-		self::$conn = new mysqli("localhost", "emstest", "Conestoga1", "ems_pss");
+		self::$conn = new mysqli("localhost", "root", "Conestoga1", "ems_pss");
 	}
 	
 	static function Execute_GetMultipleRows($query)
@@ -67,7 +67,7 @@ class DAL {
 		$sinFilter = $sin.'%';
 		$first = true;
 		
-		$query = "SELECT * FROM employees WHERE ";
+		$query = "SELECT * FROM employeeWorkterm WHERE ";
 		
 		
 		if (strcmp($lastName, "") != 0)
@@ -125,7 +125,7 @@ class DAL {
 	
 	static function SeachEmployee($id)
 	{
-		$query = "SELECT * FROM employees WHERE employeeID=".$id.";";
+		$query = "SELECT * FROM employeeWorkterm WHERE employeeID=".$id.";";
 		
 		// run the query
 		$result = self::$conn->query($query);
@@ -143,6 +143,29 @@ class DAL {
 		
 		return $ret;
 	}
+
+
+	
+	static function SearchWorkTerm($id)
+	{
+		$query = "SELECT * FROM employeeWorkterm WHERE worktermID=".$id.";";
+		
+		// run the query
+		$result = self::$conn->query($query);
+		$ret = array();
+		if (!$result) {
+				
+		}
+		else
+		{
+			while($row = $result->fetch_assoc()){
+				$ret = $row;	
+				break;
+			}
+		}
+				
+		return $ret;
+	}
 		
 	static function GetAllCompany()
 	{
@@ -157,7 +180,7 @@ class DAL {
 
 	static function GetAllEmployee()
 	{
-		$query = "SELECT * FROM employees;";
+		$query = "SELECT * FROM employeeWorkterm;";
 
 		$ret = self::Execute_GetMultipleRows($query);
 
@@ -167,7 +190,7 @@ class DAL {
 
 	static function GetAllEmployee_WithoutContractEmployee()
 	{
-		$query = "SELECT * FROM employees WHERE employeeTypeName!='Contract';";
+		$query = "SELECT * FROM employeeWorkterm WHERE employeeTypeName!='Contract';";
 
 		$ret = self::Execute_GetMultipleRows($query);
 
@@ -177,13 +200,21 @@ class DAL {
 
 	static function GetAllWorkTerm($employeeID)
 	{
-		$query = "SELECT * FROM employees WHERE employeeID=".$employeeID.";";
+		$query = "SELECT * FROM employeeWorkterm WHERE employeeID=".$employeeID.";";
 
 		$ret = self::Execute_GetMultipleRows($query);
 
 		return $ret;
 	}
 
+	static function GetAllWorkTerm_WithoutContractEmployee($employeeID)
+	{
+		$query = "SELECT * FROM employeeWorkterm WHERE employeeID=".$employeeID." AND employeeTypeName!='Contract';";
+
+		$ret = self::Execute_GetMultipleRows($query);
+
+		return $ret;
+	}
 
 	static function GetAllUser()
 	{

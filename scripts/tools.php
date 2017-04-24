@@ -88,15 +88,35 @@ function GetCompanyList(){
 }
 
 
-function GetWorkTermList($employeeID){
-	$fromDatabase = DAL::GetAllWorkTerm($employeeID);
+function GetWorkTermList($employeeID, $securityLevel){	
+	$fromDatabase = array();
+	if (strcmp($securityLevel, 'Administrator'))
+	{
+		$fromDatabase = DAL::GetAllWorkTerm($employeeID);
+	}
+	else
+	{
+		$fromDatabase = DAL::GetAllWorkTerm_WithoutContractEmployee($employeeID);
+	}
+
 	return ParseToGenericArray($fromDatabase, Workterm);
 }
+
+
+function GetWorkTerm($workTermID){
+	$fromDatabase = DAL::SeachWorkTerm($workTermID);
+	$ret = new genericWorkTerm($fromDatabase);
+	return ret;
+}
+
+
 
 function GetUserList(){
 	$fromDatabase = DAL::GetAllUser();
 	return ParseToGenericArray($fromDatabase, User);
 }
+
+
 
 function GetTimeCardInfo($employeeID, $weekStartDate){
 	$fromDatabase = DAL::GetTimeCard($employeeID, $weekStartDate);
