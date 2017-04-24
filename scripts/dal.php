@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 class DAL {
 		
@@ -17,7 +19,7 @@ class DAL {
 		$result = self::$conn->query($query);
 		$ret = array();
 		if (!$result) {
-				
+			
 		}
 		else
 		{
@@ -94,7 +96,6 @@ class DAL {
 			if ($first)
 			{				
 				$query = $query . "socialInsuranceNumber = " . $sinFilter;
-				echo "<script>console.log( 'Debug Objects: " . $query . "' );</script>";
 			}				
 			else
 				$query = $query . " AND sin LIKE '" . $sinFilter . "'";
@@ -112,7 +113,6 @@ class DAL {
 		else
 		{
 			while($row = $result->fetch_assoc()){
-				echo $row['employeeID'];
 				$ret[] = $row;		
 			}
 		}
@@ -227,10 +227,8 @@ class DAL {
 
 	static function GetTimeCard($employeeID, $startDate)
 	{
-		$query = "SELECT * FROM employeeTimeCardInfo WHERE employeeID=".$employeeID." AND cardDate=".$startDate.";";
-
+		$query = "SELECT * FROM employeeTimeCardInfo WHERE employeeID=".$employeeID." AND cardDate='".$startDate."';";
 		$ret = self::Execute_GetMultipleRows($query);
-
 		return $ret;
 	}
 }

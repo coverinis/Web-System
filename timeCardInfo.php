@@ -1,5 +1,6 @@
 <?php
-
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 class timeCardInfo
 {
 	public $employeeID;
@@ -21,13 +22,13 @@ class timeCardInfo
 		$this->hours["fri"] = $fromDatabase["friHours"];
 		$this->hours["sat"] = $fromDatabase["satHours"];
 
-		$this->pieces["sun"] = $fromDatabase["sunPiece"];
-		$this->pieces["mon"] = $fromDatabase["monPiece"];
-		$this->pieces["tue"] = $fromDatabase["tuePiece"];
-		$this->pieces["wed"] = $fromDatabase["wedPiece"];
-		$this->pieces["thu"] = $fromDatabase["thurPiece"];
-		$this->pieces["fri"] = $fromDatabase["friPiece"];
-		$this->pieces["sat"] = $fromDatabase["satPiece"];
+		$this->pieces["sun"] = $fromDatabase["sunPieces"];
+		$this->pieces["mon"] = $fromDatabase["monPieces"];
+		$this->pieces["tue"] = $fromDatabase["tuePieces"];
+		$this->pieces["wed"] = $fromDatabase["wedPieces"];
+		$this->pieces["thu"] = $fromDatabase["thuPieces"];
+		$this->pieces["fri"] = $fromDatabase["friPieces"];
+		$this->pieces["sat"] = $fromDatabase["satPieces"];
 
 	}
 	

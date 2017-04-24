@@ -11,13 +11,10 @@ $id = 1;
 
 
 //$employee = GetEmployeeDetails("Coverini","",""); // This is for seaching
-//$employee = GetEmployeeDetail($id); // This is for edit
-//echo $employee->fName;
+$timecard = GetTimeCardInfo(1, '2017-04-23'); // This is for edit
+echo $timecard[0]->cardDate;
 
-$employeeList = GetEmployeeList("Administrator");
 
-foreach($employeeList as $row){
-    echo $row->firstName;
-}
+
 
 ?>
