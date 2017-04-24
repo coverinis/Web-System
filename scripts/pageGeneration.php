@@ -135,7 +135,7 @@ function GenerateEmployeeList($secLevel, $addNew){
 function GenerateWorkTermList($employeeID, $secLevel, $addNew){
 	
 	//Get the employee details
-	$workTermList = GetWorkTermList($employeeID);
+	$workTermList = GetWorkTermList($employeeID, $secLevel);
 	ob_start();
 	if($addNew == true){
 ?>
@@ -145,7 +145,7 @@ function GenerateWorkTermList($employeeID, $secLevel, $addNew){
 	//Loop through employees
 	foreach($workTermList as $workTerm){
 ?>
-		<option value='<?php echo $workTerm->employeeID; ?>'><?php echo $workTerm->companyName . " - " . $workTerm->employeeType . " - " . $workTerm->dateOfHire; ?></option>
+		<option value='<?php echo $workTerm->workTermID; ?>'><?php echo $workTerm->companyName . " - " . $workTerm->employeeType . " - " . $workTerm->dateOfHire; ?></option>
 <?php
 	}
 	
@@ -155,6 +155,7 @@ function GenerateWorkTermList($employeeID, $secLevel, $addNew){
 function GenerateCompanyList($addNew){
 	
 	//Get the companies
+	$companies = GetCompanyList();
 	
 	ob_start();
 	if($addNew == true){
@@ -163,10 +164,11 @@ function GenerateCompanyList($addNew){
 <?php
 	}
 	//Loop through companies
+	foreach($companies as $comp){
 ?>
-	<option value="<?php echo "1"; ?>"><?php echo "Company1"; ?></option>
+		<option value="<?php echo $comp->name; ?>"><?php echo $comp->name; ?></option>
 <?php
-	
+	}
 	return ob_get_clean();
 }
 
@@ -264,29 +266,29 @@ function GenerateEmployeeForm($empID, $secLevel){
 	return $formCode;
 }
 
-function GenerateWorkTermForm($empType, $secLevel, $empID){
+function GenerateWorkTermForm($empType, $secLevel, $workTermID){
 	$formCode = "";
 	
-	//$employee = GetDetails($empID);
+	$workTerm = GetWorkTerm($workTermID);
 	
 	if(strcmp($empType, FullTime) == 0){
 		ob_start();
 ?>
 		<h3 class='customFormLabel'>Select Company</h3>
-		<select class='customFormInput' id='cid'>
+		<select class='customFormInput' id='cname'>
 			<?php echo GenerateCompanyList(false); ?>
 		</select>
 		<h3 class='customFormLabel'>Date of Hire</h3>
-		<input class='customFormInput' type='text' name='doh'>
+		<input class='customFormInput' type='text' name='doh' value='<?php echo $workTerm->dateOfHire; ?>'>
 <?php
 		if(strcmp($secLevel, Admin) == 0){
 ?>
 			<h3 class='customFormLabel'>Date of Termination</h3>
-			<input class='customFormInput' type='text' name='dot'>
+			<input class='customFormInput' type='text' name='dot' value='<?php echo $workTerm->dateOfTermination; ?>'>
 			<h3 class='customFormLabel'>Salary</h3>
-			<input class='customFormInput' type='text' name='pay'>
+			<input class='customFormInput' type='text' name='pay' value='<?php echo $workTerm->pay; ?>'>
 			<h3 class='customFormLabel'>Status</h3>
-			<input class='customFormInput' type='text' name='status'>
+			<input class='customFormInput' type='text' name='status' value='<?php echo $workTerm->status; ?>'>
 <?php	
 		}
 ?>
@@ -298,20 +300,20 @@ function GenerateWorkTermForm($empType, $secLevel, $empID){
 		ob_start();
 ?>
 		<h3 class='customFormLabel'>Select Company</h3>
-		<select class='customFormInput' id='cid'>
+		<select class='customFormInput' id='cname'>
 			<?php echo GenerateCompanyList(false); ?>
 		</select>
 		<h3 class='customFormLabel'>Date of Hire</h3>
-		<input class='customFormInput' type='text' name='doh'>
+		<input class='customFormInput' type='text' name='doh' value='<?php echo $workTerm->dateOfHire; ?>'>
 <?php
 		if(strcmp($secLevel, Admin) == 0){
 ?>
 			<h3 class='customFormLabel'>Date of Termination</h3>
-			<input class='customFormInput' type='text' name='dot'>
+			<input class='customFormInput' type='text' name='dot' value='<?php echo $workTerm->dateOfTermination; ?>'>
 			<h3 class='customFormLabel'>Wage</h3>
-			<input class='customFormInput' type='text' name='pay'>
+			<input class='customFormInput' type='text' name='pay' value='<?php echo $workTerm->pay; ?>'>
 			<h3 class='customFormLabel'>Status</h3>
-			<input class='customFormInput' type='text' name='status'>
+			<input class='customFormInput' type='text' name='status' value='<?php echo $workTerm->status; ?>'>
 <?php
 		}
 ?>
@@ -323,20 +325,20 @@ function GenerateWorkTermForm($empType, $secLevel, $empID){
 		ob_start();
 ?>
 		<h3 class='customFormLabel'>Select Company</h3>
-		<select class='customFormInput' id='cid'>
+		<select class='customFormInput' id='cname'>
 			<?php echo GenerateCompanyList(false); ?>
 		</select>
 		<h3 class='customFormLabel'>Season</h3>
-		<input class='customFormInput' type='text' name='doh'>
+		<input class='customFormInput' type='text' name='doh' value='<?php echo $workTerm->dateOfHire; ?>'>
 		<h3 class='customFormLabel'>Season Year</h3>
-		<input class='customFormInput' type='text' name='doh_detail'>
+		<input class='customFormInput' type='text' name='doh_detail' value='<?php echo $workTerm->dateOfHire_detail; ?>'>
 <?php
 		if(strcmp($secLevel, Admin) == 0){
 ?>
 			<h3 class='customFormLabel'>Piece Pay</h3>
-			<input class='customFormInput' type='text' name='pay'>
+			<input class='customFormInput' type='text' name='pay' value='<?php echo $workTerm->pay; ?>'>
 			<h3 class='customFormLabel'>Status</h3>
-			<input class='customFormInput' type='text' name='status'>
+			<input class='customFormInput' type='text' name='status' value='<?php echo $workTerm->status; ?>'>
 <?php
 		}
 ?>
@@ -348,17 +350,17 @@ function GenerateWorkTermForm($empType, $secLevel, $empID){
 		ob_start();
 ?>
 		<h3 class='customFormLabel'>Select Company</h3>
-		<select class='customFormInput' id='cid'>
+		<select class='customFormInput' id='cname'>
 			<?php echo GenerateCompanyList(false); ?>
 		</select>
 		<h3 class='customFormLabel'>Contract Start Date</h3>
-		<input class='customFormInput' type='text' name='doh'>
+		<input class='customFormInput' type='text' name='doh' value='<?php echo $workTerm->dateOfHire; ?>'>
 		<h3 class='customFormLabel'>Contract End Date</h3>
-		<input class='customFormInput' type='text' name='dot'>
+		<input class='customFormInput' type='text' name='dot' value='<?php echo $workTerm->dateOfTermination; ?>'>
 		<h3 class='customFormLabel'>Contract Amount</h3>
-		<input class='customFormInput' type='text' name='pay'>
+		<input class='customFormInput' type='text' name='pay' value='<?php echo $workTerm->pay; ?>'>
 		<h3 class='customFormLabel'>Status</h3>
-		<input class='customFormInput' type='text' name='status'>
+		<input class='customFormInput' type='text' name='status' value='<?php echo $workTerm->status; ?>'>
 		<button class='customFormInput'>Submit</button>
 <?php		
 		$formCode = ob_get_clean();

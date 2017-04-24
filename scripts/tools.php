@@ -104,9 +104,9 @@ function GetWorkTermList($employeeID, $securityLevel){
 
 
 function GetWorkTerm($workTermID){
-	$fromDatabase = DAL::SeachWorkTerm($workTermID);
+	$fromDatabase = DAL::SearchWorkTerm($workTermID);
 	$ret = new genericWorkTerm($fromDatabase);
-	return ret;
+	return $ret;
 }
 
 

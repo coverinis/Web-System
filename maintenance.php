@@ -15,6 +15,8 @@
 <link rel="stylesheet" type="text/css" href="/styles/common.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
 <?php
+		//Initialize DAL
+		DAL::Init();
 		//Get the security level of the user
 		$securityLevel = $_SESSION["userType"];
 		//Get the form_type if it is set
@@ -44,10 +46,21 @@
 			$workTermID = $_POST["work_term_id"];
 			
 			//Check the employee type based on the work term and change it
-			$formType = PartTime;
+			if($workTermID == 0 || strcmp($workTermID, "0")== 0){
+				$formType = FullTime;
+				$companyName = "";
+			}
+			else{
+				$workTermDetail = GetWorkTerm($workTermID);
+				$formType = $workTermDetail->employeeType;
+				$companyName = $workTermDetail->companyName;
+			}
+			
+			
 		}
 		else{
 			$workTermID = 0;
+			$companyName = "";
 		}
 		
 		//Get the page type if there is one
@@ -88,14 +101,18 @@
 		$("#employeeSelectEmp").change(changeEmployee);
 		$("#workTermSelectEmployee").change(changeEmployee);
 		$("#workTermSelectWorkTerm").change(changeWorkTerm);
+		$("#timeCardSelectEmployee").change(changeEmployee);
 		
 		//Select the right employee from each select
 		$('#employeeSelectEmp').val('<?php echo $employeeID; ?>');
-		$('#workTermSelectEmp').val('<?php echo $employeeID; ?>');
-		$('#timeCardSelectEmp').val('<?php echo $employeeID; ?>');
+		$('#workTermSelectEmployee').val('<?php echo $employeeID; ?>');
+		$('#timeCardSelectEmployee').val('<?php echo $employeeID; ?>');
 		
 		//Select the right work term
 		$("#workTermSelectWorkTerm").val('<?php echo $workTermID; ?>');
+		
+		//Select the right company
+		$("#cname").val('<?php echo $companyName; ?>');
 		
 		//Select the right option from type
 		var currentType = "<?php echo $formType; ?>";
@@ -153,11 +170,13 @@
 		if(selectID == "#employeeSelectEmp"){
 			//Fill in the hidden form and refresh the page
 			$("#emp_id").val(newID);
+			$("#work_term_id").val("0");
 			$("#page_type").val("<?php echo EmpForm; ?>");
 			$("#formChange").submit();
 		}
 		else if(selectID == "#workTermSelectEmployee"){
 			//Fill in the hidden form and refresh the page
+			$("#work_term_id").val("0");
 			$("#emp_id").val(newID);
 			$("#page_type").val("<?php echo WorkTerm; ?>");
 			$("#formChange").submit();
@@ -165,6 +184,7 @@
 		else{
 			//Fill in the hidden form and refresh the page
 			$("#emp_id").val(newID);
+			$("#work_term_id").val("0");
 			$("#page_type").val("<?php echo TimeCard; ?>");
 			$("#formChange").submit();
 		}
@@ -242,7 +262,7 @@
 					<?php echo GenerateEmployeeTypeList($securityLevel); ?>
 				</select>
 				<input type='hidden' value='<?php echo WorkTerm; ?>' name='submit_page_type'>
-				<?php echo GenerateWorkTermForm($formType, $securityLevel, $employeeID); ?>
+				<?php echo GenerateWorkTermForm($formType, $securityLevel, $workTermID); ?>
 			</form>
 		</div>
 		<div id="TimeCardInfo" class="tabcontent">
@@ -260,7 +280,7 @@
 		</div>
 		<form id='formChange' action='maintenance.php' method='post'>
 				<input type='hidden' id='form_type' name='form_type' value=''>
-				<input type='hidden' id='emp_id' name='emp_id' value=''>
+				<input type='hidden' id='emp_id' name='emp_id' value='<?php echo $employeeID; ?>'>
 				<input type='hidden' id='work_term_id' name='work_term_id' value=''>
 				<input type='hidden' id='page_type' name='page_type' value=''>
 		</form>
