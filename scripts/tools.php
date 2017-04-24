@@ -276,31 +276,31 @@ function WorkTermMaintenance($workTermIDs, $employeeID, $firstName, $lastName, $
 
 function ErrorCodeToMessage($errorCode){
 	$ret = array();
-	if($errorCode & kInvalidFirstName) != 0){
+	if(($errorCode & kInvalidFirstName) != 0){
 		$ret[] = "Invalid First Name.";
 	}
-	if($errorCode & kInvalidLastName) != 0){
+	if(($errorCode & kInvalidLastName) != 0){
 		$ret[] = "Invalid Last Name.";
 	}
-	if($errorCode & kInvalidSIN) != 0){
+	if(($errorCode & kInvalidSIN) != 0){
 		$ret[] = "Invalid Social Insurance Number.";
 	}
-	if($errorCode & kInvalidDateOfBirth) != 0){
+	if(($errorCode & kInvalidDateOfBirth) != 0){
 		$ret[] = "Invalid Date of Birth.";
 	}
-	if($errorCode & kInvalidDateOfHire) != 0){
+	if(($errorCode & kInvalidDateOfHire) != 0){
 		$ret[] = "Invalid Date of Hire.";
 	}
-	if($errorCode & kInvalidDateOfTermination) != 0){
+	if(($errorCode & kInvalidDateOfTermination) != 0){
 		$ret[] = "Invalid Date of Termination.";
 	}
-	if($errorCode & kInvalidPay) != 0){
+	if(($errorCode & kInvalidPay) != 0){
 		$ret[] = "Invalid Pay amount.";
 	}
-	if($errorCode & kInvalidSeason) != 0){
+	if(($errorCode & kInvalidSeason) != 0){
 		$ret[] = "Invalid Season.";
 	}
-	if($errorCode & kInvalidBusinessNumber) != 0){
+	if(($errorCode & kInvalidBusinessNumber) != 0){
 		$ret[] = "Invalid Business Number.";
 	}
 
