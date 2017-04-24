@@ -31,11 +31,18 @@
 			$this->dateOfBirth = $fromDatabase["dateOfBirth"];
 		}
 		
-		function __construct4($newLastName, $newFirstName, $newSocialInsuranceNumber, $newDateOfBirth){
-			
+		function __construct2($newID, $newFirstName, $newLastName, $newSocialInsuranceNumber, $newDateOfBirth){
+			$this->id = $newID;
 			$this->lastName = $newLastName;
 			$this->firstName = $newFirstName;
 			$this->socialInsuranceNumber = $newSocialInsuranceNumber;
+			$this->dateOfBirth = $newDateOfBirth;
+		}
+
+		function __construct3($newID, $newLastName, $newBusinessNumber, $newDateOfBirth){
+			$this->id = $newID;
+			$this->lastName = $newLastName;
+			$this->socialInsuranceNumber = $newBusinessNumber;
 			$this->dateOfBirth = $newDateOfBirth;
 		}
 		

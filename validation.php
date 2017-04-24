@@ -151,6 +151,7 @@
 	const kInvalidDateOfTermination = 0x20;
 	const kInvalidPay = 0x40; // hourly rate, salary, piecePay, contract amount
 	const kInvalidSeason = 0x80; 
+	const kInvalidBusinessNumber = 0x100;
 	
 	// validates full time and part time employees
 	function validateFullParttimeEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth, $dateOfHire, $dateOfTermination, $pay)
@@ -221,21 +222,17 @@
 		return $invalidFields;
 	}
 	
-	function validateContractEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth, $contractStartDate, $contractEndDate, $fixedContractAmount)
+	function validateContractEmployee($lastName, $businessNumber, $dateOfBirth, $contractStartDate, $contractEndDate, $fixedContractAmount)
 	{
 		 $invalidFields = 0;
 		
-		if(validateName($firstName) == false)
-		{
-			$invalidFields |= kInvalidFirstName;
-		}
 		if(validateName($lastName) == false)
 		{
 			$invalidFields |= kInvalidLastName;
 		}
-		if(validateSocialInsuranceNumber($socialInsuranceNumber) == false)
+		if(validateBusinessNumber($businessNumber) == false)
 		{
-			$invalidFields |= kInvalidSIN;
+			$invalidFields |= kInvalidBusinessNumber;
 		}
 		if(validatePastDate($dateOfBirth) == false)
 		{
@@ -256,6 +253,54 @@
 		
 		return $invalidFields;
 	}
+
+
+	function validateBaseEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth)
+	{
+		$invalidFields = 0;
+		
+		if(validateName($firstName) == false)
+		{
+			$invalidFields |= kInvalidFirstName;
+		}
+		if(validateName($lastName) == false)
+		{
+			$invalidFields |= kInvalidLastName;
+		}
+		if(validateSocialInsuranceNumber($socialInsuranceNumber) == false)
+		{
+			$invalidFields |= kInvalidSIN;
+		}
+		if(validatePastDate($dateOfBirth) == false)
+		{
+			$invalidFields |= kInvalidDateOfBirth;
+		}
+		
+		return $invalidFields;
+	}
+
+
+	function validateBaseContractEmployee($lastName, $businessNumber, $dateOfBirth)
+	{
+		$invalidFields = 0;
+		
+		if(validateName($lastName) == false)
+		{
+			$invalidFields |= kInvalidLastName;
+		}
+		if(validateBusinessNumber($businessNumber) == false)
+		{
+			$invalidFields |= kInvalidBusinessNumber;
+		}
+		if(validatePastDate($dateOfBirth) == false)
+		{
+			$invalidFields |= kInvalidDateOfBirth;
+		}
+		
+		return $invalidFields;
+	}
+
+
 	
 	// example
 	/*

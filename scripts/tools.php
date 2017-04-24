@@ -2,6 +2,7 @@
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 require 'dal.php';
+require './validation.php';
 require './genericWorkTerm.php';
 require './genericCompany.php';
 require './employee.php';
@@ -186,29 +187,59 @@ function GetReport($reportType, $companyName, $cardDate){
 
 function EmployeeMaintainance($employeeID, $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth){
 
-	/*$emp = new employee($employeeID, $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth);
-	$returnCode = EmployeeValidation($emp);
-	if ($returnCode == OK)
+	// validate the employee
+	$returnCode = 0;
+	if (strcmp($firstName,'') == 0)
 	{
-		// if OK
-		if ($employeeID == 0)
-		{
-			// Inserting
-			$returnCode = DAL::InsertEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth);
-		}
-		else
-		{
-			// updating
-			$returnCode = DAL::UpdateEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth);
-		}
+		// contract employee
+		$returnCode = validateBaseContractEmployee($lastName, $socialInsuranceNumber, $dateOfBirth);
 	}
 	else
 	{
-		// if not OK
+		// other types of employee
+		$returnCode = validateBaseEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth);
+	}
+
+	if ($returnCode != 0)
+	{
+		return ErrorCodeToMessage($returnCode);
+	}
+
+
+	/*$emp = new employee();
+	if (strcmp($firstName,'') == 0)
+	{
+		// contract employee
+		$emp = new employee($employeeID, $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth);
+	}
+	else
+	{
+		// other types of employee
+		$emp = new employee($employeeID, $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth);
+	}*/
+
+	
+	// if OK
+	if ($employeeID == 0)
+	{
+		// Inserting
+		$returnCode = DAL::InsertEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth);
+	}
+	else
+	{
+		// updating
+		$returnCode = DAL::UpdateEmployee($employeeID, $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth);
+	}
+
+	$ret = array();
+	if ($returnCode != 0)
+	{
+		$ret[0] = "Database error. Please try again later";
 	}
 	
+	
 
-	return $returnCode;*/
+	return $returnCode;
 }
 
 
@@ -243,13 +274,36 @@ function WorkTermMaintenance($workTermIDs, $employeeID, $firstName, $lastName, $
 }
 
 
-function EmployeeValidation($emp)
-{
-
-}
-
-
 function ErrorCodeToMessage($errorCode){
+	$ret = array();
+	if($errorCode & kInvalidFirstName) != 0){
+		$ret[] = "Invalid First Name.";
+	}
+	if($errorCode & kInvalidLastName) != 0){
+		$ret[] = "Invalid Last Name.";
+	}
+	if($errorCode & kInvalidSIN) != 0){
+		$ret[] = "Invalid Social Insurance Number.";
+	}
+	if($errorCode & kInvalidDateOfBirth) != 0){
+		$ret[] = "Invalid Date of Birth.";
+	}
+	if($errorCode & kInvalidDateOfHire) != 0){
+		$ret[] = "Invalid Date of Hire.";
+	}
+	if($errorCode & kInvalidDateOfTermination) != 0){
+		$ret[] = "Invalid Date of Termination.";
+	}
+	if($errorCode & kInvalidPay) != 0){
+		$ret[] = "Invalid Pay amount.";
+	}
+	if($errorCode & kInvalidSeason) != 0){
+		$ret[] = "Invalid Season.";
+	}
+	if($errorCode & kInvalidBusinessNumber) != 0){
+		$ret[] = "Invalid Business Number.";
+	}
 
+	return $ret;
 }	
 ?>
