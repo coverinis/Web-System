@@ -32,20 +32,6 @@ class DAL {
 	}
 	
 	
-	static function ValidateLogin($userID, $password)
-	{	
-		$result = self::$conn->query("SELECT pass AS result FROM users WHERE userID ='".$userID."'");
-		$row = $result->fetch_assoc();
-
-		$ret = false;
-		//Check if the password is the same	
-		if(strcmp($password, $row['result']) == 0){
-			$ret = true;
-		}
-		
-		return $ret;
-	}
-	
 	static function GetUserDetails($userID)
 	{	
 		$result = self::$conn->query("SELECT firstName, lastName, userTypeName FROM users JOIN usertype ON users.userTypeID = usertype.userTypeID WHERE userID ='".$userID."'");
@@ -69,7 +55,7 @@ class DAL {
 		$sinFilter = $sin.'%';
 		$first = true;
 		
-		$query = "SELECT * FROM employeeWorkterm WHERE ";
+		$query = "SELECT * FROM employee WHERE ";
 		
 		
 		if (strcmp($lastName, "") != 0)
@@ -125,7 +111,7 @@ class DAL {
 	
 	static function SeachEmployee($id)
 	{
-		$query = "SELECT * FROM employeeWorkterm WHERE employeeID=".$id.";";
+		$query = "SELECT * FROM employee WHERE employeeID=".$id.";";
 		
 		// run the query
 		$result = self::$conn->query($query);
@@ -180,7 +166,7 @@ class DAL {
 
 	static function GetAllEmployee()
 	{
-		$query = "SELECT * FROM employeeWorkterm;";
+		$query = "SELECT * FROM employeeWorkterm GROUP BY employeeID;";
 
 		$ret = self::Execute_GetMultipleRows($query);
 
@@ -190,7 +176,7 @@ class DAL {
 
 	static function GetAllEmployee_WithoutContractEmployee()
 	{
-		$query = "SELECT * FROM employeeWorkterm WHERE employeeTypeName!='Contract';";
+		$query = "SELECT * FROM employeeWorkterm WHERE employeeTypeName!='Contract' GROUP BY employeeID;";
 
 		$ret = self::Execute_GetMultipleRows($query);
 
