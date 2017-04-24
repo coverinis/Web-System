@@ -11,7 +11,7 @@ $id = 1;
 
 
 //$employee = GetEmployeeDetails("Coverini","",""); // This is for seaching
-$ret = GenerateReport('ActiveEmployement', 'Conestoga College', '');
+$ret = GetReport('ActiveEmployement', 'Conestoga College', '');
 echo $ret[0]->row1;
 
 

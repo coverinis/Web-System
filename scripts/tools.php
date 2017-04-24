@@ -1,4 +1,6 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 require 'dal.php';
 require './genericWorkTerm.php';
 require './genericCompany.php';
@@ -150,7 +152,7 @@ function GetTimeCardInfo($workTermID, $weekStartDate){
 }
 
 
-function GenerateReport($reportType, $companyName, $cardDate){
+function GetReport($reportType, $companyName, $cardDate){
 	$fromDatabase = array();
 	switch ($reportType) {
 		case 'ActiveEmployement':
