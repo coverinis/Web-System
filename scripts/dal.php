@@ -68,7 +68,7 @@ class DAL {
 		$sinFilter = $sin.'%';
 		$first = true;
 		
-		$query = "SELECT * FROM employee WHERE ";
+		$query = "SELECT * FROM employeeWorkterm WHERE ";
 		
 		
 		if (strcmp($lastName, "") != 0)
@@ -224,11 +224,67 @@ class DAL {
 		return $ret;
 	}
 
-	static function GetTimeCard($employeeID, $startDate)
+	static function GetTimeCard($worktermID, $startDate)
 	{
-		$query = "SELECT * FROM employeeTimeCardInfo WHERE employeeID=".$employeeID." AND cardDate='".$startDate."';";
+		$query = "SELECT * FROM employeeTimeCardInfo WHERE worktermID=".$worktermID." AND cardDate='".$startDate."';";
 		$ret = self::Execute_GetMultipleRows($query);
 		return $ret;
 	}
+
+
+	static function InsertEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth)
+	{
+		$stmt = self::$conn->prepare("INSERT INTO employee(firstName, lastName, socialInsuranceNumber, dateOfBirth) VALUES(?, ?, ?, ?)");
+
+		
+	    /* bind parameters for markers */
+	    $stmt->bind_param("ssis", $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth);
+
+	    /* execute query */
+	    $succeeded = $stmt->execute();
+
+	    /* close statement */
+	    $stmt->close();
+
+
+	    $ret = 0;
+	    if (!$succeeded)
+	    {
+	    	$ret = 1;
+	    }
+		
+		return $ret;
+		
+	}
+
+
+
+	static function UpdateEmployee($employeeID, $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth)
+	{
+		$stmt = self::$conn->prepare("UPDATE employee SET firstName = ?, lastName = ?, socialInsuranceNumber = ?, dateOfBirth = ? WHERE employeeID = ?");
+
+		
+	    /* bind parameters for markers */
+	    $stmt->bind_param("ssisi", $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth, $employeeID);
+
+	    /* execute query */
+	    $succeeded = $stmt->execute();
+
+	    /* close statement */
+	    $stmt->close();
+
+
+	    $ret = 0;
+	    if (!$succeeded)
+	    {
+	    	$ret = 1;
+	    }
+		
+		return $ret;
+		
+	}
+
+
+
 }
 ?>

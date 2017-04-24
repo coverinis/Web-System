@@ -12,6 +12,12 @@ define('Company', 3);
 define('User', 4);
 define('TimeCardInfo', 5);
 
+define('Invalid_LastName', 1);
+define('Invalid_FirstName', 2);
+define('Invalid_DateOfBirth', 3);
+define('Invalid_SocialInsuranceNumber', 4);
+
+
 // This is used within this class only
 function ParseToGenericArray($fromDatabase, $type){
 	$ret = array();
@@ -53,7 +59,7 @@ function ParseToGenericArray($fromDatabase, $type){
 // Return: list of employee objects
 function GetEmployeeDetails($lastName, $firstName, $sin){
 	$fromDatabase = DAL::SeachEmployees($lastName, $firstName, $sin);
-	return ParseToGenericArray($fromDatabase, Employee);
+	return ParseToGenericArray($fromDatabase, Workterm);
 }
 
 
@@ -118,10 +124,79 @@ function GetUserList(){
 
 
 
-function GetTimeCardInfo($employeeID, $weekStartDate){
-	$fromDatabase = DAL::GetTimeCard($employeeID, $weekStartDate);
+function GetTimeCardInfo($workTermID, $weekStartDate){
+	$fromDatabase = DAL::GetTimeCard($workTermID, $weekStartDate);
 	return ParseToGenericArray($fromDatabase, TimeCardInfo);
 }
 
 
+
+function EmployeeMaintainance($employeeID, $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth){
+
+	/*$emp = new employee($employeeID, $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth);
+	$returnCode = EmployeeValidation($emp);
+	if ($returnCode == OK)
+	{
+		// if OK
+		if ($employeeID == 0)
+		{
+			// Inserting
+			$returnCode = DAL::InsertEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth);
+		}
+		else
+		{
+			// updating
+			$returnCode = DAL::UpdateEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth);
+		}
+	}
+	else
+	{
+		// if not OK
+	}
+	
+
+	return $returnCode;*/
+}
+
+
+function WorkTermMaintenance($workTermIDs, $employeeID, $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth){
+
+	/*$emp = new employee($employeeID, $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth);
+	$returnCode = EmployeeValidation($emp);
+	if ($returnCode == OK)
+	{
+		// if OK
+		if ($employeeID == 0)
+		{
+			// Inserting
+			$returnCode = DAL::InsertEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth);
+		}
+		else
+		{
+			// updating
+			$returnCode = DAL::UpdateEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth);
+		}
+	}
+	else
+	{
+		// if not OK
+	}
+	
+
+	return $returnCode;*/
+
+
+
+}
+
+
+function EmployeeValidation($emp)
+{
+
+}
+
+
+function ErrorCodeToMessage($errorCode){
+
+}	
 ?>
