@@ -115,14 +115,19 @@
 		return $valid;
 	}
 	
-	function validateSeason($season)
+	function validateSeason($startDate, $endDate)
 	{
 		$valid = false;
 		
-		if(($season >= 1) && ($season <= 4))
+		$past = new DateTime($startDate);
+		$now = new DateTime($endDate);
+		$interval = $past->diff($now)->format('%a');
+		
+		if($interval >= 89 && $interval <= 91)
 		{
 			$valid = true;
 		}
+		
 		return $valid;
 	}
 	
@@ -137,4 +142,125 @@
 		}
 		return $valid;
 	}
+	
+	const kInvalidFirstName = 0x01;
+	const kInvalidLastName = 0x02;
+	const kInvalidSIN = 0x04;
+	const kInvalidDateOfBirth = 0x08;
+	const kInvalidDateOfHire = 0x10;
+	const kInvalidDateOfTermination = 0x20;
+	const kInvalidPay = 0x40; // hourly rate, salary, piecePay, contract amount
+	const kInvalidSeason = 0x80; 
+	
+	// validates full time and part time employees
+	function validateFullParttimeEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth, $dateOfHire, $dateOfTermination, $pay)
+	{
+		$invalidFields = 0;
+		
+		if(validateName($firstName) == false)
+		{
+			$invalidFields |= kInvalidFirstName;
+		}
+		if(validateName($lastName) == false)
+		{
+			$invalidFields |= kInvalidLastName;
+		}
+		if(validateSocialInsuranceNumber($socialInsuranceNumber) == false)
+		{
+			$invalidFields |= kInvalidSIN;
+		}
+		if(validatePastDate($dateOfBirth) == false)
+		{
+			$invalidFields |= kInvalidDateOfBirth;
+		}
+		if(validateDate($dateOfHire) == false)
+		{
+			$invalidFields |= kInvalidDateOfHire;
+		}
+		if(($dateOfTermination != null) && (validateEarlierDate($dateOfHire, $dateOfTermination) == false))
+		{
+			$invalidFields |= kInvalidDateOfTermination;
+		}
+		if(validatePay($pay) == false)
+		{
+			$invalidFields |= kInvalidPay;
+		}
+		
+		return $invalidFields;
+	}
+	
+	function validateSeasonalEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth, $dateOfHire, $dateOfTermination, $piecePay)
+	{
+		$invalidFields = 0;
+		
+		if(validateName($firstName) == false)
+		{
+			$invalidFields |= kInvalidFirstName;
+		}
+		if(validateName($lastName) == false)
+		{
+			$invalidFields |= kInvalidLastName;
+		}
+		if(validateSocialInsuranceNumber($socialInsuranceNumber) == false)
+		{
+			$invalidFields |= kInvalidSIN;
+		}
+		if(validatePastDate($dateOfBirth) == false)
+		{
+			$invalidFields |= kInvalidDateOfBirth;
+		}
+		if(validateSeason($dateOfHire, $dateOfTermination) == false)
+		{
+			$invalidFields |= kInvalidSeason;
+		}
+		if(validatePay($piecePay) == false)
+		{
+			$invalidFields |= kInvalidPay;
+		}
+		
+		return $invalidFields;
+	}
+	
+	function validateContractEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth, $contractStartDate, $contractEndDate, $fixedContractAmount)
+	{
+		 $invalidFields = 0;
+		
+		if(validateName($firstName) == false)
+		{
+			$invalidFields |= kInvalidFirstName;
+		}
+		if(validateName($lastName) == false)
+		{
+			$invalidFields |= kInvalidLastName;
+		}
+		if(validateSocialInsuranceNumber($socialInsuranceNumber) == false)
+		{
+			$invalidFields |= kInvalidSIN;
+		}
+		if(validatePastDate($dateOfBirth) == false)
+		{
+			$invalidFields |= kInvalidDateOfBirth;
+		}
+		if(validateDate($contractStartDate) == false)
+		{
+			$invalidFields |= kInvalidDateOfHire;
+		}
+		if(validateEarlierDate($contractStartDate, $contractEndDate) == false)
+		{
+			$invalidFields |= kInvalidDateOfTermination;
+		}
+		if(validatePay($fixedContractAmount) == false)
+		{
+			$invalidFields |= kInvalidPay;
+		}
+		
+		return $invalidFields;
+	}
+	
+	// example
+	/*
+	if((validateFullParttimeEmployee("Ro!chelle", "Anderson", 375435807, "1948-10-1", "2010-5-6", "2014-2-1", 72572) & kInvalidFirstName) != 0){
+		print("first name is invalid");
+	}
+	*/
 ?>
