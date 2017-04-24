@@ -585,10 +585,11 @@ function GenerateSeniorityReport($userID, $company){
 	$seniorityReportCode = "";
 	
 	//Get Report Results
+	$report = GetReport('Seniority', $company, '');
 	
 	ob_start();
 ?>
-	<h3 class='customFormLabel'>Seniority Report (Company)</h3>
+	<h3 class='customFormLabel'>Seniority Report (<?php echo $company; ?>)</h3>
 	<table class='reportResultTable'>
 		<tr>
 			<th>Employee Name</th>
@@ -597,13 +598,19 @@ function GenerateSeniorityReport($userID, $company){
 			<th>Date of Hire</th>
 			<th>Years of Service</th>
 		</tr>
+<?php
+	foreach($report as $reportRow){
+?>
 		<tr>
-			<td>Hergott, Justin</td>
-			<td>1234567892</td>
-			<td>Full Time</td>
-			<td>2000-01-01</td>
-			<td>17 Years</td>
+			<td><?php echo $reportRow->row1; ?></td>
+			<td><?php echo $reportRow->row2; ?></td>
+			<td><?php echo $reportRow->row3; ?></td>
+			<td><?php echo $reportRow->row4; ?></td>
+			<td><?php echo $reportRow->row5; ?></td>
 		</tr>
+<?php
+	}
+?>
 	</table>
 <?php	
 	$seniorityReportCode = ob_get_clean();
@@ -615,17 +622,18 @@ function GenerateWeeklyHoursReport($userID, $company, $date){
 	$weeklyHoursReportCode = "";
 	
 	//Get Report Results
+	$report = GetReport('WeeklyHoursWorked', $company, $date);
 	
 	ob_start();
 ?>
-	<h3 class='customFormLabel'>Weekly Hours Worked Report (Company)</h3>
+	<h3 class='customFormLabel'>Weekly Hours Worked Report (<?php echo $company; ?>)</h3>
 <?php
 	//For each Full Time Employee
-	echo GenerateWeeklyHoursReportTable("blah", FullTime);
+	echo GenerateWeeklyHoursReportTable($report, FullTime);
 	//Part Time Employees
-	echo GenerateWeeklyHoursReportTable("blah", PartTime);
+	echo GenerateWeeklyHoursReportTable($report, PartTime);
 	//Seasonal Employees
-	echo GenerateWeeklyHoursReportTable("blah", Seasonal);
+	echo GenerateWeeklyHoursReportTable($report, Seasonal);
 	
 	$weeklyHoursReportCode = ob_get_clean();
 	
@@ -650,11 +658,19 @@ function GenerateWeeklyHoursReportTable($results, $employeeType){
 			<th>SIN</th>
 			<th>Hours</th>
 		</tr>
-		<tr>
-			<td>Hergott, Justin</td>
-			<td>1234567892</td>
-			<td>40.00</td>
-		</tr>
+<?php
+		foreach($results as $resultRow){
+			if(strcmp($resultRow->row1, $employeeType) == 0){
+?>
+				<tr>
+					<td><?php echo $resultRow->row2; ?></td>
+					<td><?php echo $resultRow->row3; ?></td>
+					<td><?php echo $resultRow->row4; ?></td>
+				</tr>
+<?php
+			}
+		}
+?>
 	</table>
 	<br>
 <?php
@@ -668,19 +684,20 @@ function GeneratePayrollReport($userID, $company, $date){
 	$payrollReportCode = "";
 	
 	//Get Report Results
+	$report = GetReport('Payroll', $company, $date);
 	
 	ob_start();
 ?>
-	<h3 class='customFormLabel'>Payroll Report (Company)</h3>
+	<h3 class='customFormLabel'>Payroll Report (<?php echo $company; ?>)</h3>
 <?php
 	//For each Full Time Employee
-	echo GeneratePayrollReportTable("blah", FullTime);
+	echo GeneratePayrollReportTable($report, FullTime);
 	//Part Time Employees
-	echo GeneratePayrollReportTable("blah", PartTime);
+	echo GeneratePayrollReportTable($report, PartTime);
 	//Seasonal Employees
-	echo GeneratePayrollReportTable("blah", Seasonal);
+	echo GeneratePayrollReportTable($report, Seasonal);
 	//Contract Employees
-	echo GeneratePayrollReportTable("blah", Contract);
+	echo GeneratePayrollReportTable($report, Contract);
 	
 	$payrollReportCode = ob_get_clean();
 	
@@ -706,12 +723,20 @@ function GeneratePayrollReportTable($results, $employeeType){
 			<th>Gross</th>
 			<th>Notes</th>
 		</tr>
+<?php
+		foreach($results as $resultRow){
+			if(strcmp($resultRow->row1, $employeeType) == 0){
+?>
 		<tr>
-			<td>Hergott, Justin</td>
-			<td>40.00</td>
-			<td>1,000.00</td>
-			<td>Not Full Work Week</td>
+			<td><?php echo $resultRow->row2; ?></td>
+			<td><?php echo $resultRow->row3; ?></td>
+			<td><?php echo $resultRow->row4; ?></td>
+			<td><?php echo $resultRow->row5; ?></td>
 		</tr>
+<?php
+			}
+		}
+?>
 	</table>
 	<br>
 <?php
@@ -725,19 +750,20 @@ function GenerateActiveEmployeeReport($userID, $company){
 	$activeReportCode = "";
 	
 	//Get Report Results
+	$report = GetReport('ActiveEmployement', $company, '');
 	
 	ob_start();
 ?>
-	<h3 class='customFormLabel'>Active Employee Report (Company)</h3>
+	<h3 class='customFormLabel'>Active Employee Report (<?php echo $company; ?>)</h3>
 <?php
 	//For each Full Time Employee
-	echo GenerateActiveEmployeeReportTable("blah", FullTime);
+	echo GenerateActiveEmployeeReportTable($report, FullTime);
 	//Part Time Employees
-	echo GenerateActiveEmployeeReportTable("blah", PartTime);
+	echo GenerateActiveEmployeeReportTable($report, PartTime);
 	//Seasonal Employees
-	echo GenerateActiveEmployeeReportTable("blah", Seasonal);
+	echo GenerateActiveEmployeeReportTable($report, Seasonal);
 	//Contract Employees
-	echo GenerateActiveEmployeeReportTable("blah", Contract);
+	echo GenerateActiveEmployeeReportTable($report, Contract);
 	
 	$activeReportCode = ob_get_clean();
 	
@@ -759,11 +785,19 @@ function GenerateActiveEmployeeReportTable($results, $employeeType){
 			<th>Date of Hire</th>
 			<th>Avg. Hours</th>
 		</tr>
+<?php
+		foreach($results as $resultRow){
+			if(strcmp($resultRow->row1, $employeeType) == 0){
+?>
 		<tr>
-			<td>Hergott, Justin</td>
-			<td>2017-02-28</td>
-			<td>40.00</td>
+			<td><?php echo $resultRow->row2; ?></td>
+			<td><?php echo $resultRow->row3; ?></td>
+			<td><?php echo $resultRow->row4; ?></td>
 		</tr>
+<?php
+			}
+		}
+?>
 	</table>
 	<br>
 <?php
@@ -777,10 +811,11 @@ function GenerateInactiveEmployeeReport($userID, $company){
 	$inactiveReportCode = "";
 	
 	//Get Report Results
+	$report = GetReport('InactiveEmployment', $company, '');
 	
 	ob_start();
 ?>
-	<h3 class='customFormLabel'>Inactive Employee Report (Company)</h3>
+	<h3 class='customFormLabel'>Inactive Employee Report (<?php echo $company; ?>)</h3>
 	<table class='reportResultTable'>
 		<tr>
 			<th>Employee Name</th>
@@ -789,13 +824,19 @@ function GenerateInactiveEmployeeReport($userID, $company){
 			<th>Type</th>
 			<th>Reason for Leaving</th>
 		</tr>
+<?php
+		foreach($report as $resultRow){
+?>
 		<tr>
-			<td>Hergott, Justin</td>
-			<td>2000-01-01</td>
-			<td>2000-01-02</td>
-			<td>Full Time</td>
-			<td>Bad Employee</td>
+			<td><?php echo $resultRow->row1; ?></td>
+			<td><?php echo $resultRow->row2; ?></td>
+			<td><?php echo $resultRow->row3; ?></td>
+			<td><?php echo $resultRow->row4; ?></td>
+			<td><?php echo $resultRow->row5; ?></td>
 		</tr>
+<?php
+		}
+?>
 	</table>
 <?php	
 	$inactiveReportCode = ob_get_clean();
@@ -823,7 +864,7 @@ function ConvertDateToMonday($date){
 		//Convert date to last monday
 		$returnDate = date('Y-m-d', strtotime("last monday", strtotime($date)));	
 	}
-	
+
 	return $returnDate;
 }
 

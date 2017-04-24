@@ -19,8 +19,8 @@
 				
 				case 'InactiveEmployment':
 					$this->row1 = $fromDatabase["Employee Name"];
-					$this->row2 = $fromDatabase["Date of Hire"];
-					$this->row3 = $fromDatabase["Date of Termination"];
+					$this->row2 = $fromDatabase["Hired"];
+					$this->row3 = $fromDatabase["Terminated"];
 					$this->row4 = $fromDatabase["Type"];
 					$this->row5 = $fromDatabase["Reason for Leaving"];
 					break;
@@ -28,8 +28,9 @@
 				case 'Payroll':
 					$this->row1 = $fromDatabase["Employee Type"];
 					$this->row2 = $fromDatabase["Employee Name"];
-					$this->row3 = $fromDatabase["SIN"];
-					$this->row4 = $fromDatabase["Hours"];
+					$this->row3 = $fromDatabase["Hours"];
+					$this->row4 = $fromDatabase["Gross"];
+					$this->row5 = $fromDatabase["Notes"];
 					break;
 
 				case 'Seniority':
