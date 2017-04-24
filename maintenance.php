@@ -103,6 +103,7 @@
 		$("#workTermSelectWorkTerm").change(changeWorkTerm);
 		$("#timeCardSelectEmployee").change(changeEmployee);
 		$("#timeCardSelectWorkTerm").change(changeWorkTerm);
+		$("#weekSelect").change(changeDate);
 		
 		//Select the right employee from each select
 		$('#employeeSelectEmp').val('<?php echo $employeeID; ?>');
@@ -166,7 +167,7 @@
 		var newID = $(selectID).val();
 		
 		//Get the employee details by ID in PHP
-		
+		$("#selected_week").val("<?php echo date('Y-m-d'); ?>");
 		
 		//Change the inputs of the appropriate tab
 		if(selectID == "#employeeSelectEmp"){
@@ -204,11 +205,21 @@
 		}
 		else{
 			$("#work_term_id").val(newID);
-			$("#week_start").val("<?php echo date('Y-m-d');; ?>");
+			$("#selected_week").val("<?php echo date('Y-m-d'); ?>");
 			$("#page_type").val("<?php echo TimeCard; ?>");
 			$("#formChange").submit();
 		}	
 		
+	}
+	
+	function changeDate(e){
+		var selectID = "#" + $(this).attr("id");
+		var newDate = $(selectID).val();
+		
+		$("#work_term_id").val("<?php echo $workTermID; ?>");
+		$("#selected_week").val(newDate);
+		$("#page_type").val("<?php echo TimeCard; ?>");
+		$("#formChange").submit();
 	}
 	
 	function openTab(evt, tabName) {
@@ -288,13 +299,13 @@
 					<?php echo GenerateWorkTermList($employeeID, $securityLevel, false); ?>
 				</select>
 				<h3 class='customFormLabel'>Week Start Date</h3>
-				<input class='customFormInput' type='date' name='week_start' value='<?php echo $weekStart; ?>'>
+				<input class='customFormInput' type='date' id='weekSelect' name='week_start' value='<?php echo $weekStart; ?>'>
 				<input type='hidden' value='<?php echo TimeCard; ?>' name='submit_page_type'>
-				<h3 class='customFormLabel'>Time Card</h3>
-				<?php echo GenerateEmployeeTimeCard($securityLevel, $employeeID, $weekStart); ?>
+				<?php echo GenerateEmployeeTimeCard($securityLevel, $workTermID, $weekStart); ?>
 			</form>
 		</div>
 		<form id='formChange' action='maintenance.php' method='post'>
+				<input type='hidden' id='selected_week' name='week_start' value=''>
 				<input type='hidden' id='form_type' name='form_type' value=''>
 				<input type='hidden' id='emp_id' name='emp_id' value='<?php echo $employeeID; ?>'>
 				<input type='hidden' id='work_term_id' name='work_term_id' value=''>

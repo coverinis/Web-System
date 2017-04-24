@@ -377,14 +377,24 @@ function GenerateWorkTermForm($empType, $secLevel, $workTermID){
 }
 
 //Create a time card table
-function GenerateEmployeeTimeCard($securityLevel, $employeeID, $weekStart){
+function GenerateEmployeeTimeCard($securityLevel, $workTermID, $weekStart){
+	
+	//Time card code
+	$timeCardCode = "";
+	
 	//Convert the date to a monday
 	$weekStart = ConvertDateToMonday($weekStart);
+
+	//Get the work term detail
+	$workTerm = GetWorkTerm($workTermID);
 	
 	//Get the time card
-	$timeCard = GetTimeCardInfo($employeeID, $weekStart);
+	$timeCard = GetTimeCardInfo($workTermID, $weekStart);
+	
+	if($workTermID != 0 && strcmp($workTermID, "0") != 0){
 	ob_start();
 ?>
+	<h3 class='customFormLabel'>Time Card</h3>
 	<table class='timeCardTable'>
 		<tr>
 			<th></th>
@@ -408,6 +418,7 @@ function GenerateEmployeeTimeCard($securityLevel, $employeeID, $weekStart){
 		</tr>
 <?php
 	//Check Employee Type to see if its seasonal to display pieces
+	if(strcmp($workTerm->employeeType, Seasonal) == 0){
 ?>
 		<tr>
 			<th>Pieces</th>
@@ -421,12 +432,19 @@ function GenerateEmployeeTimeCard($securityLevel, $employeeID, $weekStart){
 		</tr>
 		<tr>
 		</tr>
+<?php
+	}
+?>
 	</table>
 	<button class='customFormInput'>Submit</button>
 	<br>
 <?php
-	echo "For Week Starting: " . $weekStart; 
-	return ob_get_clean();
+	echo "For Week Starting: " . $weekStart;
+	
+	$timeCardCode =  ob_get_clean();
+	}
+
+	return $timeCardCode;
 }
 
 function GenerateSearchResult($securityLevel, $lastName, $firstName, $SIN){
@@ -478,15 +496,15 @@ function GenerateSearchResultRow($employeeResult, $resultNumber, $securityLevel)
 			<?php echo $employeeResult->lastName . ", " . $employeeResult->firstName . ". (" . $employeeResult->socialInsuranceNumber . ")"; ?>
 			<button class='tablink  detailButton' onclick="openTab(event, '<?php echo 'item' . $resultNumber . 'Content'?>')">More...</button>
 			<div id='<?php echo 'item' . $resultNumber . 'Content'?>' class='tabcontent'>
-				Company: <br>
-				Date of Birth: <br>
-				Date of Hire: <br>
+				Company: <?php echo $employeeResult->companyName; ?><br>
+				Date of Birth: <?php echo $employeeResult->dateOfBirth; ?><br>
+				Date of Hire: <?php echo $employeeResult->dateOfHire; ?><br>
 <?php
 				if(strcmp($securityLevel, Admin) == 0){
 ?>
-					Date of Termination: <br>
-					Pay: <br>
-					Status: <br>
+					Date of Termination: <?php echo $employeeResult->dateOfTermination; ?><br>
+					Pay: <?php echo $employeeResult->pay; ?><br>
+					Status: <?php echo $employeeResult->status; ?><br>
 <?php
 				}
 ?>
@@ -495,15 +513,16 @@ function GenerateSearchResultRow($employeeResult, $resultNumber, $securityLevel)
 		</td>
 		<td>
 			<form class='actionForm' action='maintenance.php' method='post'>
-				<input type='hidden' name='emp_id' value='1'/>
-				<input type='hidden' name='form_type' value='Part Time'/>
+				<input type='hidden' name='emp_id' value='<?php echo $employeeResult->employeeID; ?>'/>
+				<input type='hidden' name='form_type' value='<?php echo $employeeResult->employeeType; ?>'/>
 				<input type='hidden' name='page_type' value='<?php echo EmpForm; ?>'/>
 				<button class='actionButton'>Edit...</button>
 			</form>
 			<form class='actionForm' action='maintenance.php' method='post'>
-				<input type='hidden' name='emp_id' value='1'/>
-				<input type='hidden' name='form_type' value='Part Time'/>
+				<input type='hidden' name='emp_id' value='<?php echo $employeeResult->employeeID; ?>'/>
+				<input type='hidden' name='form_type' value='<?php echo $employeeResult->employeeType; ?>'/>
 				<input type='hidden' name='page_type' value='<?php echo TimeCard; ?>'/>
+				<input type='hidden' name='work_term_id' value='<?php echo $employeeResult->workTermID; ?>'/>
 				<button class='actionButton'>Time Card...</button>
 			</form>
 		</td>
