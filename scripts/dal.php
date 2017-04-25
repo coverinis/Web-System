@@ -288,7 +288,7 @@ class DAL {
 
 	static function UpdateEmployee($employeeID, $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth)
 	{
-		$query = "UPDATE employee SET firstName='".$firstName."', lastName='".$lastName."', socialInsuranceNumber='".$socialInsuranceNumber."', dateOfBirth='".$dateOfBirth."', incomplete=0 WHERE $employeeID=".$employeeID.";";
+		$query = "UPDATE employee SET firstName='".$firstName."', lastName='".$lastName."', socialInsuranceNumber='".$socialInsuranceNumber."', dateOfBirth='".$dateOfBirth."', incomplete=0 WHERE employeeID=".$employeeID.";";
 		$succeeded = self::$conn->query($query);
 
 
@@ -300,6 +300,7 @@ class DAL {
 		
 		return $ret;		
 	}
+
 
 	static function InsertWorkTerm($employeeTypeID, $employeeID, $companyName, $dateOfHire, $dateOfTermination, $pay, $status)
 	{
@@ -339,9 +340,9 @@ class DAL {
 	}
 
 
-	static function CheckTimeCard($employeeID, $cardDate)
+	static function CheckTimeCard($worktermID, $cardDate)
 	{
-		$query = "SELECT COUNT(*) FROM employeetimecardinfo WHERE employeeID=".$employeeID." AND cardDate=".$cardDate." ;";
+		$query = "SELECT COUNT(*) FROM timecard WHERE worktermID=".$worktermID." AND cardDate='".$cardDate."'' ;";
 
 		
 	    $result = self::$conn->query($query);
@@ -353,13 +354,17 @@ class DAL {
 
 	static function InsertTimeCard($worktermID, $cardDate, $hours, $pieces)
 	{
-		$query = "INSERT INTO timecard(worktermID, cardDate, sunHours, monHours, tueHours, wedHours, thuHours, friHours, sunPiece";
+		$query = "INSERT INTO timecard(worktermID, cardDate, sunHours, monHours, tueHours, wedHours, thuHours, friHours, satHours, sunPiece, monPieces, tuePieces, wedPieces, thuPieces, friPieces, satPieces) VALUES(".$worktermID.", '".$cardDate."', ".$hours['sun'].", ".$hours['mon'].", ".$hours['tue'].", ".$hours['wed'].", ".$hours['thu'].", ".$hours['fri'].", ".$hours['sat'].", ".$pieces['sun'].", ".$pieces['mon'].", ".$pieces['tue'].", ".$pieces['wed'].", ".$pieces['thu'].", ".$pieces['fri'].", ".$pieces['sat'].");";
 
-		
-	    $result = self::$conn->query($query);
-	    $row = $result->fetch_row();
+		$succeeded = self::$conn->query($query);
 
-	    return $row[0];
+	    $ret = 0;
+	    if (!$succeeded)
+	    {
+	    	$ret = 1;
+	    }
+
+	    return $ret;
 	}
 
 }

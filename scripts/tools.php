@@ -286,6 +286,7 @@ function WorkTermMaintenance($workTermID, $employeeID, $employeeType, $companyNa
 	{
 		$status = "'".$status."'";
 	}
+
 	if ($workTermID == 0)
 	{
 		// Inserting
@@ -371,18 +372,27 @@ function ErrorCodeToMessage($errorCode){
 	return $ret;
 }
 
-function timeCardMaintenance($employeeID, $cardDate, $hours, $pieces)
+function timeCardMaintenance($workTermID, $cardDate, $hours, $pieces)
 {
 	$count = DAL::CheckTimeCard($employeeID, $cardDate);
+	$returnCode = 0;
 	if ($count == 0)
 	{
 		// inserting
-		DAL::
+		$returnCode = DAL::InsertTimeCard($workTermID, $cardDate, $hours, $pieces)
 	}
 	else
 	{
 		// updating
 	}
+
+	$ret = array();
+	if ($returnCode != 0)
+	{
+		$ret[0] = "Database error. Please try again later";
+	}
+
+	return $ret;
 }
 
 
