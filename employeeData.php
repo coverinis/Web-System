@@ -2,8 +2,6 @@
 
 require './scripts/tools.php';
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
 //Get the post information from the page
 //employee id
 if(isset($_POST["employee_id"])){
@@ -86,15 +84,8 @@ else{
 }
 
 //Set up post paramters to go back
-//$pageType = $_POST[“submit_page_type”];
+$pageType = $_POST["submit_page_type"];
 $response = $responseMessage;
-
-echo $employeeID;
-//echo $firstName;
-//echo $lastName;
-//echo $sin
-//echo $dob;
-//echo $response;
 	
 ?>
 
@@ -105,5 +96,5 @@ echo $employeeID;
 </form>
  
 <script type="text/javascript">
-    //document.getElementById('myForm').submit();
+    document.getElementById('myForm').submit();
 </script>
