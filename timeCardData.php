@@ -257,7 +257,7 @@ else{
 	print_r($hoursList);
 	print_r($piecesList);
 	DAL::Init();
-	//$retStrings = WorkTermMaintenance($workTermID, $employeeID, $employeeType, $companyName, $doh, $doh_detail, $dot, $pay, $status);
+	$retStrings = timeCardMaintenance($workTermID, $weekStart, $hoursList, $piecesList);
 	//Build responseMessage
 	if(sizeof($retStrings) == 0){
 		$responseMessage = $workTermID . " was successfully added.";
@@ -273,7 +273,7 @@ else{
 $pageType = $_POST["submit_page_type"];
 $response = $responseMessage;
 
-echo $employeeID . "<br>";
+/*echo $employeeID . "<br>";
 echo $workTermID . "<br>";
 echo $formType . "<br>";
 echo $weekStart . "<br>";
@@ -290,7 +290,7 @@ echo $wedPieces . "<br>";
 echo $thuPieces . "<br>";
 echo $friPieces . "<br>";
 echo $satPieces . "<br>";
-echo $sunPieces . "<br>";
+echo $sunPieces . "<br>";*/
 	
 ?>
 

@@ -342,8 +342,7 @@ class DAL {
 
 	static function CheckTimeCard($worktermID, $cardDate)
 	{
-		$query = "SELECT COUNT(*) FROM timecard WHERE worktermID=".$worktermID." AND cardDate='".$cardDate."'' ;";
-
+		$query = "SELECT COUNT(*) FROM timecard WHERE worktermID=".$worktermID." AND cardDate='".$cardDate."';";
 		
 	    $result = self::$conn->query($query);
 	    $row = $result->fetch_row();
@@ -354,8 +353,8 @@ class DAL {
 
 	static function InsertTimeCard($worktermID, $cardDate, $hours, $pieces)
 	{
-		$query = "INSERT INTO timecard(worktermID, cardDate, sunHours, monHours, tueHours, wedHours, thuHours, friHours, satHours, sunPiece, monPieces, tuePieces, wedPieces, thuPieces, friPieces, satPieces) VALUES(".$worktermID.", '".$cardDate."', ".$hours['sun'].", ".$hours['mon'].", ".$hours['tue'].", ".$hours['wed'].", ".$hours['thu'].", ".$hours['fri'].", ".$hours['sat'].", ".$pieces['sun'].", ".$pieces['mon'].", ".$pieces['tue'].", ".$pieces['wed'].", ".$pieces['thu'].", ".$pieces['fri'].", ".$pieces['sat'].");";
-
+		$query = "INSERT INTO timecard(worktermID, cardDate, sunHours, monHours, tueHours, wedHours, thuHours, friHours, satHours, sunPieces, monPieces, tuePieces, wedPieces, thuPieces, friPieces, satPieces) VALUES(".$worktermID.", '".$cardDate."', ".$hours['sun'].", ".$hours['mon'].", ".$hours['tue'].", ".$hours['wed'].", ".$hours['thu'].", ".$hours['fri'].", ".$hours['sat'].", ".$pieces['sun'].", ".$pieces['mon'].", ".$pieces['tue'].", ".$pieces['wed'].", ".$pieces['thu'].", ".$pieces['fri'].", ".$pieces['sat'].");";
+		echo $query;
 		$succeeded = self::$conn->query($query);
 
 	    $ret = 0;

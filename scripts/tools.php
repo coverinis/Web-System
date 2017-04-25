@@ -374,12 +374,12 @@ function ErrorCodeToMessage($errorCode){
 
 function timeCardMaintenance($workTermID, $cardDate, $hours, $pieces)
 {
-	$count = DAL::CheckTimeCard($employeeID, $cardDate);
+	$count = DAL::CheckTimeCard($workTermID, $cardDate);
 	$returnCode = 0;
 	if ($count == 0)
 	{
 		// inserting
-		$returnCode = DAL::InsertTimeCard($workTermID, $cardDate, $hours, $pieces)
+		$returnCode = DAL::InsertTimeCard($workTermID, $cardDate, $hours, $pieces);
 	}
 	else
 	{
