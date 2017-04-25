@@ -929,6 +929,7 @@ function GenerateAuditTable($employeeID, $numberOfResults){
 	$tableCode = "";
 	
 	//Get Audit Records
+	$auditList = GetAudit($employeeID, $numberOfResults);
 	
 	ob_start();
 	if(strcmp($employeeID, "0") != 0){
@@ -945,15 +946,19 @@ function GenerateAuditTable($employeeID, $numberOfResults){
 		</tr>
 <?php
 	//For each audit record
+	foreach($auditList as $audit){
 ?>
 		<tr>
-			<th>Date</th>
-			<th>Hergott</th>
-			<th>MOD</th>
-			<th>FNAME</th>
-			<th>JUSTIN</th>
-			<th>Justin</th>
+			<th><?php echo $audit->row1; ?></th>
+			<th><?php echo $audit->row2; ?></th>
+			<th><?php echo $audit->row3; ?></th>
+			<th><?php echo $audit->row4; ?></th>
+			<th><?php echo $audit->row5; ?></th>
+			<th><?php echo $audit->row6; ?></th>
 		</tr>
+<?php
+	}
+?>
 	</table>
 	<br>
 <?php
