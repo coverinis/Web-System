@@ -6,10 +6,10 @@ require './scripts/pageGeneration.php';
 //Get the login message if their is one
 //Get the response message if there is one
 	if(isset($_POST["loginMessage"])){
-		$response = $_POST["loginMessage"];
+		$loginMessage = $_POST["loginMessage"];
 	}
 	else{
-		$response = "";
+		$loginMessage = "";
 	}
 ?>
 
