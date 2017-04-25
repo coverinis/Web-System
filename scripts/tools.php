@@ -396,5 +396,34 @@ function timeCardMaintenance($workTermID, $cardDate, $hours, $pieces)
 	return $ret;
 }
 
+function userMaintenance($userID, $firstName, $lastName, $password)
+{
+	$returnCode = validateName($firstName, $lastName);
+
+	if ($returnCode != 0)
+	{
+		return ErrorCodeToMessage($returnCode);
+	}
+
+
+	if ($userID == 0)
+	{
+		$returnCode = DAL::InsertUser($firstName, $lastName, $password);
+	}
+	else
+	{
+		$returnCode = DAL::UpdateUser($userID, $firstName, $lastName, $password);
+	}
+
+	$ret = array();
+	if ($returnCode != 0)
+	{
+		$ret[0] = "Database error. Please try again later";
+	}
+
+	return $ret;
+	
+}
+
 
 ?>

@@ -381,5 +381,40 @@ class DAL {
 	    return $ret;
 	}
 
+
+	static function InsertUser($firstName, $lastName, $password)
+	{
+		$query = "INSERT INTO users(firstName, lastName, password) VALUES('".$firstName."', '".$lastName."', '".$password."');";
+
+
+		$succeeded = self::$conn->query($query);
+
+	    $ret = 0;
+	    if (!$succeeded)
+	    {
+	    	$ret = 1;
+	    }
+
+	    return $ret;
+	}
+
+	static function UpdateUser($userID, $firstName, $lastName, $password)
+	{
+
+		$query = "UPDATE users SET firstName='".$firstName."', lastName='".$lastName."', password='".$password."' WHERE userID=".$userID.";";
+
+
+		$succeeded = self::$conn->query($query);
+
+	    $ret = 0;
+	    if (!$succeeded)
+	    {
+	    	$ret = 1;
+	    }
+
+	    return $ret;
+
+	}
+
 }
 ?>
