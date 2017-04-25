@@ -154,26 +154,10 @@
 	const kInvalidBusinessNumber = 0x100;
 	
 	// validates full time and part time employees
-	function validateFullParttimeEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth, $dateOfHire, $dateOfTermination, $pay)
+	function validateFullParttimeEmployee($dateOfHire, $dateOfTermination, $pay)
 	{
 		$invalidFields = 0;
 		
-		if(validateName($firstName) == false)
-		{
-			$invalidFields |= kInvalidFirstName;
-		}
-		if(validateName($lastName) == false)
-		{
-			$invalidFields |= kInvalidLastName;
-		}
-		if(validateSocialInsuranceNumber($socialInsuranceNumber) == false)
-		{
-			$invalidFields |= kInvalidSIN;
-		}
-		if(validatePastDate($dateOfBirth) == false)
-		{
-			$invalidFields |= kInvalidDateOfBirth;
-		}
 		if(validateDate($dateOfHire) == false)
 		{
 			$invalidFields |= kInvalidDateOfHire;
@@ -190,26 +174,10 @@
 		return $invalidFields;
 	}
 	
-	function validateSeasonalEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth, $piecePay)
+	function validateSeasonalEmployee($piecePay)
 	{
 		$invalidFields = 0;
 		
-		if(validateName($firstName) == false)
-		{
-			$invalidFields |= kInvalidFirstName;
-		}
-		if(validateName($lastName) == false)
-		{
-			$invalidFields |= kInvalidLastName;
-		}
-		if(validateSocialInsuranceNumber($socialInsuranceNumber) == false)
-		{
-			$invalidFields |= kInvalidSIN;
-		}
-		if(validatePastDate($dateOfBirth) == false)
-		{
-			$invalidFields |= kInvalidDateOfBirth;
-		}
 		if(validatePay($piecePay) == false)
 		{
 			$invalidFields |= kInvalidPay;
@@ -218,22 +186,10 @@
 		return $invalidFields;
 	}
 	
-	function validateContractEmployee($lastName, $businessNumber, $dateOfBirth, $contractStartDate, $contractEndDate, $fixedContractAmount)
+	function validateContractEmployee($contractStartDate, $contractEndDate, $fixedContractAmount)
 	{
-		 $invalidFields = 0;
+		 $invalidFields = 0;		
 		
-		if(validateName($lastName) == false)
-		{
-			$invalidFields |= kInvalidLastName;
-		}
-		if(validateBusinessNumber($businessNumber) == false)
-		{
-			$invalidFields |= kInvalidBusinessNumber;
-		}
-		if(validatePastDate($dateOfBirth) == false)
-		{
-			$invalidFields |= kInvalidDateOfBirth;
-		}
 		if(validateDate($contractStartDate) == false)
 		{
 			$invalidFields |= kInvalidDateOfHire;

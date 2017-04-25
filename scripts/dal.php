@@ -301,19 +301,13 @@ class DAL {
 		return $ret;		
 	}
 
-	static function InsertWorkTerm($employeeTypeID, $employeeID, $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth, $dateOfHire, $dateOfTermination, $pay, $status)
+	static function InsertWorkTerm($employeeTypeID, $employeeID, $companyName, $dateOfHire, $dateOfTermination, $pay, $status)
 	{
-		$stmt = self::$conn->prepare("INSERT INTO workterm(employeeTypeID, employeeID, companyID, firstName, lastName, socialInsuranceNumber, dateOfBirth) VALUES(?, ?, ?, ?)");
+		$query = "INSERT INTO workterm(employeeTypeID, employeeID, companyID, dateOfHire, dateOfTermination, pay, reasonForLeaving, incomplete) 
+					VALUES(".$employeeTypeID.", ".$employeeID.", (SELECT companyID FROM company WHERE companyName='".$companyName."'), '".$dateOfHire."', '".$dateOfTermination."', ".$pay.", '".$status."', 0)";
 
 		
-	    /* bind parameters for markers */
-	    $stmt->bind_param("ssis", $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth);
-
-	    /* execute query */
-	    $succeeded = $stmt->execute();
-
-	    /* close statement */
-	    $stmt->close();
+	    $succeeded = self::$conn->query($query);
 
 
 	    $ret = 0;
@@ -322,7 +316,27 @@ class DAL {
 	    	$ret = 1;
 	    }
 		
-		return $ret;
+		return $ret;	
+	}
+
+
+
+	static function UpdateWorkTerm($worktermID, $employeeTypeID, $employeeID, $companyName, $dateOfHire, $dateOfTermination, $pay, $status)
+	{
+		$query = "UPDATE workterm SET employeeTypeID=".$employeeTypeID.", employeeID=".$employeeID.", companyID=(SELECT companyID FROM company WHERE companyName='".$companyName."'), dateOfHire='".$dateOfHire."', dateOfTermination='".$dateOfTermination."', pay=".$pay.", reasonForLeaving='".$status."' WHERE worktermID=".$worktermID.";";
+
+
+		
+	    $succeeded = self::$conn->query($query);
+
+
+	    $ret = 0;
+	    if (!$succeeded)
+	    {
+	    	$ret = 1;
+	    }
+		
+		return $ret;	
 	}
 
 }

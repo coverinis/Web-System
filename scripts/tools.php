@@ -230,7 +230,7 @@ function EmployeeMaintainance($employeeID, $firstName, $lastName, $socialInsuran
 }
 
 
-function WorkTermMaintenance($workTermIDs, $employeeID, $employeeType, $firstName, $lastName, $companyName, $socialInsuranceNumber, $dateOfBirth, $dateOfHire, $dateOfHire_detail, $dateOfTermination, $pay, $status){
+function WorkTermMaintenance($workTermIDs, $employeeID, $employeeType, $companyName, $dateOfHire, $dateOfHire_detail, $dateOfTermination, $pay, $status){
 
 	// validate the employee
 	$returnCode = 0;
@@ -239,17 +239,17 @@ function WorkTermMaintenance($workTermIDs, $employeeID, $employeeType, $firstNam
 
 	switch ($employeeType) {
 		case 'Full Time':
-			$returnCode = validateFullParttimeEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth, $dateOfHire, $dateOfTermination, $pay);
+			$returnCode = validateFullParttimeEmployee($dateOfHire, $dateOfTermination, $pay);
 			$employeeTypeID = 1;
 			break;
 		
 		case 'Part Time':
-			$returnCode = validateFullParttimeEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth, $dateOfHire, $dateOfTermination, $pay);
+			$returnCode = validateFullParttimeEmployee($dateOfHire, $dateOfTermination, $pay);
 			$employeeTypeID = 2;
 			break;
 
 		case 'Seasonal':			
-			$returnCode = validateSeasonalEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth, $pay);
+			$returnCode = validateSeasonalEmployee($pay);
 			$ret = FormatSeasonalEmployeeDate($dateOfHire, $dateOfHire_detail);
 			$dateOfHire = $ret[0];
 			$dateOfTermination = $ret[1];
@@ -257,7 +257,7 @@ function WorkTermMaintenance($workTermIDs, $employeeID, $employeeType, $firstNam
 			break;
 
 		case 'Contract':
-			$returnCode = validateContractEmployee($lastName, $socialInsuranceNumber, $dateOfBirth, $dateOfHire, $dateOfTermination, $pay);
+			$returnCode = validateContractEmployee($dateOfHire, $dateOfTermination, $pay);
 			$employeeTypeID = 4;
 			break;
 	}
@@ -272,12 +272,12 @@ function WorkTermMaintenance($workTermIDs, $employeeID, $employeeType, $firstNam
 	if ($workTermID == 0)
 	{
 		// Inserting
-		$returnCode = DAL::InsertWorkTerm($employeeTypeID, $employeeID, $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth, $dateOfHire, $dateOfTermination, $pay, $status);
+		$returnCode = DAL::InsertWorkTerm($employeeTypeID, $employeeID, $companyName, $dateOfHire, $dateOfTermination, $pay, $status);
 	}
 	else
 	{
 		// updating
-		$returnCode = DAL::UpdateWorkTerm($workTermID, $employeeTypeID, $employeeID, $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth, $dateOfHire, $dateOfTermination, $pay, $status);
+		$returnCode = DAL::UpdateWorkTerm($worktermID, $employeeTypeID, $employeeID, $companyName, $dateOfHire, $dateOfTermination, $pay, $status);
 	}
 
 	
