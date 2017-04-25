@@ -252,6 +252,22 @@
 		return $invalidFields;
 	}
 
+	function validateName($firstName, $lastName)
+	{
+		$invalidFields = 0;
+		
+		if(validateName($firstName) == false)
+		{
+			$invalidFields |= kInvalidFirstName;
+		}
+		if(validateName($lastName) == false)
+		{
+			$invalidFields |= kInvalidLastName;
+		}
+
+		return $invalidFields;
+	}
+
 
 	
 	// example
