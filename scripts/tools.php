@@ -369,8 +369,21 @@ function ErrorCodeToMessage($errorCode){
 	}
 
 	return $ret;
-}	
+}
 
+function timeCardMaintenance($employeeID, $cardDate, $hours, $pieces)
+{
+	$count = DAL::CheckTimeCard($employeeID, $cardDate);
+	if ($count == 0)
+	{
+		// inserting
+		DAL::
+	}
+	else
+	{
+		// updating
+	}
+}
 
 
 ?>

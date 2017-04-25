@@ -338,5 +338,29 @@ class DAL {
 		return $ret;	
 	}
 
+
+	static function CheckTimeCard($employeeID, $cardDate)
+	{
+		$query = "SELECT COUNT(*) FROM employeetimecardinfo WHERE employeeID=".$employeeID." AND cardDate=".$cardDate." ;";
+
+		
+	    $result = self::$conn->query($query);
+	    $row = $result->fetch_row();
+
+	    return $row[0];
+	}
+
+
+	static function InsertTimeCard($worktermID, $cardDate, $hours, $pieces)
+	{
+		$query = "INSERT INTO timecard(worktermID, cardDate, sunHours, monHours, tueHours, wedHours, thuHours, friHours, sunPiece";
+
+		
+	    $result = self::$conn->query($query);
+	    $row = $result->fetch_row();
+
+	    return $row[0];
+	}
+
 }
 ?>
