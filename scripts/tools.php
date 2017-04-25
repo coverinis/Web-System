@@ -430,12 +430,14 @@ function userMaintenance($userID, $firstName, $lastName, $password, $userTypeID)
 
 function companyMaintenance($companyID, $companyName)
 {
-	$returnCode = validateCompanyName($companyName);
+	/*$returnCode = validateCompany($companyName);
 	
 	if ($returnCode != 0)
 	{
 		return ErrorCodeToMessage($returnCode);
-	}
+	}*/
+	
+	$returnCode = 0;
 
 	if ($companyID == 0)
 	{

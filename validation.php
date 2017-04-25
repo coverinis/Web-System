@@ -152,7 +152,7 @@
 	const kInvalidPay = 0x40; // hourly rate, salary, piecePay, contract amount
 	const kInvalidSeason = 0x80; 
 	const kInvalidBusinessNumber = 0x100;
-	const kInvalidCompanyName = x0200;
+	const kInvalidCompanyName = 0x200;
 	
 	// validates full time and part time employees
 	function validateFullParttimeEmployee($dateOfHire, $dateOfTermination, $pay)

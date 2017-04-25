@@ -61,6 +61,14 @@ ini_set('display_errors', 1);
 	else{
 		$companyID = "0";
 	}
+	
+	//Get the response if there is one
+	if(isset($_POST["response"])){
+		$response = $_POST["response"];
+	}
+	else{
+		$response = "";
+	}
 ?>
 <script>
 
@@ -148,6 +156,7 @@ function openTab(evt, tabName) {
 			<button class="tablinks" id='auditFormTab' onclick="openTab(event, 'AuditInfo')">Audit Information</button>
 			<button class="tablinks" id='companyFormTab' onclick="openTab(event, 'CompanyInfo')">Company Information</button>
 		</div>
+		<p class='responseMessage'><?php echo $response; ?></p>
 		<div id="UserInfo" class="tabcontent">
 			<form action='userData.php' onsubmit="return passwordsMatch()" method='post'>
 				<h3 class='customFormLabel'>Select User</h3>
@@ -161,8 +170,8 @@ function openTab(evt, tabName) {
 				<input class='customFormInput' type='password' id='confirm_password' required>
 				<h3 class='customFormLabel'>User Type</h3>
 				<select class='customFormInput' name='user_type'>
-					<option value="General">General</option>
-					<option value="Admin">Admin</option>
+					<option value="2">General</option>
+					<option value="1">Admin</option>
 				</select>
 				<input type='hidden' name='submit_page_type' value='<?php echo UserForm; ?>'>
 				<button class='customFormInput'>Submit</button>
@@ -188,10 +197,10 @@ function openTab(evt, tabName) {
 		  </form>
 		</div>
 		<div id="CompanyInfo" class="tabcontent">
-			<form method='post'>
+			<form action='companyData.php' method='post'>
 			<h3 class='customFormLabel'>Select Company</h3>
-			<select class='customFormInput' id='companySelect'>
-				<?php echo GenerateCompanyList(true); ?>
+			<select class='customFormInput' id='companySelect' name='company_id'>
+				<?php echo GenerateCompanyIDList(true); ?>
 			</select>
 			<?php echo GenerateCompanyForm($companyID); ?>
 			<input type='hidden' name='submit_page_type' value='<?php echo CompanyForm; ?>'>

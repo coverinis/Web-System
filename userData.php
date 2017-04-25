@@ -68,38 +68,39 @@ if(strcmp($userID, "") == 0){
 	$responseMessage = "Please Select a User.";
 }
 //Else call bobbys function
-/*else{
+else{
 	DAL::Init();
-	$retStrings = WorkTermMaintenance($workTermID, $employeeID, $employeeType, $companyName, $doh, $doh_detail, $dot, $pay, $status);
+	$retStrings = userMaintenance($userID, $firstName, $lastName, $password, $userType);
 	//Build responseMessage
 	if(sizeof($retStrings) == 0){
-		$responseMessage = $workTermID . " was successfully added.";
+		$responseMessage = "Maintenance on " . $userID . " was successful.";
 	}
 	else{
 		foreach($retStrings as $string){
 			$responseMessage = $string . "<br>";
 		}
 	}
-}*/
+}
 
 //Set up post paramters to go back
 $pageType = $_POST["submit_page_type"];
 $response = $responseMessage;
 
-echo $userID;
+/*echo $userID;
 echo $firstName;
 echo $lastName;
 echo $password;
 echo $userType;
+echo $response;*/
 	
 ?>
 
 <form id="myForm" action="../admin.php" method="post">
-    <input type="hidden" name="user_id" value="<?php echo $employeeID ?>">
+    <input type="hidden" name="user_id" value="<?php echo $userID ?>">
 	<input type="hidden" name="page_type" value="<?php echo $pageType ?>">
 	<input type="hidden" name="response" value="<?php echo $response ?>">
 </form>
  
 <script type="text/javascript">
-    //document.getElementById('myForm').submit();
+    document.getElementById('myForm').submit();
 </script>

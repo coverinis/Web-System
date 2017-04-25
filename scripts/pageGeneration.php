@@ -173,9 +173,30 @@ function GenerateCompanyList($addNew){
 	return ob_get_clean();
 }
 
+function GenerateCompanyIDList($addNew){
+	
+	//Get the companies
+	$companies = GetCompanyList();
+	
+	ob_start();
+	if($addNew == true){
+?>
+	<option value="0">Add New...</option>
+<?php
+	}
+	//Loop through companies
+	foreach($companies as $comp){
+?>
+		<option value="<?php echo $comp->id; ?>"><?php echo $comp->name; ?></option>
+<?php
+	}
+	return ob_get_clean();
+}
+
 function GenerateUserList($addNew){
 	
 	//Get the users
+	$userList = GetUserList();
 	
 	ob_start();
 	if($addNew == true){
@@ -184,9 +205,11 @@ function GenerateUserList($addNew){
 <?php
 	}
 	//Loop through users
+	foreach($userList as $user){
 ?>
-	<option value="<?php echo "1"; ?>"><?php echo "User1"; ?></option>
+	<option value="<?php echo $user->userID; ?>"><?php echo $user->firstName . " " . $user->lastName; ?></option>
 <?php
+	}
 	return ob_get_clean();
 }
 
@@ -879,13 +902,22 @@ function GenerateUserForm($userID){
 	$formCode = "";
 	
 	//Get the username from the id
+	$userList = GetUserList();
+	$selectedFName = "";
+	$selectedLName = "";
+	foreach($userList as $user){
+		if($user->userID == $userID){
+			$selectedFName = $user->firstName;
+			$selectedLName = $user->lastName;
+		}
+	}
 	
 	ob_start();
 ?>
 	<h3 class='customFormLabel'>First Name</h3>
-	<input class='customFormInput' type='text' name='firstname' id='username' required>
+	<input class='customFormInput' type='text' value='<?php echo $selectedFName; ?>' name='firstname' id='username' required>
 	<h3 class='customFormLabel'>Last Name</h3>
-	<input class='customFormInput' type='text' name='lastname' id='username' required>
+	<input class='customFormInput' type='text' value='<?php echo $selectedLName; ?>' name='lastname' id='username' required>
 <?php
 	
 	$formCode = ob_get_clean();
@@ -935,11 +967,18 @@ function GenerateCompanyForm($companyID){
 	$formCode = "";
 	
 	//Get the company name from the id
+	$companies = GetCompanyList();
+	$selectedName = "";
+	foreach($companies as $each){
+		if($each->id == $companyID){
+			$selectedName = $each->name;
+		}
+	}
 	
 	ob_start();
 ?>
 	<h3 class='customFormLabel'>Company Name</h3>
-	<input class='customFormInput' type='text' name='companyName' id='companyName' required>	
+	<input class='customFormInput' type='text' name='companyName' id='companyName' required value='<?php echo $selectedName; ?>'>	
 <?php
 	
 	$formCode = ob_get_clean();

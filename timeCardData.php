@@ -1,6 +1,6 @@
 <?php 
 
-require './scripts/tools.php';
+require './scripts/pageGeneration.php';
 
 //Get the post information from the page
 //employee id
@@ -254,8 +254,7 @@ else{
 	$piecesList["fri"] = $friPieces;
 	$piecesList["sat"] = $satPieces;
 	$piecesList["sun"] = $sunPieces;
-	print_r($hoursList);
-	print_r($piecesList);
+	$weekStart = ConvertDateToMonday($weekStart);
 	DAL::Init();
 	$retStrings = timeCardMaintenance($workTermID, $weekStart, $hoursList, $piecesList);
 	//Build responseMessage
@@ -303,5 +302,5 @@ echo $sunPieces . "<br>";*/
 </form>
  
 <script type="text/javascript">
-    document.getElementById('myForm').submit();
+    //document.getElementById('myForm').submit();
 </script>

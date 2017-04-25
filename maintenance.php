@@ -49,7 +49,7 @@ ini_set('display_errors', 1);
 			
 			//Check the employee type based on the work term and change it
 			if($workTermID == 0 || strcmp($workTermID, "0")== 0){
-				$formType = FullTime;
+				//$formType = FullTime;
 				$companyName = "";
 			}
 			else{
@@ -261,7 +261,7 @@ ini_set('display_errors', 1);
 			<button class="tablinks" id='workTermFormTab' onclick="openTab(event, 'WorkTerm')">Work Term Information</button>
 			<button class="tablinks" id='timeCardTab' onclick="openTab(event, 'TimeCardInfo')">Time Card Information</button>
 		</div>
-		<p class='responseMessage'><?php echo $response; ?></p>
+		<p class='responseMessage' id='response'><?php echo $response; ?></p>
 		<div id="EmpInfo" class="tabcontent">
 			<form id='employeeForm' action='employeeData.php' method='post'>
 				<h3 class='customFormLabel'>Select Employee</h3>
