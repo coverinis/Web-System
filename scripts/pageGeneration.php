@@ -1,7 +1,8 @@
 <?php
 
 require 'tools.php';
-
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 //Page name constants
 define('Login', 'Login');
 define('MainMenu', 'Main Menu');

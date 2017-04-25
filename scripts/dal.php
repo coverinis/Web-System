@@ -11,7 +11,7 @@ class DAL {
 	{
 		if (self::$initialized)
             return;		
-		self::$conn = new mysqli("localhost", "root", "Conestoga1", "ems_pss");
+		self::$conn = new mysqli("localhost", "emstest", "Conestoga1", "ems_pss");
 	}
 	
 	static function Execute_GetMultipleRows($query)
@@ -270,17 +270,9 @@ class DAL {
 
 	static function InsertEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth)
 	{
-		$stmt = self::$conn->prepare("INSERT INTO employee(firstName, lastName, socialInsuranceNumber, dateOfBirth) VALUES(?, ?, ?, ?)");
-
-		
-	    /* bind parameters for markers */
-	    $stmt->bind_param("ssis", $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth);
-
-	    /* execute query */
-	    $succeeded = $stmt->execute();
-
-	    /* close statement */
-	    $stmt->close();
+		$query = "INSERT INTO employee(firstName, lastName, socialInsuranceNumber, dateOfBirth, incomplete) VALUES('".$firstName."', '".$lastName."', '".$socialInsuranceNumber."', '".$dateOfBirth."', 0);";
+		echo $query;
+		$succeeded = self::$conn->query($query);
 
 
 	    $ret = 0;

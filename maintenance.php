@@ -1,6 +1,8 @@
 <!doctype html>
 
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 	require './scripts/pageGeneration.php';
 	session_start();
 ?>
@@ -261,7 +263,7 @@
 		</div>
 		<p class='responseMessage'><?php echo $response; ?></p>
 		<div id="EmpInfo" class="tabcontent">
-			<form id='employeeForm' action='/scripts/employeeData.php' method='post'>
+			<form id='employeeForm' action='employeeData.php' method='post'>
 				<h3 class='customFormLabel'>Select Employee</h3>
 				<select class='customFormInput' id='employeeSelectEmp' name='employee_id'>
 					<?php echo GenerateEmployeeList($securityLevel, true); ?>
