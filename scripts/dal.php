@@ -11,7 +11,7 @@ class DAL {
 	{
 		if (self::$initialized)
             return;		
-		self::$conn = new mysqli("localhost", "emstest", "Conestoga1", "ems_pss");
+		self::$conn = new mysqli("localhost", "root", "Conestoga1", "ems_pss");
 	}
 	
 	static function Execute_GetMultipleRows($query)
@@ -304,7 +304,7 @@ class DAL {
 	static function InsertWorkTerm($employeeTypeID, $employeeID, $companyName, $dateOfHire, $dateOfTermination, $pay, $status)
 	{
 		$query = "INSERT INTO workterm(employeeTypeID, employeeID, companyID, dateOfHire, dateOfTermination, pay, reasonForLeaving, incomplete) 
-					VALUES(".$employeeTypeID.", ".$employeeID.", (SELECT companyID FROM company WHERE companyName='".$companyName."'), '".$dateOfHire."', '".$dateOfTermination."', ".$pay.", '".$status."', 0)";
+					VALUES(".$employeeTypeID.", ".$employeeID.", (SELECT companyID FROM company WHERE companyName='".$companyName."'), '".$dateOfHire."', ".$dateOfTermination.", ".$pay.", ".$status.", 0)";
 
 		
 	    $succeeded = self::$conn->query($query);
@@ -323,7 +323,7 @@ class DAL {
 
 	static function UpdateWorkTerm($worktermID, $employeeTypeID, $employeeID, $companyName, $dateOfHire, $dateOfTermination, $pay, $status)
 	{
-		$query = "UPDATE workterm SET employeeTypeID=".$employeeTypeID.", employeeID=".$employeeID.", companyID=(SELECT companyID FROM company WHERE companyName='".$companyName."'), dateOfHire='".$dateOfHire."', dateOfTermination='".$dateOfTermination."', pay=".$pay.", reasonForLeaving='".$status."' WHERE worktermID=".$worktermID.";";
+		$query = "UPDATE workterm SET employeeTypeID=".$employeeTypeID.", employeeID=".$employeeID.", companyID=(SELECT companyID FROM company WHERE companyName='".$companyName."'), dateOfHire='".$dateOfHire."', dateOfTermination=".$dateOfTermination.", pay=".$pay.", reasonForLeaving=".$status." WHERE worktermID=".$worktermID.";";
 
 
 		

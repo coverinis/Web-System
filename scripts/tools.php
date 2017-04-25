@@ -269,6 +269,23 @@ function WorkTermMaintenance($workTermID, $employeeID, $employeeType, $companyNa
 	}
 
 
+	if (strcmp($dateOfTermination,'') == 0)
+	{
+		$dateOfTermination = 'null';
+	}
+	else
+	{
+		$dateOfTermination = "'".$dateOfTermination."'";
+	}
+
+	if (strcmp($status,'') == 0)
+	{
+		$status = 'null';
+	}
+	else
+	{
+		$status = "'".$status."'";
+	}
 	if ($workTermID == 0)
 	{
 		// Inserting
@@ -280,7 +297,11 @@ function WorkTermMaintenance($workTermID, $employeeID, $employeeType, $companyNa
 		$returnCode = DAL::UpdateWorkTerm($worktermID, $employeeTypeID, $employeeID, $companyName, $dateOfHire, $dateOfTermination, $pay, $status);
 	}
 
-	
+	$ret = array();
+	if ($returnCode != 0)
+	{
+		$ret[0] = "Database error. Please try again later";
+	}
 
 	return $ret;
 
