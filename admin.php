@@ -1,6 +1,8 @@
 <!doctype html>
 
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 	require './scripts/pageGeneration.php';
 	session_start();
 ?>
@@ -24,7 +26,7 @@
 			$pageType = $_POST["page_type"];
 		}
 		else{
-			$pageType = EmpForm;
+			$pageType = UserForm;
 		}
 	}
 	
@@ -147,9 +149,9 @@ function openTab(evt, tabName) {
 			<button class="tablinks" id='companyFormTab' onclick="openTab(event, 'CompanyInfo')">Company Information</button>
 		</div>
 		<div id="UserInfo" class="tabcontent">
-			<form onsubmit="return passwordsMatch()" method='post'>
+			<form action='userData.php' onsubmit="return passwordsMatch()" method='post'>
 				<h3 class='customFormLabel'>Select User</h3>
-				<select class='customFormInput' id='userSelect'>
+				<select class='customFormInput' id='userSelect' name='user_id'>
 					<?php echo GenerateUserList(true); ?>
 				</select>
 				<?php echo GenerateUserForm($userID); ?>
@@ -158,7 +160,7 @@ function openTab(evt, tabName) {
 				<h3 class='customFormLabel'>Confirm Password</h3>
 				<input class='customFormInput' type='password' id='confirm_password' required>
 				<h3 class='customFormLabel'>User Type</h3>
-				<select class='customFormInput'>
+				<select class='customFormInput' name='user_type'>
 					<option value="General">General</option>
 					<option value="Admin">Admin</option>
 				</select>

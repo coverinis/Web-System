@@ -273,17 +273,17 @@ ini_set('display_errors', 1);
 			</form>
 		</div>
 		<div id="WorkTerm" class="tabcontent">
-			<form id='employeeForm' action='' method='post'>
+			<form id='workTermForm' action='workTermData.php' method='post'>
 				<h3 class='customFormLabel'>Select Employee</h3>
-				<select class='customFormInput' id='workTermSelectEmployee'>
+				<select class='customFormInput' id='workTermSelectEmployee' name='employee_id'>
 					<?php echo GenerateEmployeeList($securityLevel, false); ?>
 				</select>
 				<h3 class='customFormLabel'>Select Work Term</h3>
-				<select class='customFormInput' id='workTermSelectWorkTerm'>
+				<select class='customFormInput' id='workTermSelectWorkTerm' name='work_term_id'>
 					<?php echo GenerateWorkTermList($employeeID, $securityLevel, true); ?>
 				</select>
 				<h3 class='customFormLabel'>Employee Type</h3>
-				<select class='customFormInput' id='empTypeSelect'>
+				<select class='customFormInput' id='empTypeSelect' name='employee_type'>
 					<?php echo GenerateEmployeeTypeList($securityLevel); ?>
 				</select>
 				<input type='hidden' value='<?php echo WorkTerm; ?>' name='submit_page_type'>

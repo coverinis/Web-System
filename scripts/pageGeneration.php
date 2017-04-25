@@ -276,7 +276,7 @@ function GenerateWorkTermForm($empType, $secLevel, $workTermID){
 		ob_start();
 ?>
 		<h3 class='customFormLabel'>Select Company</h3>
-		<select class='customFormInput' id='cname'>
+		<select class='customFormInput' id='cname' name='company_name'>
 			<?php echo GenerateCompanyList(false); ?>
 		</select>
 		<h3 class='customFormLabel'>Date of Hire</h3>
@@ -301,7 +301,7 @@ function GenerateWorkTermForm($empType, $secLevel, $workTermID){
 		ob_start();
 ?>
 		<h3 class='customFormLabel'>Select Company</h3>
-		<select class='customFormInput' id='cname'>
+		<select class='customFormInput' id='cname' name='company_name'>
 			<?php echo GenerateCompanyList(false); ?>
 		</select>
 		<h3 class='customFormLabel'>Date of Hire</h3>
@@ -326,7 +326,7 @@ function GenerateWorkTermForm($empType, $secLevel, $workTermID){
 		ob_start();
 ?>
 		<h3 class='customFormLabel'>Select Company</h3>
-		<select class='customFormInput' id='cname'>
+		<select class='customFormInput' id='cname' name='company_name'>
 			<?php echo GenerateCompanyList(false); ?>
 		</select>
 		<h3 class='customFormLabel'>Season</h3>
@@ -351,7 +351,7 @@ function GenerateWorkTermForm($empType, $secLevel, $workTermID){
 		ob_start();
 ?>
 		<h3 class='customFormLabel'>Select Company</h3>
-		<select class='customFormInput' id='cname'>
+		<select class='customFormInput' id='cname' name='company_name'>
 			<?php echo GenerateCompanyList(false); ?>
 		</select>
 		<h3 class='customFormLabel'>Contract Start Date</h3>

@@ -294,7 +294,7 @@ function WorkTermMaintenance($workTermID, $employeeID, $employeeType, $companyNa
 	else
 	{
 		// updating
-		$returnCode = DAL::UpdateWorkTerm($worktermID, $employeeTypeID, $employeeID, $companyName, $dateOfHire, $dateOfTermination, $pay, $status);
+		$returnCode = DAL::UpdateWorkTerm($workTermID, $employeeTypeID, $employeeID, $companyName, $dateOfHire, $dateOfTermination, $pay, $status);
 	}
 
 	$ret = array();
