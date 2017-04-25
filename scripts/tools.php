@@ -396,23 +396,26 @@ function timeCardMaintenance($workTermID, $cardDate, $hours, $pieces)
 	return $ret;
 }
 
-function userMaintenance($userID, $firstName, $lastName, $password)
+function userMaintenance($userID, $firstName, $lastName, $password, $userTypeID)
 {
-	$returnCode = validateName($firstName, $lastName);
+	echo "in here?";
+	$returnCode = validateNames($firstName, $lastName);
 
 	if ($returnCode != 0)
 	{
+		echo "\nyep";
 		return ErrorCodeToMessage($returnCode);
 	}
 
-
+	echo $userID;
 	if ($userID == 0)
 	{
-		$returnCode = DAL::InsertUser($firstName, $lastName, $password);
+		echo "\nyep";
+		$returnCode = DAL::InsertUser($firstName, $lastName, $password, $userTypeID);
 	}
 	else
 	{
-		$returnCode = DAL::UpdateUser($userID, $firstName, $lastName, $password);
+		$returnCode = DAL::UpdateUser($userID, $firstName, $lastName, $password, $userTypeID);
 	}
 
 	$ret = array();

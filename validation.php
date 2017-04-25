@@ -252,7 +252,7 @@
 		return $invalidFields;
 	}
 
-	function validateName($firstName, $lastName)
+	function validateNames($firstName, $lastName)
 	{
 		$invalidFields = 0;
 		

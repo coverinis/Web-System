@@ -368,7 +368,7 @@ class DAL {
 
 	static function UpdateTimeCard($worktermID, $cardDate, $hours, $pieces)
 	{
-		$query = "UPDATE timecard SET sunHours=".$hours['sun'].", monHours=".$hours['mon'].", tueHours=".$hours['tue'].", wedHours=".$hours['wed'].", thuHours=".$hours['thu'].", friHours=".$hours['fri'].", satHours=".$hours['sat'].", sunPieces=".$pieces['sun'].", monPieces=".$pieces['mon'].", tuePieces=".$pieces['tue'].", wedPieces=".$pieces['wed'].", thuPieces=".$pieces['thu'].", friPieces=".$pieces['fri'].", satPieces=".$pieces['sat']." WHERE worktermID=".$worktermID." AND cardDate='"$cardDate"';";
+		$query = "UPDATE timecard SET sunHours=".$hours['sun'].", monHours=".$hours['mon'].", tueHours=".$hours['tue'].", wedHours=".$hours['wed'].", thuHours=".$hours['thu'].", friHours=".$hours['fri'].", satHours=".$hours['sat'].", sunPieces=".$pieces['sun'].", monPieces=".$pieces['mon'].", tuePieces=".$pieces['tue'].", wedPieces=".$pieces['wed'].", thuPieces=".$pieces['thu'].", friPieces=".$pieces['fri'].", satPieces=".$pieces['sat']." WHERE worktermID=".$worktermID." AND cardDate='".$cardDate."';";
 
 		$succeeded = self::$conn->query($query);
 
@@ -382,11 +382,12 @@ class DAL {
 	}
 
 
-	static function InsertUser($firstName, $lastName, $password)
+	static function InsertUser($firstName, $lastName, $password, $userTypeID)
 	{
-		$query = "INSERT INTO users(firstName, lastName, password) VALUES('".$firstName."', '".$lastName."', '".$password."');";
+		$query = "INSERT INTO users(firstName, lastName, pass, userTypeID, active) VALUES('".$firstName."', '".$lastName."', '".$password."', ".$userTypeID.", 1);";
 
-
+		echo $query;
+		
 		$succeeded = self::$conn->query($query);
 
 	    $ret = 0;
@@ -398,12 +399,14 @@ class DAL {
 	    return $ret;
 	}
 
-	static function UpdateUser($userID, $firstName, $lastName, $password)
+	static function UpdateUser($userID, $firstName, $lastName, $password, $userTypeID)
 	{
 
-		$query = "UPDATE users SET firstName='".$firstName."', lastName='".$lastName."', password='".$password."' WHERE userID=".$userID.";";
+		$query = "UPDATE users SET firstName='".$firstName."', lastName='".$lastName."', pass='".$password."', userTypeID=".$userTypeID." WHERE userID=".$userID.";";
 
 
+		echo $query;
+		
 		$succeeded = self::$conn->query($query);
 
 	    $ret = 0;
