@@ -190,7 +190,7 @@
 		return $invalidFields;
 	}
 	
-	function validateSeasonalEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth, $dateOfHire, $dateOfTermination, $piecePay)
+	function validateSeasonalEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth, $piecePay)
 	{
 		$invalidFields = 0;
 		
@@ -209,10 +209,6 @@
 		if(validatePastDate($dateOfBirth) == false)
 		{
 			$invalidFields |= kInvalidDateOfBirth;
-		}
-		if(validateSeason($dateOfHire, $dateOfTermination) == false)
-		{
-			$invalidFields |= kInvalidSeason;
 		}
 		if(validatePay($piecePay) == false)
 		{

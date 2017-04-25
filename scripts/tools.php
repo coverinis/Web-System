@@ -205,19 +205,6 @@ function EmployeeMaintainance($employeeID, $firstName, $lastName, $socialInsuran
 		return ErrorCodeToMessage($returnCode);
 	}
 
-
-	/*$emp = new employee();
-	if (strcmp($firstName,'') == 0)
-	{
-		// contract employee
-		$emp = new employee($employeeID, $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth);
-	}
-	else
-	{
-		// other types of employee
-		$emp = new employee($employeeID, $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth);
-	}*/
-
 	
 	// if OK
 	if ($employeeID == 0)
@@ -239,71 +226,130 @@ function EmployeeMaintainance($employeeID, $firstName, $lastName, $socialInsuran
 	
 	
 
-	return $returnCode;
+	return $ret;
 }
 
 
-function WorkTermMaintenance($workTermIDs, $employeeID, $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth){
+function WorkTermMaintenance($workTermIDs, $employeeID, $employeeType, $firstName, $lastName, $companyName, $socialInsuranceNumber, $dateOfBirth, $dateOfHire, $dateOfHire_detail, $dateOfTermination, $pay, $status){
 
-	/*$emp = new employee($employeeID, $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth);
-	$returnCode = EmployeeValidation($emp);
-	if ($returnCode == OK)
+	// validate the employee
+	$returnCode = 0;
+	$ret = array();
+	$employeeTypeID = 0;
+
+	switch ($employeeType) {
+		case 'Full Time':
+			$returnCode = validateFullParttimeEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth, $dateOfHire, $dateOfTermination, $pay);
+			$employeeTypeID = 1;
+			break;
+		
+		case 'Part Time':
+			$returnCode = validateFullParttimeEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth, $dateOfHire, $dateOfTermination, $pay);
+			$employeeTypeID = 2;
+			break;
+
+		case 'Seasonal':			
+			$returnCode = validateSeasonalEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth, $pay);
+			$ret = FormatSeasonalEmployeeDate($dateOfHire, $dateOfHire_detail);
+			$dateOfHire = $ret[0];
+			$dateOfTermination = $ret[1];
+			$employeeTypeID = 3;
+			break;
+
+		case 'Contract':
+			$returnCode = validateContractEmployee($lastName, $socialInsuranceNumber, $dateOfBirth, $dateOfHire, $dateOfTermination, $pay);
+			$employeeTypeID = 4;
+			break;
+	}
+
+	
+	if ($returnCode != 0)
 	{
-		// if OK
-		if ($employeeID == 0)
-		{
-			// Inserting
-			$returnCode = DAL::InsertEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth);
-		}
-		else
-		{
-			// updating
-			$returnCode = DAL::UpdateEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth);
-		}
+		return ErrorCodeToMessage($returnCode);
+	}
+
+
+	if ($workTermID == 0)
+	{
+		// Inserting
+		$returnCode = DAL::InsertWorkTerm($employeeTypeID, $employeeID, $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth, $dateOfHire, $dateOfTermination, $pay, $status);
 	}
 	else
 	{
-		// if not OK
+		// updating
+		$returnCode = DAL::UpdateWorkTerm($workTermID, $employeeTypeID, $employeeID, $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth, $dateOfHire, $dateOfTermination, $pay, $status);
 	}
+
 	
 
-	return $returnCode;*/
+	return $ret;
 
 
 
 }
 
+function FormatSeasonalEmployeeDate($season, $seasonYear)
+{
+	$ret = array();
+	switch ($season) {
+		case 'Spring':
+			$ret[0] = $seasonYear . '-05-01';
+			$ret[1] = $seasonYear . '-06-30';
+			break;
+		
+		case 'Summer':
+			$ret[0] = $seasonYear . '-07-01';
+			$ret[1] = $seasonYear . '-08-31';
+			break;
+
+		case 'Fall':
+			$ret[0] = $seasonYear . '-09-01';
+			$ret[1] = $seasonYear . '-11-30';
+			break;
+
+		case 'Winter':
+			$ret[0] = $seasonYear . '-12-01';
+			$seasonYear = $seasonYear + 1;
+			$ret[1] = $seasonYear . '-04-30';
+			break;
+	}
+
+	return $ret;
+}
 
 function ErrorCodeToMessage($errorCode){
 	$ret = array();
-	if(($errorCode & kInvalidFirstName) != 0){
+	if($errorCode & kInvalidFirstName) != 0){
 		$ret[] = "Invalid First Name.";
 	}
-	if(($errorCode & kInvalidLastName) != 0){
+	if($errorCode & kInvalidLastName) != 0){
 		$ret[] = "Invalid Last Name.";
 	}
-	if(($errorCode & kInvalidSIN) != 0){
+	if($errorCode & kInvalidSIN) != 0){
 		$ret[] = "Invalid Social Insurance Number.";
 	}
-	if(($errorCode & kInvalidDateOfBirth) != 0){
+	if($errorCode & kInvalidDateOfBirth) != 0){
 		$ret[] = "Invalid Date of Birth.";
 	}
-	if(($errorCode & kInvalidDateOfHire) != 0){
+	if($errorCode & kInvalidDateOfHire) != 0){
 		$ret[] = "Invalid Date of Hire.";
 	}
-	if(($errorCode & kInvalidDateOfTermination) != 0){
+	if($errorCode & kInvalidDateOfTermination) != 0){
 		$ret[] = "Invalid Date of Termination.";
 	}
-	if(($errorCode & kInvalidPay) != 0){
+	if($errorCode & kInvalidPay) != 0){
 		$ret[] = "Invalid Pay amount.";
 	}
-	if(($errorCode & kInvalidSeason) != 0){
+	if($errorCode & kInvalidSeason) != 0){
 		$ret[] = "Invalid Season.";
 	}
-	if(($errorCode & kInvalidBusinessNumber) != 0){
+	if($errorCode & kInvalidBusinessNumber) != 0){
 		$ret[] = "Invalid Business Number.";
 	}
 
 	return $ret;
 }	
+
+
+
 ?>

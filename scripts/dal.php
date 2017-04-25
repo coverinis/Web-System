@@ -271,7 +271,6 @@ class DAL {
 	static function InsertEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth)
 	{
 		$query = "INSERT INTO employee(firstName, lastName, socialInsuranceNumber, dateOfBirth, incomplete) VALUES('".$firstName."', '".$lastName."', '".$socialInsuranceNumber."', '".$dateOfBirth."', 0);";
-		echo $query;
 		$succeeded = self::$conn->query($query);
 
 
@@ -289,11 +288,26 @@ class DAL {
 
 	static function UpdateEmployee($employeeID, $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth)
 	{
-		$stmt = self::$conn->prepare("UPDATE employee SET firstName = ?, lastName = ?, socialInsuranceNumber = ?, dateOfBirth = ? WHERE employeeID = ?");
+		$query = "UPDATE employee SET firstName='".$firstName."', lastName='".$lastName."', socialInsuranceNumber='".$socialInsuranceNumber."', dateOfBirth='".$dateOfBirth."', incomplete=0 WHERE $employeeID=".$employeeID.";";
+		$succeeded = self::$conn->query($query);
+
+
+	    $ret = 0;
+	    if (!$succeeded)
+	    {
+	    	$ret = 1;
+	    }
+		
+		return $ret;		
+	}
+
+	static function InsertWorkTerm($employeeTypeID, $employeeID, $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth, $dateOfHire, $dateOfTermination, $pay, $status)
+	{
+		$stmt = self::$conn->prepare("INSERT INTO workterm(employeeTypeID, employeeID, companyID, firstName, lastName, socialInsuranceNumber, dateOfBirth) VALUES(?, ?, ?, ?)");
 
 		
 	    /* bind parameters for markers */
-	    $stmt->bind_param("ssisi", $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth, $employeeID);
+	    $stmt->bind_param("ssis", $firstName, $lastName, $socialInsuranceNumber, $dateOfBirth);
 
 	    /* execute query */
 	    $succeeded = $stmt->execute();
@@ -309,7 +323,6 @@ class DAL {
 	    }
 		
 		return $ret;
-		
 	}
 
 }

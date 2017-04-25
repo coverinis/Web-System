@@ -1,10 +1,12 @@
 <?php
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-define('SpringStartDate', '1');
-define('SummerStartDate', '4');
-define('FallStartDate', '7');
-define('WinterStartDate', '10');
+
+
+define('SpringStartMonth', 5);
+define('SummerStartMonth', 7);
+define('FallStartMonth', 9);
+define('WinterStartMonth', 12);
 
 class genericWorkTerm
 {
@@ -40,19 +42,19 @@ class genericWorkTerm
 			$this->dateOfHire_detail = date('Y', $time);
 			switch($month)
 			{
-				case SpringStartDate:
+				case SpringStartMonth:
 					$this->dateOfHire = "Spring";
 					break;
 					
-				case SummerStartDate:
+				case SummerStartMonth:
 					$this->dateOfHire = "Summer";
 					break;
 					
-				case FallStartDate:
+				case FallStartMonth:
 					$this->dateOfHire = "Fall";
 					break;
 				
-				case WinterStartDate:
+				case WinterStartMonth:
 					$this->dateOfHire = "Winter";
 					break;
 			}
