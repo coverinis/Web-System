@@ -121,11 +121,11 @@ else{
 	$retStrings = WorkTermMaintenance($workTermID, $employeeID, $employeeType, $companyName, $doh, $doh_detail, $dot, $pay, $status);
 	//Build responseMessage
 	if(sizeof($retStrings) == 0){
-		$responseMessage = $workTermID . " was successfully added.";
+		$responseMessage = "Work Term Maintenance Successful.";
 	}
 	else{
 		foreach($retStrings as $string){
-			$responseMessage = $string . "<br>";
+			$responseMessage .= $string . "<br>";
 		}
 	}
 }
@@ -149,7 +149,7 @@ echo $status;*/
     <input type="hidden" name="emp_id" value="<?php echo $employeeID ?>">
 	<input type="hidden" name="page_type" value="<?php echo $pageType ?>">
 	<input type="hidden" name="response" value="<?php echo $response ?>">
-	<input type="hidden" name="form_type" value="<?php echo $formType ?>">
+	<input type="hidden" name="form_type" value="<?php echo $employeeType ?>">
 	<input type="hidden" name="work_term_id" value="<?php echo $workTermID ?>">
 </form>
  

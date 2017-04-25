@@ -64,8 +64,8 @@ else{
 }
 
 //If employee ID is not set return error message
-if(strcmp($workTermID, "") == 0){
-	$responseMessage = "Please Select a Work Term.";
+if(strcmp($employeeID, "") == 0){
+	$responseMessage = "Please Select an Employee";
 }
 //Else call bobbys function
 else{
@@ -73,11 +73,11 @@ else{
 	$retStrings = EmployeeMaintainance($employeeID, $firstName, $lastName, $sin, $dob);
 	//Build responseMessage
 	if(sizeof($retStrings) == 0){
-		$responseMessage = $firstName . " " . $lastName . " was successfully added.";
+		$responseMessage = "Maintenance on " . $firstName . " " . $lastName . " was successful.";
 	}
 	else{
 		foreach($retStrings as $string){
-			$responseMessage = $string . "<br>";
+			$responseMessage .= $string . "<br>";
 		}
 	}
 }

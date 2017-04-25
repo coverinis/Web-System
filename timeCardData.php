@@ -42,11 +42,11 @@ if(isset($_POST["monHours"])){
 		$monHours = $_POST["monHours"];
 	}
 	else{
-		$monHours = "";
+		$monHours = 0;
 	}
 }
 else{
-	$monHours = "";
+	$monHours = 0;
 }
 
 //tueHours
@@ -55,11 +55,11 @@ if(isset($_POST["tueHours"])){
 		$tueHours = $_POST["tueHours"];
 	}
 	else{
-		$tueHours = "";
+		$tueHours = 0;
 	}
 }
 else{
-	$tueHours = "";
+	$tueHours = 0;
 }
 
 //wedHours
@@ -68,11 +68,11 @@ if(isset($_POST["wedHours"])){
 		$wedHours = $_POST["wedHours"];
 	}
 	else{
-		$wedHours = "";
+		$wedHours = 0;
 	}
 }
 else{
-	$wedHours = "";
+	$wedHours = 0;
 }
 
 //thuHours
@@ -81,11 +81,11 @@ if(isset($_POST["thuHours"])){
 		$thuHours = $_POST["thuHours"];
 	}
 	else{
-		$thuHours = "";
+		$thuHours = 0;
 	}
 }
 else{
-	$thuHours = "";
+	$thuHours = 0;
 }
 
 //friHours
@@ -94,11 +94,11 @@ if(isset($_POST["friHours"])){
 		$friHours = $_POST["friHours"];
 	}
 	else{
-		$friHours = "";
+		$friHours = 0;
 	}
 }
 else{
-	$friHours = "";
+	$friHours = 0;
 }
 
 //satHours
@@ -107,11 +107,11 @@ if(isset($_POST["satHours"])){
 		$satHours = $_POST["satHours"];
 	}
 	else{
-		$satHours = "";
+		$satHours = 0;
 	}
 }
 else{
-	$satHours = "";
+	$satHours = 0;
 }
 
 //sunHours
@@ -120,11 +120,11 @@ if(isset($_POST["sunHours"])){
 		$sunHours = $_POST["sunHours"];
 	}
 	else{
-		$sunHours = "";
+		$sunHours = 0;
 	}
 }
 else{
-	$sunHours = "";
+	$sunHours = 0;
 }
 
 //monPieces
@@ -133,11 +133,11 @@ if(isset($_POST["monPieces"])){
 		$monPieces = $_POST["monPieces"];
 	}
 	else{
-		$monPieces = "";
+		$monPieces = 0;
 	}
 }
 else{
-	$monPieces = "";
+	$monPieces = 0;
 }
 
 //monPieces
@@ -146,11 +146,11 @@ if(isset($_POST["monPieces"])){
 		$monPieces = $_POST["monPieces"];
 	}
 	else{
-		$monPieces = "";
+		$monPieces = 0;
 	}
 }
 else{
-	$monPieces = "";
+	$monPieces = 0;
 }
 
 //tuePieces
@@ -159,11 +159,11 @@ if(isset($_POST["tuePieces"])){
 		$tuePieces = $_POST["tuePieces"];
 	}
 	else{
-		$tuePieces = "";
+		$tuePieces = 0;
 	}
 }
 else{
-	$tuePieces = "";
+	$tuePieces = 0;
 }
 
 //wedPieces
@@ -172,11 +172,11 @@ if(isset($_POST["wedPieces"])){
 		$wedPieces = $_POST["wedPieces"];
 	}
 	else{
-		$wedPieces = "";
+		$wedPieces = 0;
 	}
 }
 else{
-	$wedPieces = "";
+	$wedPieces = 0;
 }
 
 //thuPieces
@@ -185,11 +185,11 @@ if(isset($_POST["thuPieces"])){
 		$thuPieces = $_POST["thuPieces"];
 	}
 	else{
-		$thuPieces = "";
+		$thuPieces = 0;
 	}
 }
 else{
-	$thuPieces = "";
+	$thuPieces = 0;
 }
 
 //friPieces
@@ -198,11 +198,11 @@ if(isset($_POST["friPieces"])){
 		$friPieces = $_POST["friPieces"];
 	}
 	else{
-		$friPieces = "";
+		$friPieces = 0;
 	}
 }
 else{
-	$friPieces = "";
+	$friPieces = 0;
 }
 
 //satPieces
@@ -211,11 +211,11 @@ if(isset($_POST["satPieces"])){
 		$satPieces = $_POST["satPieces"];
 	}
 	else{
-		$satPieces = "";
+		$satPieces = 0;
 	}
 }
 else{
-	$satPieces = "";
+	$satPieces = 0;
 }
 
 //sunPieces
@@ -224,11 +224,11 @@ if(isset($_POST["sunPieces"])){
 		$sunPieces = $_POST["sunPieces"];
 	}
 	else{
-		$sunPieces = "";
+		$sunPieces = 0;
 	}
 }
 else{
-	$sunPieces = "";
+	$sunPieces = 0;
 }
 
 //If employee ID is not set return error message
@@ -236,9 +236,28 @@ if(strcmp($workTermID, "") == 0){
 	$responseMessage = "Please Select a Work Term.";
 }
 //Else call bobbys function
-/*else{
+else{
+	//Build the arrays
+	$hoursList = array();
+	$hoursList["mon"] = $monHours;
+	$hoursList["tue"] = $tueHours;
+	$hoursList["wed"] = $wedHours;
+	$hoursList["thu"] = $thuHours;
+	$hoursList["fri"] = $friHours;
+	$hoursList["sat"] = $satHours;
+	$hoursList["sun"] = $sunHours;
+	$piecesList = array();
+	$piecesList["mon"] = $monPieces;
+	$piecesList["tue"] = $tuePieces;
+	$piecesList["wed"] = $wedPieces;
+	$piecesList["thu"] = $thuPieces;
+	$piecesList["fri"] = $friPieces;
+	$piecesList["sat"] = $satPieces;
+	$piecesList["sun"] = $sunPieces;
+	print_r($hoursList);
+	print_r($piecesList);
 	DAL::Init();
-	$retStrings = WorkTermMaintenance($workTermID, $employeeID, $employeeType, $companyName, $doh, $doh_detail, $dot, $pay, $status);
+	//$retStrings = WorkTermMaintenance($workTermID, $employeeID, $employeeType, $companyName, $doh, $doh_detail, $dot, $pay, $status);
 	//Build responseMessage
 	if(sizeof($retStrings) == 0){
 		$responseMessage = $workTermID . " was successfully added.";
@@ -248,7 +267,7 @@ if(strcmp($workTermID, "") == 0){
 			$responseMessage = $string . "<br>";
 		}
 	}
-}*/
+}
 
 //Set up post paramters to go back
 $pageType = $_POST["submit_page_type"];
@@ -284,5 +303,5 @@ echo $sunPieces . "<br>";
 </form>
  
 <script type="text/javascript">
-    //document.getElementById('myForm').submit();
+    document.getElementById('myForm').submit();
 </script>

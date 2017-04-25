@@ -11,17 +11,30 @@ else{
 	$userID = "";
 }
 
-//user name
-if(isset($_POST["username"])){
-	if(!empty($_POST["username"])){
-		$userName = $_POST["username"];
+//first name
+if(isset($_POST["firstname"])){
+	if(!empty($_POST["firstname"])){
+		$firstName = $_POST["firstname"];
 	}
 	else{
-		$userName = "";
+		$firstName = "";
 	}
 }
 else{
-	$userName = "";
+	$firstName = "";
+}
+
+//last name
+if(isset($_POST["lastname"])){
+	if(!empty($_POST["lastname"])){
+		$lastName = $_POST["lastname"];
+	}
+	else{
+		$lastName = "";
+	}
+}
+else{
+	$lastName = "";
 }
 
 //password
@@ -74,7 +87,8 @@ $pageType = $_POST["submit_page_type"];
 $response = $responseMessage;
 
 echo $userID;
-echo $userName;
+echo $firstName;
+echo $lastName;
 echo $password;
 echo $userType;
 	
@@ -87,5 +101,5 @@ echo $userType;
 </form>
  
 <script type="text/javascript">
-    document.getElementById('myForm').submit();
+    //document.getElementById('myForm').submit();
 </script>
