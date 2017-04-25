@@ -419,5 +419,45 @@ class DAL {
 
 	}
 
+
+
+	static function InsertCompany($companyName)
+	{
+		$query = "INSERT INTO company(companyName) VALUES('".$companyName."');";
+
+		echo $query;
+		
+		$succeeded = self::$conn->query($query);
+
+	    $ret = 0;
+	    if (!$succeeded)
+	    {
+	    	$ret = 1;
+	    }
+
+	    return $ret;
+	}
+
+	static function UpdateCompany($companyID, $companyName)
+	{
+
+		$query = "UPDATE company SET companyName='".$companyName."' WHERE companyID=".$companyID.";";
+
+
+		echo $query;
+		
+		$succeeded = self::$conn->query($query);
+
+	    $ret = 0;
+	    if (!$succeeded)
+	    {
+	    	$ret = 1;
+	    }
+
+	    return $ret;
+
+	}
+
+
 }
 ?>

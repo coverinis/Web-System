@@ -152,6 +152,7 @@
 	const kInvalidPay = 0x40; // hourly rate, salary, piecePay, contract amount
 	const kInvalidSeason = 0x80; 
 	const kInvalidBusinessNumber = 0x100;
+	const kInvalidCompanyName = x0200;
 	
 	// validates full time and part time employees
 	function validateFullParttimeEmployee($dateOfHire, $dateOfTermination, $pay)
@@ -236,9 +237,9 @@
 	{
 		$invalidFields = 0;
 		
-		if(validateName($lastName) == false)
+		if(validateCompanyName($lastName) == false)
 		{
-			$invalidFields |= kInvalidLastName;
+			$invalidFields |= kInvalidCompanyName;
 		}
 		if(validateBusinessNumber($businessNumber) == false)
 		{
@@ -268,6 +269,17 @@
 		return $invalidFields;
 	}
 
+	function validateCompany($companyName)
+	{
+		$invalidFields = 0;
+		
+		if(validateCompanyName($lastName) == false)
+		{
+			$invalidFields |= kInvalidCompanyName;
+		}
+
+		return $invalidFields;
+	}
 
 	
 	// example

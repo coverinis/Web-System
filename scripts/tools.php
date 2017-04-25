@@ -369,6 +369,10 @@ function ErrorCodeToMessage($errorCode){
 		$ret[] = "Invalid Business Number.";
 	}
 
+	if(($errorCode & kInvalidCompanyName) != 0){
+		$ret[] = "Invalid Company Name.";
+	}
+
 	return $ret;
 }
 
@@ -398,19 +402,15 @@ function timeCardMaintenance($workTermID, $cardDate, $hours, $pieces)
 
 function userMaintenance($userID, $firstName, $lastName, $password, $userTypeID)
 {
-	echo "in here?";
 	$returnCode = validateNames($firstName, $lastName);
 
 	if ($returnCode != 0)
 	{
-		echo "\nyep";
 		return ErrorCodeToMessage($returnCode);
 	}
 
-	echo $userID;
 	if ($userID == 0)
 	{
-		echo "\nyep";
 		$returnCode = DAL::InsertUser($firstName, $lastName, $password, $userTypeID);
 	}
 	else
@@ -426,6 +426,34 @@ function userMaintenance($userID, $firstName, $lastName, $password, $userTypeID)
 
 	return $ret;
 	
+}
+
+function companyMaintenance($companyID, $companyName)
+{
+	$returnCode = validateCompanyName($companyName);
+	
+	if ($returnCode != 0)
+	{
+		return ErrorCodeToMessage($returnCode);
+	}
+
+	if ($companyID == 0)
+	{
+		$returnCode = DAL::InsertCompany($companyName);
+	}
+	else
+	{
+		$returnCode = DAL::UpdateCompany($companyID, $companyName);
+	}
+
+	$ret = array();
+	if ($returnCode != 0)
+	{
+		$ret[0] = "Database error. Please try again later";
+	}
+
+	return $ret;
+
 }
 
 
