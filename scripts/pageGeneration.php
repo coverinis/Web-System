@@ -409,13 +409,13 @@ function GenerateEmployeeTimeCard($securityLevel, $workTermID, $weekStart){
 		</tr>
 		<tr>
 			<th>Hours</th>
-			<td><input type='number' name='monHours' value='<?php echo $timeCard[0]->hours["mon"]; ?>'></td>
-			<td><input type='number' name='tueHours' value='<?php echo $timeCard[0]->hours["tue"]; ?>'></td>
-			<td><input type='number' name='wedHours' value='<?php echo $timeCard[0]->hours["wed"]; ?>'></td>
-			<td><input type='number' name='thuHours' value='<?php echo $timeCard[0]->hours["thu"]; ?>'></td>
-			<td><input type='number' name='friHours' value='<?php echo $timeCard[0]->hours["fri"]; ?>'></td>
-			<td><input type='number' name='satHours' value='<?php echo $timeCard[0]->hours["sat"]; ?>'></td>
-			<td><input type='number' name='sunHours' value='<?php echo $timeCard[0]->hours["sun"]; ?>'></td>
+			<td><input type='number' min='0' name='monHours' value='<?php echo $timeCard[0]->hours["mon"]; ?>'></td>
+			<td><input type='number' min='0' name='tueHours' value='<?php echo $timeCard[0]->hours["tue"]; ?>'></td>
+			<td><input type='number' min='0' name='wedHours' value='<?php echo $timeCard[0]->hours["wed"]; ?>'></td>
+			<td><input type='number' min='0' name='thuHours' value='<?php echo $timeCard[0]->hours["thu"]; ?>'></td>
+			<td><input type='number' min='0' name='friHours' value='<?php echo $timeCard[0]->hours["fri"]; ?>'></td>
+			<td><input type='number' min='0' name='satHours' value='<?php echo $timeCard[0]->hours["sat"]; ?>'></td>
+			<td><input type='number' min='0' name='sunHours' value='<?php echo $timeCard[0]->hours["sun"]; ?>'></td>
 		</tr>
 <?php
 	//Check Employee Type to see if its seasonal to display pieces
@@ -423,13 +423,13 @@ function GenerateEmployeeTimeCard($securityLevel, $workTermID, $weekStart){
 ?>
 		<tr>
 			<th>Pieces</th>
-			<td><input type='number' name='monPieces' value='<?php echo $timeCard[0]->pieces["mon"]; ?>'></td>
-			<td><input type='number' name='tuePieces' value='<?php echo $timeCard[0]->pieces["mon"]; ?>'></td>
-			<td><input type='number' name='wedPieces' value='<?php echo $timeCard[0]->pieces["mon"]; ?>'></td>
-			<td><input type='number' name='thuPieces' value='<?php echo $timeCard[0]->pieces["mon"]; ?>'></td>
-			<td><input type='number' name='friPieces' value='<?php echo $timeCard[0]->pieces["mon"]; ?>'></td>
-			<td><input type='number' name='satPieces' value='<?php echo $timeCard[0]->pieces["mon"]; ?>'></td>
-			<td><input type='number' name='sunPieces' value='<?php echo $timeCard[0]->pieces["mon"]; ?>'></td>
+			<td><input type='number' min='0' name='monPieces' value='<?php echo $timeCard[0]->pieces["mon"]; ?>'></td>
+			<td><input type='number' min='0' name='tuePieces' value='<?php echo $timeCard[0]->pieces["mon"]; ?>'></td>
+			<td><input type='number' min='0' name='wedPieces' value='<?php echo $timeCard[0]->pieces["mon"]; ?>'></td>
+			<td><input type='number' min='0' name='thuPieces' value='<?php echo $timeCard[0]->pieces["mon"]; ?>'></td>
+			<td><input type='number' min='0' name='friPieces' value='<?php echo $timeCard[0]->pieces["mon"]; ?>'></td>
+			<td><input type='number' min='0' name='satPieces' value='<?php echo $timeCard[0]->pieces["mon"]; ?>'></td>
+			<td><input type='number' min='0' name='sunPieces' value='<?php echo $timeCard[0]->pieces["mon"]; ?>'></td>
 		</tr>
 		<tr>
 		</tr>

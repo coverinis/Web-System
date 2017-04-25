@@ -291,13 +291,13 @@ ini_set('display_errors', 1);
 			</form>
 		</div>
 		<div id="TimeCardInfo" class="tabcontent">
-			<form id='timeCardForm' action='' method='post'>
+			<form id='timeCardForm' action='timeCardData.php' method='post'>
 				<h3 class='customFormLabel'>Select Employee</h3>
 				<select class='customFormInput' id='timeCardSelectEmployee' name='emp_id'>
 					<?php echo GenerateEmployeeList($securityLevel, false); ?>
 				</select>
 				<h3 class='customFormLabel'>Select Work Term</h3>
-				<select class='customFormInput' id='timeCardSelectWorkTerm'>
+				<select class='customFormInput' id='timeCardSelectWorkTerm' name='work_term_id'>
 					<?php echo GenerateWorkTermList($employeeID, $securityLevel, false); ?>
 				</select>
 				<h3 class='customFormLabel'>Week Start Date</h3>
