@@ -366,5 +366,20 @@ class DAL {
 	    return $ret;
 	}
 
+	static function UpdateTimeCard($worktermID, $cardDate, $hours, $pieces)
+	{
+		$query = "UPDATE timecard SET sunHours=".$hours['sun'].", monHours=".$hours['mon'].", tueHours=".$hours['tue'].", wedHours=".$hours['wed'].", thuHours=".$hours['thu'].", friHours=".$hours['fri'].", satHours=".$hours['sat'].", sunPieces=".$pieces['sun'].", monPieces=".$pieces['mon'].", tuePieces=".$pieces['tue'].", wedPieces=".$pieces['wed'].", thuPieces=".$pieces['thu'].", friPieces=".$pieces['fri'].", satPieces=".$pieces['sat']." WHERE worktermID=".$worktermID." AND cardDate='"$cardDate"';";
+
+		$succeeded = self::$conn->query($query);
+
+	    $ret = 0;
+	    if (!$succeeded)
+	    {
+	    	$ret = 1;
+	    }
+
+	    return $ret;
+	}
+
 }
 ?>

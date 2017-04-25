@@ -384,6 +384,7 @@ function timeCardMaintenance($workTermID, $cardDate, $hours, $pieces)
 	else
 	{
 		// updating
+		$returnCode = DAL::UpdateTimeCard($workTermID, $cardDate, $hours, $pieces);
 	}
 
 	$ret = array();
