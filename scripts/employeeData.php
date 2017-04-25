@@ -14,8 +14,6 @@ else{
 	$employeeID = "";
 }
 
-//Error check if employee ID is not sent
-
 //fname
 if(isset($_POST["fname"])){
 	if(!empty($_POST["fname"])){
@@ -68,20 +66,19 @@ else{
 	$dob = "";
 }
 
-//Call bobbys function
+//If employee ID is not set return error message
+if(strcmp($employeeID, "") == 0){
+	$responseMessage = "Please Select an Employee.";
+}
+//Else call bobbys function
+else{
+	
+}
+
 
 //Set up post paramters to go back
 $pageType = $_POST[“submit_page_type”];
-$response = "Success.";
-	
-
-//Test Echo
-echo $employeeID . "<br>";
-echo $firstName . "<br>";
-echo $lastName . "<br>";
-echo $sin . "<br>";
-echo $dob . "<br>";
-	
+$response = $responseMessage;
 	
 ?>
 
