@@ -267,6 +267,13 @@ class DAL {
 		return $ret;
 	}
 
+	static function GetEmployeeAudit($employeeID, $numOfResults)
+	{
+		$query = "CALL getAuditEmployeeReport(". $employeeID .", ". $numOfResults .");";
+		$ret = self::Execute_GetMultipleRows($query);		
+		return $ret;
+	}
+
 
 	static function InsertEmployee($firstName, $lastName, $socialInsuranceNumber, $dateOfBirth)
 	{

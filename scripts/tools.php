@@ -458,5 +458,12 @@ function companyMaintenance($companyID, $companyName)
 
 }
 
+function GetAudit($employeeID, $numOfResults)
+{
+	$fromDatabase = DAL::GetEmployeeAudit($employeeID, $numOfResults);
+
+	return ParseToGenericArray_Report($fromDatabase, 'Audit');
+}
+
 
 ?>

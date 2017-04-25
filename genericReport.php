@@ -6,6 +6,7 @@
 		var $row3; 
 		var $row4; 
 		var $row5; 
+		var $row6;
 		
 		
 		function __construct($fromDatabase, $reportType){
@@ -47,6 +48,14 @@
 					$this->row3 = $fromDatabase["SIN"];
 					$this->row4 = $fromDatabase["Hours"];
 					break;
+
+				case 'Audit':
+					$this->row1 = $fromDatabase["eventTimestamp"];
+					$this->row2 = $fromDatabase["userID"];
+					$this->row3 = $fromDatabase["eventType"];
+					$this->row4 = $fromDatabase["attributeName"];
+					$this->row5 = $fromDatabase["oldValue"];
+					$this->row6 = $fromDatabase["newValue"];
 			}
 		}
 
